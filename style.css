@@ -1,0 +1,208 @@
+body
+{
+	background-color: #303030;
+	color: #ffffff;
+	margin: 0 !important;
+}
+
+#container
+{
+		background-color: white;
+		width: 300px;
+		padding: 50px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 100px;
+		-webkit-box-shadow: 3px 3px 30px 5px rgba(204,204,204,0.9);
+		-moz-box-shadow: 3px 3px 30px 5px rgba(204,204,204,0.9);
+		box-shadow: 3px 3px 30px 5px rgba(204,204,204,0.9);
+}
+
+#Register
+{
+	padding: 10px 0px;
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+	padding-right: 5px
+}
+
+#Forgot
+{
+	padding: 10px 0px;
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+}
+
+#LoginError
+{
+	padding: 0px;
+	clear: both;
+}
+
+button
+{
+	border-radius: 5px;
+	background-color: #13c5f2;
+	border: none;
+	padding: 5px 28px;
+	letter-spacing:1px;
+	box-sizing: border-box;
+	color: white;
+
+
+}
+
+
+/*chrome yellow input*/
+input:-webkit-autofill
+{
+	-webkit-box-shadow: 0 0 0 50px #efefef inset;
+}
+
+input[type=text],
+input[type=password]
+{
+	width: 300px;
+	background-color: #efefef;
+	color: #666;
+	border: 2px solid #ddd;
+	border-radius: 5px;
+	font-size: 20px;
+	padding: 10px;
+	box-sizing: border-box;
+	outline: none;
+}
+
+input[type=text]:focus,
+input[type=password]:focus
+{
+	-webkit-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
+	-moz-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
+	box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
+}
+
+input[type=submit]
+{
+	width: 300px;
+	background-color: #36b03c;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 20px;
+	padding: 15px 10px;
+	cursor: pointer;
+	letter-spacing:2px;
+}
+
+input[type=submit]:hover
+{
+	background-color: #37b93d;
+}
+
+.error
+{
+	color:red;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.logo
+{
+	width: 450px;
+	font-size: 48px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.nav
+{
+	border-radius: 5px;
+	width: 100%;
+	padding: 10px 0px;
+	background-color: #03b22f;
+	text-align: center;
+	border-top: 1px solid #017a1f;
+	border-bottom: 1px solid #017a1f;
+}
+
+ol
+{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	font-size: 18px;
+	height: 35px;
+	line-height: 200%;
+	display: inline-block;
+}
+ol a
+{
+	color: #ffffff;
+	text-decoration: none;
+	display: block;
+}
+
+ol > li
+{
+	float: left;
+	width: 150px;
+	height: 40px;
+	border-right: 1px dashed #751b1b;
+}
+
+ol > li:first-child
+{
+	border-left: 1px dashed #751b1b;
+}
+
+.gameContainer
+{
+	margin: 10px;
+	border-radius: 10px;
+	padding: 50 px;
+	width: 85vw;
+	height: 80vh;
+	border: 3px solid #017a1f;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.gameResources
+{
+	background-color: #03b22f;
+	border-radius: 5px;
+	margin: 2%;
+	border: 3px solid #017a1f;
+	width: 95%;
+	height: 32px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.gameResource
+{
+	color: #a32303;
+	font-weight: bold;
+	margin: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 30px;
+	border-radius: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	display: inline-block;
+}
+
+.gameOptions
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 30px;
+	width: 85px;
+	height: 80px;
+	margin: 2%;
+}
