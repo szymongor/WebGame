@@ -213,7 +213,7 @@ ol > li:first-child
 	position: relative;
 	border-radius: 5px;
 	border: 2px solid #017a1f;
-	padding: 0px 30px;
+	padding: 0px 0px;
 	width: 56vh;
 	height: 56vh;
 	margin: 2%;
@@ -229,4 +229,19 @@ ol > li:first-child
 	height: 70%;
 	margin: 2%;
 	float: left;
+}
+
+.mapTile
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	width: 9.5%;
+	height: 9.5%;
+	margin: 1%;
+	float: left;
+}
+
+.selectedTile
+{
+	border: 2px solid #f49542;
 }

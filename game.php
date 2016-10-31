@@ -43,19 +43,22 @@
 -->
 
 <div class="gameContainer">
-	<div id="resourcesBar" onclick="getResources()">
-			<div class="gameResource">
-				Resource 1: 300
-			</div>
+	<div id="resourcesBar" onclick="showResources()">
 
 	</div>
+
 	<div clear="both"></div>
 	<div id="gameOptions">
 	</div>
 	<div id="gameMap">
+
 	</div>
+<!--
+
 	<div id="gameDetails">
 	</div>
+-->
+
 </div>
 
 <?php
