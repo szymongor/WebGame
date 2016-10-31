@@ -13,7 +13,7 @@ function showResources(){
 			resources = $.map(resources, function(key,val) { return [[val,key]] });
 			$resourcesBar.empty();
 			$.each(resources,function(id,resource){
-				console.log('<div class="gameResource">'+resource[0]+':'+resource[1]+'</div>');
+				//console.log('<div class="gameResource">'+resource[0]+':'+resource[1]+'</div>');
 				$resourcesBar.append('<div class="gameResource">'+resource[0]+':'+resource[1]+'</div>');
 			});
 		}
@@ -26,9 +26,10 @@ function showMapGrid(){
 	for (i=0; i < 8; i++){
 		for(j=0; j < 8 ; j++){
 			var element = "tile" +j+"x" +i;
+			var value = "["+i+","+j+"]";
 			//div_content = div_content + '<div class="mapTile" onclick="setSquare('+j+','+i+')" id="'+element+'">'+'</div>';
 			$('#gameMap').append('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
-			console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
+			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
 		$('#gameMap').append('<div style="clear:both;"></div>');
 		//div_content = div_content + '<div style="clear:both;"></div>';
@@ -36,7 +37,16 @@ function showMapGrid(){
 }
 
 function setTile(x,y){
+	var coords = [x,y];
 	var element = "tile" +x+ "x"+y;
-	$('#'+element).addClass("selectedTile");
-	console.log(element);
+	$('#'+element).toggleClass("selectedTile");
+}
+
+function selectedTiles(){
+	var selectedTiles = [];
+	var $items = $('.selectedTile');
+	$.each($items, function(i,value){
+		console.log(value.id);
+	});
+
 }
