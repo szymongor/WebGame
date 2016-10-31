@@ -170,7 +170,7 @@ ol > li:first-child
 	margin-right: auto;
 }
 
-.gameResources
+#resourcesBar
 {
 	background-color: #03b22f;
 	border-radius: 5px;
@@ -197,12 +197,36 @@ ol > li:first-child
 	display: inline-block;
 }
 
-.gameOptions
+#gameOptions
 {
 	border-radius: 5px;
 	border: 2px solid #017a1f;
 	padding: 0px 30px;
 	width: 85px;
-	height: 80px;
+  height: 70%;
 	margin: 2%;
+	float: left;
+}
+
+#gameMap
+{
+	position: relative;
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 30px;
+	width: 56vh;
+	height: 56vh;
+	margin: 2%;
+	float: left;
+}
+
+#gameDetails
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 30px;
+	width: 30%;
+	height: 70%;
+	margin: 2%;
+	float: left;
 }

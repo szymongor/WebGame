@@ -1,0 +1,2 @@
+CSS:
+	-gameOptions,Details,Map relative to parent div
