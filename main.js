@@ -20,6 +20,16 @@ function showResources(){
 	});
 };
 
+function getMap(){
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/reg/api/map.php',
+		success: function(data){
+				console.log(data);
+		}
+	});
+};
+
 function showMapGrid(){
 	var div_content ="";
 	$('#gameMap').empty();
