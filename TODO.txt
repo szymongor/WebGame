@@ -1,2 +1,8 @@
 CSS:
 	-gameOptions,Details,Map relative to parent div
+
+API:
+	map.php:
+	{
+		add isset($_GET['x/y'])
+	}

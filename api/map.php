@@ -22,9 +22,10 @@
 				switch($method)
 				{
 					case 'GET':
-          initMap($db_connect,1,2,3,1);
+          initMap($db_connect,$_GET['x'],1,$_GET['y'],1);
           break;
         }
+				//$db_connect.close();
       }
     }
 
@@ -41,7 +42,8 @@
       }
       else
       {
-        echo("NOT NULL");
+				$jsonResponse = json_encode($row);
+        echo($jsonResponse);
       }
 
 

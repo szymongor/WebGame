@@ -1,3 +1,5 @@
+var selectedTile = null;
+
 $( document ).ready(function(){
 	showResources();
 	showMapGrid();
@@ -20,10 +22,10 @@ function showResources(){
 	});
 };
 
-function getMap(){
+function getMap(x,y){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/reg/api/map.php',
+		url: 'http://localhost/reg/api/map.php?x='+x+'&y='+y,
 		success: function(data){
 				console.log(data);
 		}
@@ -47,9 +49,15 @@ function showMapGrid(){
 }
 
 function setTile(x,y){
+	if(selectedTile != null){
+		var element = "tile" +selectedTile[0]+ "x"+selectedTile[1];
+		$('#'+element).toggleClass("selectedTile");
+	}
 	var coords = [x,y];
 	var element = "tile" +x+ "x"+y;
 	$('#'+element).toggleClass("selectedTile");
+	selectedTile = coords;
+
 }
 
 function selectedTiles(){
