@@ -1,4 +1,5 @@
 var selectedTile = null;
+var tiles = [];
 
 $( document ).ready(function(){
 	showResources();
@@ -23,18 +24,23 @@ function showResources(){
 };
 
 function getTile(x,y){
-	var response;
 	$.ajax({
 		type: 'GET',
-		async: false,
 		url: 'http://localhost/reg/api/map.php?x='+x+'&y='+y,
 		success: function(data){
-				response = data;
+				storeTiles($.parseJSON(data));
 		}
 	});
-	response = $.parseJSON(response);
-	return response;
 };
+
+function storeTiles(tileJSON){
+	tiles.push(tileJSON);
+	var x_coord = tileJSON['x_coord'];
+	var y_coord = tileJSON['y_coord'];
+	var element = "tile" +y_coord+"x" +x_coord;
+	var biome = tileJSON['biome'];
+	$('#'+element).append(biome[0]);
+}
 
 function showMapGrid(){
 	selectedTile = null;
@@ -44,9 +50,9 @@ function showMapGrid(){
 		for(j=0; j < 8 ; j++){
 			var element = "tile" +j+"x" +i;
 			var value = "["+i+","+j+"]";
-			var tile = getTile(i,j);
 			//console.log(tile['biome']);
-			$('#gameMap').append('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+tile['biome'][0]+'</div>');
+			getTile(i,j);
+			$('#gameMap').append('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
 		$('#gameMap').append('<div style="clear:both;"></div>');

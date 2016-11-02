@@ -13,5 +13,6 @@ API:
 	}
 
 JS:
-	getTile - fix to async.
+	class to store tiles (storeTile method)
 	getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
+	DONE: getTile - fix to async.

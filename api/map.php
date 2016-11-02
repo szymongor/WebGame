@@ -32,7 +32,7 @@
 
   function getTileMap($db_connect,$x,$y)
   {
-    $query = sprintf("SELECT `id_owner`, `biome`, `building` FROM `map` WHERE x_coord = %s AND y_coord = %s",
+    $query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`, `building` FROM `map` WHERE x_coord = %s AND y_coord = %s",
     $x,$y);
     $result = @$db_connect->query($query);
 
@@ -51,7 +51,7 @@
 			$jsonResponse = json_encode($row);
       return $jsonResponse;
     }
-		$query = sprintf("SELECT `id_owner`, `biome`, `building` FROM `map` WHERE x_coord = %s AND y_coord = %s",
+		$query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`, `building` FROM `map` WHERE x_coord = %s AND y_coord = %s",
     $x,$y);
     $result = @$db_connect->query($query);
     $row = $result->fetch_assoc();
