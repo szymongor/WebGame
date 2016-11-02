@@ -28,7 +28,6 @@
 				//$db_connect.close();
       }
     }
-
     function initMap($db_connect,$xfrom,$xto,$yfrom,$yto)
     {
       $query = sprintf("SELECT `id_owner`, `biome`, `building` FROM `map` WHERE x_coord = %s AND y_coord = %s",
@@ -38,16 +37,16 @@
       $row = $result->fetch_assoc();
       if($row == NULL)
       {
-        echo("NULL");
+				//$rand = rand(1,10);
+				require_once "../databaseNames.php";
+				$rand = array_rand($Biomes);
+        echo($rand);
       }
       else
       {
 				$jsonResponse = json_encode($row);
         echo($jsonResponse);
       }
-
-
-
     }
 
 ?>
