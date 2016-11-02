@@ -6,3 +6,12 @@ API:
 	{
 		add isset($_GET['x/y'])
 	}
+
+	resources.php
+	{
+		add init resources and resources income for new players
+	}
+
+JS:
+	getTile - fix to async.
+	getRegion instead of Tile

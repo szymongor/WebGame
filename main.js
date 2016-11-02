@@ -22,14 +22,18 @@ function showResources(){
 	});
 };
 
-function getMap(x,y){
+function getTile(x,y){
+	var response;
 	$.ajax({
 		type: 'GET',
+		async: false,
 		url: 'http://localhost/reg/api/map.php?x='+x+'&y='+y,
 		success: function(data){
-				console.log(data);
+				response = data;
 		}
 	});
+	response = $.parseJSON(response);
+	return response;
 };
 
 function showMapGrid(){
@@ -39,8 +43,9 @@ function showMapGrid(){
 		for(j=0; j < 8 ; j++){
 			var element = "tile" +j+"x" +i;
 			var value = "["+i+","+j+"]";
-			//div_content = div_content + '<div class="mapTile" onclick="setSquare('+j+','+i+')" id="'+element+'">'+'</div>';
-			$('#gameMap').append('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
+			var tile = getTile(i,j);
+			//console.log(tile['biome']);
+			$('#gameMap').append('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+tile['biome'][0]+'</div>');
 			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
 		$('#gameMap').append('<div style="clear:both;"></div>');
