@@ -37,10 +37,12 @@
       $row = $result->fetch_assoc();
       if($row == NULL)
       {
-				//$rand = rand(1,10);
 				require_once "../databaseNames.php";
-				$rand = array_rand($Biomes);
-        echo($rand);
+				$biome = array_rand($Biomes);
+				$query = sprintf("INSERT INTO `map`(`x_coord`, `y_coord`, `biome`) VALUES (%s,%s,'%s')",
+	      $xfrom,$yfrom,$biome);
+				@$db_connect->query($query);
+        echo($biome);
       }
       else
       {
