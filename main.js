@@ -37,6 +37,7 @@ function getTile(x,y){
 };
 
 function showMapGrid(){
+	selectedTile = null;
 	var div_content ="";
 	$('#gameMap').empty();
 	for (i=0; i < 8; i++){

@@ -14,4 +14,4 @@ API:
 
 JS:
 	getTile - fix to async.
-	getRegion instead of Tile
+	getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
