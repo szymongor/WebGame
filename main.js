@@ -39,7 +39,21 @@ function storeTiles(tileJSON){
 	var y_coord = tileJSON['y_coord'];
 	var element = "tile" +y_coord+"x" +x_coord;
 	var biome = tileJSON['biome'];
-	$('#'+element).append(biome[0]);
+	switch(biome){
+		case "Forest":
+			$('#'+element).prepend('<img id="theImg" src="img/Forest.png" height="99%" width="99%" />');
+			break;
+		case "Desert":
+			$('#'+element).prepend('<img id="theImg" src="img/Desert.png" height="99%" width="99%" />');
+			break;
+		case "Swamp":
+			$('#'+element).prepend('<img id="theImg" src="img/Swamp.png" height="99%" width="99%" />');
+			break;
+		case "Plains":
+			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="99%" width="99%" />');
+			break;
+	}
+
 }
 
 function showMapGrid(){
@@ -48,11 +62,10 @@ function showMapGrid(){
 	$('#gameMap').empty();
 	for (i=0; i < 8; i++){
 		for(j=0; j < 8 ; j++){
-			var element = "tile" +j+"x" +i;
-			var value = "["+i+","+j+"]";
+			var element = "tile" +i+"x" +j;
 			//console.log(tile['biome']);
 			getTile(i,j);
-			$('#gameMap').append('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
+			$('#gameMap').append('<div class="mapTile" onclick="setTile('+i+','+j+')" id="'+element+'">'+'</div>');
 			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
 		$('#gameMap').append('<div style="clear:both;"></div>');
