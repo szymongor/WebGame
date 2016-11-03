@@ -1,5 +1,6 @@
 var selectedTile = null;
 var tiles = [];
+var mapXYCorner = [0,0];
 
 $( document ).ready(function(){
 	showResources();
@@ -35,8 +36,8 @@ function getTile(x,y){
 
 function storeTiles(tileJSON){
 	tiles.push(tileJSON);
-	var x_coord = tileJSON['x_coord'];
-	var y_coord = tileJSON['y_coord'];
+	var x_coord = tileJSON['x_coord']-mapXYCorner[0];
+	var y_coord = tileJSON['y_coord']-mapXYCorner[1];
 	var element = "tile" +y_coord+"x" +x_coord;
 	var biome = tileJSON['biome'];
 	switch(biome){
@@ -64,7 +65,7 @@ function showMapGrid(){
 		for(j=0; j < 8 ; j++){
 			var element = "tile" +i+"x" +j;
 			//console.log(tile['biome']);
-			getTile(i,j);
+			getTile(mapXYCorner[0]+i,mapXYCorner[1]+j);
 			$('#gameMap').append('<div class="mapTile" onclick="setTile('+i+','+j+')" id="'+element+'">'+'</div>');
 			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
