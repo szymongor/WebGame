@@ -208,6 +208,24 @@ ol > li:first-child
 	float: left;
 }
 
+.gameOption
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	text-align: center;
+	color: #ABDD93;
+	margin: 5px;
+	width: 100%;
+  height: 20px;
+	cursor: pointer;
+}
+
+.gameOption:hover
+{
+	background-color: #37b93d;
+	color: #122E08;
+}
+
 #gameMap
 {
 	position: relative;

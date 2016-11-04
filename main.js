@@ -1,11 +1,22 @@
 var selectedTile = null;
 var tiles = [];
 var mapXYCorner = [0,0];
+var idPlayer;
 
 $( document ).ready(function(){
 	showResources();
 	showMapGrid();
 });
+
+function getPlayerId(){
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/reg/api/player.php',
+		success: function(data){
+				idPlayer = ($.parseJSON(data))['id'];
+		}
+	});
+};
 
 function showResources(){
 	var $resourcesBar = $('#resourcesBar');
@@ -93,4 +104,10 @@ function selectedTiles(){
 		console.log(value.id);
 	});
 
+}
+
+function conquer(){
+	if(selectedTile != null){
+
+	}
 }

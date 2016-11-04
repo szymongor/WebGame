@@ -49,6 +49,7 @@
 
 	<div clear="both"></div>
 	<div id="gameOptions">
+		<div class="gameOption" id="Conquer">Conquer</div>
 	</div>
 	<div id="gameMap">
 
