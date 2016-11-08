@@ -4,6 +4,7 @@ var mapXYCorner = [0,0];
 var idPlayer;
 
 $( document ).ready(function(){
+	getPlayerId();
 	showResources();
 	showMapGrid();
 });
@@ -64,6 +65,12 @@ function storeTiles(tileJSON){
 		case "Plains":
 			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="99%" width="99%" />');
 			break;
+	}
+	if(tileJSON['id_owner']==idPlayer){
+		$('#'+element).addClass("ownedTile");
+	}
+	else if (tileJSON['id_owner']!=null) {
+		$('#'+element).addClass("foreignTile");
 	}
 
 }

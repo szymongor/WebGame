@@ -168,6 +168,8 @@ ol > li:first-child
 	border: 3px solid #017a1f;
 	margin-left: auto;
 	margin-right: auto;
+	min-height: 600px;
+	min-width: 1200px;
 }
 
 #resourcesBar
@@ -236,6 +238,8 @@ ol > li:first-child
 	height: 56vh;
 	margin: 2%;
 	float: left;
+	min-height: 400px;
+	min-width: 400px;
 }
 
 #gameDetails
@@ -251,16 +255,29 @@ ol > li:first-child
 
 .mapTile
 {
+	box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 	border-radius: 5px;
-	border: 2px solid #017a1f;
+	border: 3% solid #017a1f;
 	width: 11.5%;
 	height: 11.5%;
-	margin: 0%;
+	margin: 0.5%;
 	float: left;
 	text-align: center;
 }
 
 .selectedTile
 {
-	border: 2px solid Red;
+	border: 4px solid Red !important;
+}
+
+.ownedTile
+{
+	border: 3px solid #71B2DC;
+}
+
+.foreignTile
+{
+	border: 3px solid #EF7761;
 }

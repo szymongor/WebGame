@@ -5,6 +5,7 @@ API:
 	map.php:
 	{
 		add isset($_GET['x/y'])
+		show shadow tile
 	}
 
 	resources.php
@@ -16,3 +17,7 @@ JS:
 	class to store tiles (storeTile method)
 	getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
 	DONE: getTile - fix to async.
+
+
+PHP:
+	DB-interface to manage opeations on resources etc.
