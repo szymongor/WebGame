@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 01 Lis 2016, 13:10
+-- Czas generowania: 09 Lis 2016, 12:36
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -30,9 +30,98 @@ CREATE TABLE `map` (
   `x_coord` smallint(6) NOT NULL,
   `y_coord` smallint(6) NOT NULL,
   `id_owner` int(11) DEFAULT NULL,
-  `biome` enum('Fosret','Plains','Desert','Swamp') COLLATE utf8_polish_ci NOT NULL,
-  `building` enum('House','Sawmill','Mine','') COLLATE utf8_polish_ci NOT NULL
+  `biome` enum('Forest','Plains','Desert','Swamp') COLLATE utf8_polish_ci NOT NULL,
+  `building` enum('House','Sawmill','Mine','') COLLATE utf8_polish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `map`
+--
+
+INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
+(-3, 1, NULL, 'Desert', NULL),
+(-1, 0, NULL, 'Desert', NULL),
+(-1, 1, NULL, 'Plains', NULL),
+(-1, 3, NULL, 'Desert', NULL),
+(0, 0, NULL, 'Desert', NULL),
+(0, 1, NULL, 'Desert', NULL),
+(0, 2, NULL, 'Forest', NULL),
+(0, 3, NULL, 'Swamp', NULL),
+(0, 4, NULL, 'Swamp', NULL),
+(0, 5, NULL, 'Plains', NULL),
+(0, 6, NULL, 'Swamp', NULL),
+(0, 7, NULL, 'Forest', NULL),
+(1, 0, NULL, 'Forest', NULL),
+(1, 1, 21, 'Forest', 'Sawmill'),
+(1, 2, NULL, 'Forest', NULL),
+(1, 3, NULL, 'Forest', NULL),
+(1, 4, 12, 'Plains', NULL),
+(1, 5, 12, 'Desert', NULL),
+(1, 6, NULL, 'Swamp', NULL),
+(1, 7, NULL, 'Plains', NULL),
+(1, 8, NULL, 'Forest', NULL),
+(2, 0, NULL, 'Swamp', NULL),
+(2, 1, NULL, 'Forest', NULL),
+(2, 2, NULL, 'Swamp', NULL),
+(2, 3, 12, 'Plains', NULL),
+(2, 4, NULL, 'Swamp', NULL),
+(2, 5, NULL, 'Plains', NULL),
+(2, 6, NULL, 'Plains', NULL),
+(2, 7, NULL, 'Plains', NULL),
+(2, 8, NULL, 'Plains', NULL),
+(3, 0, NULL, 'Swamp', NULL),
+(3, 1, NULL, 'Forest', NULL),
+(3, 2, NULL, 'Forest', NULL),
+(3, 3, NULL, 'Swamp', NULL),
+(3, 4, NULL, 'Swamp', NULL),
+(3, 5, NULL, 'Plains', NULL),
+(3, 6, NULL, 'Swamp', NULL),
+(3, 7, NULL, 'Plains', NULL),
+(3, 8, NULL, 'Swamp', NULL),
+(4, 0, NULL, 'Forest', NULL),
+(4, 1, NULL, 'Swamp', NULL),
+(4, 2, NULL, 'Desert', NULL),
+(4, 3, NULL, 'Plains', NULL),
+(4, 4, NULL, 'Plains', NULL),
+(4, 5, NULL, 'Forest', NULL),
+(4, 6, NULL, 'Desert', NULL),
+(4, 7, NULL, 'Swamp', NULL),
+(4, 8, NULL, 'Forest', NULL),
+(5, 0, NULL, 'Forest', NULL),
+(5, 1, NULL, 'Swamp', NULL),
+(5, 2, NULL, 'Forest', NULL),
+(5, 3, NULL, 'Swamp', NULL),
+(5, 4, NULL, 'Swamp', NULL),
+(5, 5, NULL, 'Plains', NULL),
+(5, 6, NULL, 'Swamp', NULL),
+(5, 7, NULL, 'Desert', NULL),
+(5, 8, NULL, 'Plains', NULL),
+(6, 0, NULL, 'Desert', NULL),
+(6, 1, NULL, 'Plains', NULL),
+(6, 2, NULL, 'Desert', NULL),
+(6, 3, NULL, 'Desert', NULL),
+(6, 4, NULL, 'Desert', NULL),
+(6, 5, NULL, 'Plains', NULL),
+(6, 6, NULL, 'Desert', NULL),
+(6, 7, NULL, 'Forest', NULL),
+(6, 8, NULL, 'Desert', NULL),
+(7, 0, NULL, 'Desert', NULL),
+(7, 1, NULL, 'Forest', NULL),
+(7, 2, NULL, 'Forest', NULL),
+(7, 3, NULL, 'Swamp', NULL),
+(7, 4, NULL, 'Forest', NULL),
+(7, 5, NULL, 'Forest', NULL),
+(7, 6, NULL, 'Forest', NULL),
+(7, 7, NULL, 'Forest', NULL),
+(7, 8, NULL, 'Swamp', NULL),
+(8, 1, NULL, 'Forest', NULL),
+(8, 2, NULL, 'Forest', NULL),
+(8, 3, NULL, 'Plains', NULL),
+(8, 4, NULL, 'Desert', NULL),
+(8, 5, NULL, 'Forest', NULL),
+(8, 6, NULL, 'Swamp', NULL),
+(8, 7, NULL, 'Plains', NULL),
+(8, 8, NULL, 'Swamp', NULL);
 
 -- --------------------------------------------------------
 
@@ -44,26 +133,16 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `user` text COLLATE utf8_polish_ci NOT NULL,
   `pass` text COLLATE utf8_polish_ci NOT NULL,
-  `email` text COLLATE utf8_polish_ci NOT NULL,
-  `dnipremium` int(11) NOT NULL
+  `email` text COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`id`, `user`, `pass`, `email`, `dnipremium`) VALUES
-(1, 'adam', '$2y$10$PicCZ7IRCczG6zTxld.c.udgkOKGWo4uboOwpCfivligKsbrPZZ4m', 'adam@gmail.com', 0),
-(2, 'marek', 'asdfg', 'marek@gmail.com', 15),
-(3, 'anna', 'zxcvb', 'anna@gmail.com', 25),
-(4, 'andrzej', 'asdfg', 'andrzej@gmail.com', 0),
-(5, 'justyna', 'yuiop', 'justyna@gmail.com', 0),
-(6, 'kasia', 'hjkkl', 'kasia@gmail.com', 12),
-(7, 'beata', 'fgthj', 'beata@gmail.com', 77),
-(8, 'jakub', 'ertyu', 'jakub@gmail.com', 0),
-(9, 'janusz', 'cvbnm', 'janusz@gmail.com', 0),
-(10, 'roman', 'dfghj', 'roman@gmail.com', 23),
-(12, 'Szymon', '$2y$10$vTv8VjWSOaU/Z96xp.un2.YCauEQUTDbqrCpiYx.3rnCfIUUT2.pC', 'gm@gmail.com', 14);
+INSERT INTO `users` (`id`, `user`, `pass`, `email`) VALUES
+(12, 'Szymon', '$2y$10$vTv8VjWSOaU/Z96xp.un2.YCauEQUTDbqrCpiYx.3rnCfIUUT2.pC', 'gm@gmail.com'),
+(13, 'Blyp', '$2y$10$VQ8eZTjq0OGDHfK1jqz7JuzRRHnA/yfQLh2LHhBNmOoEBStNnUyOu', 'blyp@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -84,7 +163,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 25361, 22161, 18961, 44321);
+(12, 59783, 45109, 30435, 90217);
 
 -- --------------------------------------------------------
 
@@ -123,7 +202,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1478001538);
+(12, 1478689978);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -133,6 +212,7 @@ INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
 -- Indexes for table `map`
 --
 ALTER TABLE `map`
+  ADD UNIQUE KEY `x_coord` (`x_coord`,`y_coord`),
   ADD KEY `coord` (`x_coord`,`y_coord`);
 
 --
@@ -168,7 +248,7 @@ ALTER TABLE `user_resources_update`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
