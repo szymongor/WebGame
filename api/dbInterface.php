@@ -58,5 +58,50 @@ require_once "../connect.php";
 		mysqli_close($db_connect);
 	}
 
-	#echo(json_encode(getUserResources(12)));
+	# $resourcesArray example
+	#$res = [
+	#	"Wood" => -5000,
+	#	"Iron" => +500
+	#];
+
+	function transferResources($userId, $resourcesArray)
+	{
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		upDateResources($userId);
+		$currentResources = getUserResources($userId);
+		$sufficeAmount = true;
+		#check amount of all needed resources
+		foreach ($resourcesArray as $transferedResource => $amount)
+		{
+			if($currentResources[$transferedResource]+$amount < 0)
+			{
+				$sufficeAmount = false;
+			}
+		}
+		#if enough then add/substract
+
+		if($sufficeAmount)
+		{
+
+			foreach ($resourcesArray as $transferedResource => $amount)
+			{
+				addResource($userId, $transferedResource, $amount);
+			}
+		}
+		mysqli_close($db_connect);
+
+	}
+
+	function addResource($userId,$resourceName,$resouceAmount)
+	{
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		#UPDATE `user_resources` SET`Wood`=Wood + 2000 WHERE user_id=12
+		$queryStr = sprintf("UPDATE `user_resources` SET `%s`= %s + %s WHERE user_id=%s",
+		$resourceName,$resourceName,$resouceAmount,$userId);
+		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
 ?>
