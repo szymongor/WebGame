@@ -54,11 +54,15 @@
 	<div id="gameMap">
 
 	</div>
-<!--
-
 	<div id="gameDetails">
+		<div class="gameDetailsOptionsContainer">
+			<div class="gameDetailsOption" id="detailsMap" onclick="conquer()">Map</div>
+			<div class="gameDetailsOption" id="detailsBuilding" onclick="conquer()">Building</div>
+		</div>
+		<div class="gameDetailsView" id="detailsView">
+
+		</div>
 	</div>
--->
 
 </div>
 
