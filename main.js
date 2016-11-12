@@ -109,6 +109,9 @@ function setTile(x,y){
 function setDetailsMap(){
 	$('#detailsMap').addClass("gameDetailsOptionSelected");
 	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
+	if(selectedTile == null){
+		return;
+	}
 	var selectedTileObject = $.grep(tiles, function(e){ return (e.x_coord == selectedTile[1] && e.y_coord == selectedTile[0]); })[0];
 
 
