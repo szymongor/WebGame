@@ -77,6 +77,7 @@ function storeTiles(tileJSON){
 
 function showMapGrid(){
 	selectedTile = null;
+	tiles = [];
 	var div_content ="";
 	$('#gameMap').empty();
 	for (i=0; i < 8; i++){
@@ -101,8 +102,32 @@ function setTile(x,y){
 	var element = "tile" +x+ "x"+y;
 	$('#'+element).toggleClass("selectedTile");
 	selectedTile = coords;
+	setDetailsMap();
 
 }
+
+function setDetailsMap(){
+	$('#detailsMap').addClass("gameDetailsOptionSelected");
+	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
+	var selectedTileObject = $.grep(tiles, function(e){ return (e.x_coord == selectedTile[1] && e.y_coord == selectedTile[0]); })[0];
+
+
+	var mapTileStr = "Biome: "+selectedTileObject.biome;
+
+	if(selectedTileObject.id_owner != null){
+		mapTileStr += "<br />";
+		mapTileStr += "Owner: "+selectedTileObject.id_owner;
+	}
+
+	$('#detailsView').empty();
+	$('#detailsView').append(mapTileStr);
+}
+
+function setDetailsBuilding(){
+	$('#detailsBuilding').addClass("gameDetailsOptionSelected");
+	$('#detailsMap').removeClass("gameDetailsOptionSelected");
+}
+
 
 function selectedTiles(){
 	var selectedTiles = [];

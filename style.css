@@ -286,6 +286,12 @@ ol > li:first-child
 	color: #122E08;
 }
 
+.gameDetailsOptionSelected
+{
+	background-color: #37b93d;
+	color: #122E08;
+}
+
 .gameDetailsView
 {
 	border-radius: 5px;
@@ -294,6 +300,7 @@ ol > li:first-child
 	width: 87%;
 	height: 85%;
 	margin: 2%;
+	color: #ABDD93;
 	clear: both;
 }
 
