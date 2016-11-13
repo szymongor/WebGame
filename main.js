@@ -133,7 +133,7 @@ function setDetailsMap(){
 	if(selectedTile == null){
 		return;
 	}
-	var selectedTileObject = $.grep(tiles, function(e){ return (e.x_coord == selectedTile[1] && e.y_coord == selectedTile[0]); })[0];
+	var selectedTileObject = $.grep(tiles, function(e){ return (e.x_coord == selectedTile[1]+mapXYCorner[1] && e.y_coord == selectedTile[0]+mapXYCorner[0]); })[0];
 
 
 	var mapTileStr = "Biome: "+selectedTileObject.biome;
