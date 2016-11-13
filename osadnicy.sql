@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 09 Lis 2016, 12:36
+-- Czas generowania: 13 Lis 2016, 20:15
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -23,6 +23,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `building`
+--
+
+CREATE TABLE `building` (
+  `building_id` int(11) NOT NULL,
+  `type` enum('Castle','Sawmill','Mine','House') COLLATE utf8_polish_ci DEFAULT 'House'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `building`
+--
+
+INSERT INTO `building` (`building_id`, `type`) VALUES
+(1, 'House');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `map`
 --
 
@@ -31,14 +49,14 @@ CREATE TABLE `map` (
   `y_coord` smallint(6) NOT NULL,
   `id_owner` int(11) DEFAULT NULL,
   `biome` enum('Forest','Plains','Desert','Swamp') COLLATE utf8_polish_ci NOT NULL,
-  `building` enum('House','Sawmill','Mine','') COLLATE utf8_polish_ci DEFAULT NULL
+  `building_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `map`
 --
 
-INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
+INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`) VALUES
 (-3, 1, NULL, 'Desert', NULL),
 (-1, 0, NULL, 'Desert', NULL),
 (-1, 1, NULL, 'Plains', NULL),
@@ -52,11 +70,11 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (0, 6, NULL, 'Swamp', NULL),
 (0, 7, NULL, 'Forest', NULL),
 (1, 0, NULL, 'Forest', NULL),
-(1, 1, 21, 'Forest', 'Sawmill'),
+(1, 1, 21, 'Forest', NULL),
 (1, 2, NULL, 'Forest', NULL),
 (1, 3, NULL, 'Forest', NULL),
 (1, 4, 12, 'Plains', NULL),
-(1, 5, 12, 'Desert', NULL),
+(1, 5, 12, 'Desert', 1),
 (1, 6, NULL, 'Swamp', NULL),
 (1, 7, NULL, 'Plains', NULL),
 (1, 8, NULL, 'Forest', NULL),
@@ -69,6 +87,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (2, 6, NULL, 'Plains', NULL),
 (2, 7, NULL, 'Plains', NULL),
 (2, 8, NULL, 'Plains', NULL),
+(2, 9, NULL, 'Forest', NULL),
 (3, 0, NULL, 'Swamp', NULL),
 (3, 1, NULL, 'Forest', NULL),
 (3, 2, NULL, 'Forest', NULL),
@@ -78,6 +97,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (3, 6, NULL, 'Swamp', NULL),
 (3, 7, NULL, 'Plains', NULL),
 (3, 8, NULL, 'Swamp', NULL),
+(3, 9, NULL, 'Plains', NULL),
 (4, 0, NULL, 'Forest', NULL),
 (4, 1, NULL, 'Swamp', NULL),
 (4, 2, NULL, 'Desert', NULL),
@@ -87,6 +107,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (4, 6, NULL, 'Desert', NULL),
 (4, 7, NULL, 'Swamp', NULL),
 (4, 8, NULL, 'Forest', NULL),
+(4, 9, NULL, 'Swamp', NULL),
 (5, 0, NULL, 'Forest', NULL),
 (5, 1, NULL, 'Swamp', NULL),
 (5, 2, NULL, 'Forest', NULL),
@@ -96,6 +117,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (5, 6, NULL, 'Swamp', NULL),
 (5, 7, NULL, 'Desert', NULL),
 (5, 8, NULL, 'Plains', NULL),
+(5, 9, NULL, 'Swamp', NULL),
 (6, 0, NULL, 'Desert', NULL),
 (6, 1, NULL, 'Plains', NULL),
 (6, 2, NULL, 'Desert', NULL),
@@ -105,6 +127,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (6, 6, NULL, 'Desert', NULL),
 (6, 7, NULL, 'Forest', NULL),
 (6, 8, NULL, 'Desert', NULL),
+(6, 9, NULL, 'Plains', NULL),
 (7, 0, NULL, 'Desert', NULL),
 (7, 1, NULL, 'Forest', NULL),
 (7, 2, NULL, 'Forest', NULL),
@@ -114,6 +137,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (7, 6, NULL, 'Forest', NULL),
 (7, 7, NULL, 'Forest', NULL),
 (7, 8, NULL, 'Swamp', NULL),
+(7, 9, NULL, 'Forest', NULL),
 (8, 1, NULL, 'Forest', NULL),
 (8, 2, NULL, 'Forest', NULL),
 (8, 3, NULL, 'Plains', NULL),
@@ -121,7 +145,16 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building`) VALUES
 (8, 5, NULL, 'Forest', NULL),
 (8, 6, NULL, 'Swamp', NULL),
 (8, 7, NULL, 'Plains', NULL),
-(8, 8, NULL, 'Swamp', NULL);
+(8, 8, NULL, 'Swamp', NULL),
+(8, 9, NULL, 'Forest', NULL),
+(9, 2, NULL, 'Forest', NULL),
+(9, 3, NULL, 'Forest', NULL),
+(9, 4, NULL, 'Swamp', NULL),
+(9, 5, NULL, 'Swamp', NULL),
+(9, 6, NULL, 'Forest', NULL),
+(9, 7, NULL, 'Desert', NULL),
+(9, 8, NULL, 'Desert', NULL),
+(9, 9, NULL, 'Desert', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,7 +196,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 59783, 45109, 30435, 90217);
+(12, 100461, 6284, 7681, 115121);
 
 -- --------------------------------------------------------
 
@@ -202,7 +235,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1478689978);
+(12, 1479063658);
 
 --
 -- Indeksy dla zrzutów tabel

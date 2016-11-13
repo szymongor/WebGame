@@ -46,6 +46,27 @@ function getTile(x,y){
 	});
 };
 
+function getBuildingDetails(x,y){
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/reg/api/building.php?xCoord='+x+'&yCoord='+y,
+		success: function(data){
+				showBuildingDetails($.parseJSON(data));
+		}
+	});
+}
+
+function showBuildingDetails(building){
+	if(building==null){
+			$('#detailsView').empty();
+			$('#detailsView').append("No building here.");
+		return;
+	}
+	var buildingStr = "Type: "+building.type;
+	$('#detailsView').empty();
+	$('#detailsView').append(buildingStr);
+}
+
 function storeTiles(tileJSON){
 	tiles.push(tileJSON);
 	var x_coord = tileJSON['x_coord']-mapXYCorner[0];
@@ -129,8 +150,13 @@ function setDetailsMap(){
 function setDetailsBuilding(){
 	$('#detailsBuilding').addClass("gameDetailsOptionSelected");
 	$('#detailsMap').removeClass("gameDetailsOptionSelected");
-}
+	if(selectedTile == null){
+		return;
+	}
 
+	getBuildingDetails(selectedTile[1]+mapXYCorner[1],selectedTile[0]+mapXYCorner[0]);
+
+}
 
 function selectedTiles(){
 	var selectedTiles = [];
