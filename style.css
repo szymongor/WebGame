@@ -316,6 +316,7 @@ ol > li:first-child
 	margin: 0.5%;
 	float: left;
 	text-align: center;
+	position: relative;
 }
 
 .selectedTile
@@ -331,4 +332,12 @@ ol > li:first-child
 .foreignTile
 {
 	border: 3px solid #EF7761;
+}
+
+img{
+		display:block;
+    position: absolute;
+    z-index: -1;
+    top: 0px;
+    left:0;
 }

@@ -46,12 +46,12 @@ function getTile(x,y){
 	});
 };
 
-function getBuildingDetails(x,y){
+function getBuildingDetails(x,y,f,element){
 	$.ajax({
 		type: 'GET',
 		url: 'http://localhost/reg/api/building.php?xCoord='+x+'&yCoord='+y,
 		success: function(data){
-				showBuildingDetails($.parseJSON(data));
+				f($.parseJSON(data),element);
 		}
 	});
 }
@@ -75,16 +75,16 @@ function storeTiles(tileJSON){
 	var biome = tileJSON['biome'];
 	switch(biome){
 		case "Forest":
-			$('#'+element).prepend('<img id="theImg" src="img/Forest.png" height="99%" width="99%" />');
+			$('#'+element).prepend('<img id="theImg'+element+'" src="img/Forest.png" height="100%" width="100%" />');
 			break;
 		case "Desert":
-			$('#'+element).prepend('<img id="theImg" src="img/Desert.png" height="99%" width="99%" />');
+			$('#'+element).prepend('<img id="theImg'+element+'" src="img/Desert.png" height="100%" width="100%"/>');
 			break;
 		case "Swamp":
-			$('#'+element).prepend('<img id="theImg" src="img/Swamp.png" height="99%" width="99%" />');
+			$('#'+element).prepend('<img id="theImg" src="img/Swamp.png" height="100%" width="100%" />');
 			break;
 		case "Plains":
-			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="99%" width="99%" />');
+			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="100%" width="100%"  />');
 			break;
 	}
 	if(tileJSON['id_owner']==idPlayer){
@@ -94,7 +94,22 @@ function storeTiles(tileJSON){
 		$('#'+element).addClass("foreignTile");
 	}
 
+	if(tileJSON['building_id']!=null){
+		getBuildingDetails(x_coord,y_coord,showBuilding,element);
+	}
+
 }
+
+function showBuilding(buildingJSON, element){
+	var type = buildingJSON['type'];
+	switch(type){
+		case "House":
+			$('#'+element).append('<img id="theImgBuilding'+element+'" src="img/Buildings/House.png" height="100%" width="100%"/>');
+			break;
+	}
+}
+
+
 
 function showMapGrid(){
 	selectedTile = null;
@@ -154,7 +169,7 @@ function setDetailsBuilding(){
 		return;
 	}
 
-	getBuildingDetails(selectedTile[1]+mapXYCorner[1],selectedTile[0]+mapXYCorner[0]);
+	getBuildingDetails(selectedTile[1]+mapXYCorner[1],selectedTile[0]+mapXYCorner[0],showBuildingDetails);
 
 }
 
