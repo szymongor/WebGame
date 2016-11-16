@@ -1,6 +1,17 @@
 <?php
 require_once "../connect.php";
 
+	function getUser($userId)
+	{
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT `user` FROM `users` WHERE id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+		return $row;
+	}
+
 	function getUserResources($userId)
   {
 		upDateResources($userId);

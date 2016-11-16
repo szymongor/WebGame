@@ -75,20 +75,21 @@ function storeTiles(tileJSON){
 	var biome = tileJSON['biome'];
 	switch(biome){
 		case "Forest":
-			$('#'+element).prepend('<img id="theImg'+element+'" src="img/Forest.png" height="100%" width="100%" />');
+			$('#'+element).prepend('<img id="theImg" src="img/Forest.png" height="100%" width="100%"/>');
 			break;
 		case "Desert":
-			$('#'+element).prepend('<img id="theImg'+element+'" src="img/Desert.png" height="100%" width="100%"/>');
+			$('#'+element).prepend('<img id="theImg" src="img/Desert.png" height="100%" width="100%"/>');
 			break;
 		case "Swamp":
-			$('#'+element).prepend('<img id="theImg" src="img/Swamp.png" height="100%" width="100%" />');
+			$('#'+element).prepend('<img id="theImg" src="img/Swamp.png" height="100%" width="100%"/>');
 			break;
 		case "Plains":
-			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="100%" width="100%"  />');
+			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="100%" width="100%"/>');
 			break;
 	}
 	if(tileJSON['id_owner']==idPlayer){
 		$('#'+element).addClass("ownedTile");
+		console.log(tileJSON);
 	}
 	else if (tileJSON['id_owner']!=null) {
 		$('#'+element).addClass("foreignTile");
@@ -102,14 +103,8 @@ function storeTiles(tileJSON){
 
 function showBuilding(buildingJSON, element){
 	var type = buildingJSON['type'];
-	switch(type){
-		case "House":
-			$('#'+element).append('<img id="theImgBuilding'+element+'" src="img/Buildings/House.png" height="100%" width="100%"/>');
-			break;
-	}
+	$('#'+element).append('<img id="theImgBuilding'+element+'" src="img/Buildings/'+type+'.png" height="100%" width="100%"/>');
 }
-
-
 
 function showMapGrid(){
 	selectedTile = null;
