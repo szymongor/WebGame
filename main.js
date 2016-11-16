@@ -89,7 +89,7 @@ function storeTiles(tileJSON){
 	}
 	if(tileJSON['id_owner']==idPlayer){
 		$('#'+element).addClass("ownedTile");
-		console.log(tileJSON);
+		//console.log(tileJSON);
 	}
 	else if (tileJSON['id_owner']!=null) {
 		$('#'+element).addClass("foreignTile");
@@ -177,8 +177,17 @@ function selectedTiles(){
 
 }
 
+var tileNow;
+
 function conquer(){
 	if(selectedTile != null){
-
+		$.ajax({
+			type: 'GET',
+			url: 'http://localhost/reg/api/conquer.php?x='+selectedTile[1]+'&y='+selectedTile[0],
+			success: function(data){
+				storeTiles($.parseJSON(data));
+				//console.log($.parseJSON(data));
+			}
+		});
 	}
 }
