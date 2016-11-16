@@ -2,6 +2,8 @@ CSS:
 	-gameOptions,Details,Map relative to parent div
 
 API:
+	validate get/post variables 
+
 	map.php:
 	{
 		add isset($_GET['x/y'])
@@ -14,8 +16,9 @@ API:
 	}
 
 JS:
-	class to store tiles (storeTile method)
+	Store conquered tile (to show it details without refreshing board)
 	getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
+	DONE: class to store tiles (storeTile method)
 	DONE: getTile - fix to async.
 
 
