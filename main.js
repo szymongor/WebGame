@@ -73,20 +73,7 @@ function storeTiles(tileJSON){
 	var y_coord = tileJSON['y_coord']-mapXYCorner[1];
 	var element = "tile" +y_coord+"x" +x_coord;
 	var biome = tileJSON['biome'];
-	switch(biome){
-		case "Forest":
-			$('#'+element).prepend('<img id="theImg" src="img/Forest.png" height="100%" width="100%"/>');
-			break;
-		case "Desert":
-			$('#'+element).prepend('<img id="theImg" src="img/Desert.png" height="100%" width="100%"/>');
-			break;
-		case "Swamp":
-			$('#'+element).prepend('<img id="theImg" src="img/Swamp.png" height="100%" width="100%"/>');
-			break;
-		case "Plains":
-			$('#'+element).prepend('<img id="theImg" src="img/plains.png" height="100%" width="100%"/>');
-			break;
-	}
+	$('#'+element).prepend('<img id="theImg" src="img/'+biome+'.png" height="100%" width="100%"/>');
 	if(tileJSON['id_owner']==idPlayer){
 		$('#'+element).addClass("ownedTile");
 		//console.log(tileJSON);
@@ -177,16 +164,20 @@ function selectedTiles(){
 
 }
 
-var tileNow;
-
 function conquer(){
 	if(selectedTile != null){
 		$.ajax({
 			type: 'GET',
 			url: 'http://localhost/reg/api/conquer.php?x='+selectedTile[1]+'&y='+selectedTile[0],
 			success: function(data){
-				storeTiles($.parseJSON(data));
-				//console.log($.parseJSON(data));
+				var newTile = $.parseJSON(data);
+
+
+				tiles = $.grep(tiles, function(e) {
+  				return (e.x_coord != newTile.x_coord || e.y_coord != newTile.y_coord);
+				});
+
+				storeTiles(newTile);
 			}
 		});
 	}
