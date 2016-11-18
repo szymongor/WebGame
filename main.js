@@ -60,11 +60,16 @@ function showBuildingDetails(building){
 	if(building==null){
 			$('#detailsView').empty();
 			$('#detailsView').append("No building here.");
+			showBuildingsToBuild();
 		return;
 	}
 	var buildingStr = "Type: "+building.type;
 	$('#detailsView').empty();
 	$('#detailsView').append(buildingStr);
+}
+
+function showBuildingsToBuild(){
+	
 }
 
 function storeTiles(tileJSON){

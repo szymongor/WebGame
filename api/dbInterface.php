@@ -120,7 +120,8 @@ require_once "../connect.php";
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
-		$queryStr = sprintf("SELECT * FROM `buildings` WHERE building_id = (SELECT `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s)",
+		$queryStr = sprintf("SELECT b.`building_id`,t.`type` FROM `buildings` as b JOIN gs_buildingstypes as t
+			WHERE b.type_id = t.id AND b.building_id = (SELECT `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s)",
 		$xCoord,$yCoord);
 		$result = @$db_connect->query($queryStr);
 		$row = $result->fetch_assoc();

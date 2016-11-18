@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 16 Lis 2016, 21:46
+-- Czas generowania: 18 Lis 2016, 16:41
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -28,20 +28,58 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `buildings` (
   `building_id` int(11) NOT NULL,
-  `type` enum('Castle','Sawmill','Mine','House','Forge','Farm') COLLATE utf8_polish_ci DEFAULT 'House'
+  `type_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `buildings`
 --
 
-INSERT INTO `buildings` (`building_id`, `type`) VALUES
-(1, 'House'),
-(2, 'Sawmill'),
-(3, 'Mine'),
-(4, 'Forge'),
-(5, 'Farm'),
-(6, 'Castle');
+INSERT INTO `buildings` (`building_id`, `type_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `gs_buildingstypes`
+--
+
+CREATE TABLE `gs_buildingstypes` (
+  `id` int(11) NOT NULL,
+  `Type` varchar(20) COLLATE utf8_polish_ci NOT NULL,
+  `Cost` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `gs_buildingstypes`
+--
+
+INSERT INTO `gs_buildingstypes` (`id`, `Type`, `Cost`) VALUES
+(1, 'House', 1),
+(2, 'Sawmill', 2),
+(3, 'Mine', 3),
+(4, 'Forge', 4),
+(5, 'Farm', 5),
+(6, 'Castle', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `gs_costs`
+--
+
+CREATE TABLE `gs_costs` (
+  `id` int(11) NOT NULL,
+  `Wood` int(10) NOT NULL,
+  `Food` int(10) NOT NULL,
+  `Iron` int(10) NOT NULL,
+  `Stone` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -108,7 +146,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`) VAL
 (4, 2, NULL, 'Desert', NULL),
 (4, 3, NULL, 'Plains', NULL),
 (4, 4, NULL, 'Plains', NULL),
-(4, 5, NULL, 'Forest', NULL),
+(4, 5, 12, 'Forest', NULL),
 (4, 6, NULL, 'Desert', NULL),
 (4, 7, NULL, 'Swamp', NULL),
 (4, 8, NULL, 'Forest', NULL),
@@ -201,7 +239,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 113712, 15118, 12098, 132789);
+(12, 121455, 20280, 14679, 143113);
 
 -- --------------------------------------------------------
 
@@ -240,7 +278,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1479328678);
+(12, 1479483538);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -251,6 +289,18 @@ INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
 --
 ALTER TABLE `buildings`
   ADD PRIMARY KEY (`building_id`);
+
+--
+-- Indexes for table `gs_buildingstypes`
+--
+ALTER TABLE `gs_buildingstypes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gs_costs`
+--
+ALTER TABLE `gs_costs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `map`
@@ -293,6 +343,16 @@ ALTER TABLE `user_resources_update`
 --
 ALTER TABLE `buildings`
   MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT dla tabeli `gs_buildingstypes`
+--
+ALTER TABLE `gs_buildingstypes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT dla tabeli `gs_costs`
+--
+ALTER TABLE `gs_costs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
