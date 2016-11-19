@@ -135,6 +135,7 @@ require_once "../connect.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("UPDATE `map` SET `id_owner`=%s WHERE x_coord = %s AND y_coord = %s",$userId,$xCoord,$yCoord);
 		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
 	}
 
 	function getTileMap($x,$y)
@@ -166,7 +167,56 @@ require_once "../connect.php";
     $row = $result->fetch_assoc();
 
 		$jsonResponse = json_encode($row);
+		mysqli_close($db_connect);
 		return $jsonResponse;
   }
 
+	function getBuildingsToBuild()
+	{
+		$buildingsInfo = array();
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `gs_buildingstypes`");
+		$result = @$db_connect->query($queryStr);
+
+		$row = $result->fetch_assoc();
+
+		while($row != NULL)
+		{
+			$buildingInfo = array(
+					"id"=>$row["id"],
+					"Type"=>$row["Type"]
+			);
+			if($row["Cost"] != NULL)
+			{
+				$cost = array();
+				$queryStrCost = sprintf("SELECT * FROM `gs_costs` WHERE id = %s",$row["Cost"]);
+				$resultCost = @$db_connect->query($queryStrCost);
+				$rowCost = $resultCost->fetch_assoc();
+				foreach ($rowCost as $key => $value)
+				{
+					if($key != "id")
+					{
+						$cost[$key] = $value;
+					}
+				}
+				$buildingInfo["Cost"]=$cost;
+			}
+
+			if($row["technology_requirements_id"] != NULL)
+			{
+				//get tech req.
+			}
+			$row = $result->fetch_assoc();
+			array_push($buildingsInfo,$buildingInfo);
+		}
+
+		$jsonResponse = json_encode($buildingsInfo);
+		echo ($jsonResponse);
+
+
+		mysqli_close($db_connect);
+	}
+
+	getBuildingsToBuild();
 ?>
