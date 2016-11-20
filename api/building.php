@@ -14,11 +14,26 @@
 					switch($method)
 					{
 						case 'GET':
-              $building = getBuilding($_GET['xCoord'],$_GET['yCoord']);
-              $building_json = json_encode($building);
-              echo($building_json);
+						//todo -> refactor this:
+							$request = explode('/', $_SERVER['REQUEST_URI'])[4];
+							switch($request)
+							{
+								case "toBuild":
+									getBuildingsToBuild();
+									break;
+								case "map":
+									defaultRequest();
+								 break;
+							}
+
               break;
           }
     }
 
+		function defaultRequest()
+		{
+			$building = getBuilding($_GET['xCoord'],$_GET['yCoord']);
+			$building_json = json_encode($building);
+			echo($building_json);
+		}
 ?>

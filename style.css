@@ -304,6 +304,46 @@ ol > li:first-child
 	clear: both;
 }
 
+.gameDetailsList
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 5px;
+	width: 90%;
+	height: 85%;
+	margin: 2%;
+	color: #ABDD93;
+	overflow: auto
+}
+
+.gameDetailsBuildingToBuild
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 5px;
+	width: 90%;
+	height: 30%;
+	margin: 2%;
+	color: #ABDD93;
+	position: relative;
+	text-align: center;
+}
+
+.gameDetailsBuildingToBuildResources
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 5px;
+	width: 60%;
+	height: 61%;
+	margin: 2%;
+	color: #ABDD93;
+	position: relative;
+	float:right;
+	text-align: left;
+	overflow: auto;
+}
+
 .mapTile
 {
 	-moz-user-select: none;

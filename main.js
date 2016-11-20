@@ -49,7 +49,7 @@ function getTile(x,y){
 function getBuildingDetails(x,y,f,element){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/reg/api/building.php?xCoord='+x+'&yCoord='+y,
+		url: 'http://localhost/reg/api/building.php/map/?xCoord='+x+'&yCoord='+y,
 		success: function(data){
 				f($.parseJSON(data),element);
 		}
@@ -69,7 +69,33 @@ function showBuildingDetails(building){
 }
 
 function showBuildingsToBuild(){
-	
+	$('#detailsView').append("<div class='gameDetailsList' id='buildingsToBuildList'></div>");
+	getBuildingsToBuild();
+}
+
+function getBuildingsToBuild(){
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/reg/api/building.php/toBuild',
+		success: function(data){
+				var buildingList = $.parseJSON(data);
+				$.each(buildingList, function(i,value){
+					appendBuildingToBuild(value);
+				});
+		}
+	});
+}
+
+function appendBuildingToBuild(building){
+	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' id='"+building.Type+"ToBuild' ></div>");
+	$('#'+building.Type+"ToBuild").append(building.Type + "<br/>");
+	$('#'+building.Type+"ToBuild").append('<img src="img/Buildings/'+building.Type+'.png" height="70px" width="70px "/>');
+	$('#'+building.Type+"ToBuild").append("<div class='gameDetailsBuildingToBuildResources' id='"+building.Type+"ToBuildCost' ></div>");
+	$.each(building.Cost, function(i,value){
+		if(value!=0)
+		$('#'+building.Type+"ToBuildCost").append(i+":"+value+"<br/>");
+	});
+
 }
 
 function storeTiles(tileJSON){
@@ -108,7 +134,7 @@ function showMapGrid(){
 			var element = "tile" +i+"x" +j;
 			//console.log(tile['biome']);
 			getTile(mapXYCorner[0]+i,mapXYCorner[1]+j);
-			$('#gameMap').append('<div class="mapTile" onclick="setTile('+i+','+j+')" id="'+element+'">'+'</div>');
+			$('#gameMap').append('<div class="mapTile" onclick="setTile('+i+','+j+')" ondblclick="setTile('+i+','+j+'), setDetailsBuilding()" id="'+element+'">'+'</div>');
 			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
 		$('#gameMap').append('<div style="clear:both;"></div>');
