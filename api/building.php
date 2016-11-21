@@ -21,8 +21,11 @@
 								case "toBuild":
 									getBuildingsToBuild();
 									break;
+								case "build":
+									buildBuilding();
+									break;
 								case "map":
-									defaultRequest();
+									getBuilding();
 								 break;
 							}
 
@@ -30,10 +33,35 @@
           }
     }
 
-		function defaultRequest()
+		function getBuilding()
 		{
-			$building = getBuilding($_GET['xCoord'],$_GET['yCoord']);
+			$building = getBuildingFromDB($_GET['xCoord'],$_GET['yCoord']);
 			$building_json = json_encode($building);
 			echo($building_json);
+		}
+
+		function buildBuilding()
+		{
+			$tile = json_decode(getTileMap($_GET['xCoord'],$_GET['yCoord']),true);
+			$success;
+			//echo($tile['id_owner']." : ". $_SESSION['id']."<br/>");
+			if($tile['id_owner']==$_SESSION['id'])
+			{
+				//echo("Equals<br/>");
+				$success = setTileBuilding($_GET['xCoord'],$_GET['yCoord'],$_GET['buildingType']);
+			}
+			else
+			{
+				$success = false;
+			}
+
+			if($success)
+			{
+				getBuilding();
+			}
+			else
+			{
+				echo("Failed!");
+			}
 		}
 ?>

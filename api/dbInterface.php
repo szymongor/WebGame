@@ -115,7 +115,7 @@ require_once "../connect.php";
 		mysqli_close($db_connect);
 	}
 
-	function getBuilding($xCoord,$yCoord)
+	function getBuildingFromDB($xCoord,$yCoord)
 	{
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -218,5 +218,46 @@ require_once "../connect.php";
 		mysqli_close($db_connect);
 	}
 
-	//getBuildingsToBuild();
+	function setTileBuilding($x,$y,$buildingTypeId)
+	{
+		$success;
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$tile = json_decode(getTileMap($x,$y),true);
+		if($tile["building_id"]==NULL)
+		{
+			$queryStr = sprintf("INSERT INTO `buildings`(`type_id`) VALUES (%s);",$buildingTypeId);
+			$queryStr .= sprintf("SELECT LAST_INSERT_ID();");
+
+			$buildingId;
+			if (mysqli_multi_query($db_connect,$queryStr))
+			{
+			  do
+			    {
+			    if ($result=mysqli_store_result($db_connect)) {
+			      while ($row=mysqli_fetch_row($result))
+			      {
+			        $buildingId=$row[0];
+			      }
+			      // Free result set
+			      mysqli_free_result($result);
+			      }
+			    }
+			  while (mysqli_next_result($db_connect));
+			}
+
+			$queryStr = sprintf("UPDATE `map` SET `building_id`=%s WHERE x_coord = %s AND y_coord = %s",$buildingId,$x,$y);
+			@$db_connect->query($queryStr);
+			$success = true;
+		}
+		else
+		{
+			$success = false;
+		}
+
+
+		mysqli_close($db_connect);
+		return $success;
+	}
+
 ?>

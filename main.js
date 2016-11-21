@@ -60,7 +60,11 @@ function showBuildingDetails(building){
 	if(building==null){
 			$('#detailsView').empty();
 			$('#detailsView').append("No building here.");
-			showBuildingsToBuild();
+			var element = "tile" +selectedTile[0]+"x" +selectedTile[1];
+			if($('#'+element).hasClass("ownedTile")){
+				showBuildingsToBuild();
+			}
+
 		return;
 	}
 	var buildingStr = "Type: "+building.type;
@@ -87,7 +91,7 @@ function getBuildingsToBuild(){
 }
 
 function appendBuildingToBuild(building){
-	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' id='"+building.Type+"ToBuild' ></div>");
+	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build("+building.id+") id='"+building.Type+"ToBuild' ></div>");
 	$('#'+building.Type+"ToBuild").append(building.Type + "<br/>");
 	$('#'+building.Type+"ToBuild").append('<img src="img/Buildings/'+building.Type+'.png" height="70px" width="70px "/>');
 	$('#'+building.Type+"ToBuild").append("<div class='gameDetailsBuildingToBuildResources' id='"+building.Type+"ToBuildCost' ></div>");
@@ -212,4 +216,8 @@ function conquer(){
 			}
 		});
 	}
+}
+
+function build(buildingTypeId){
+	console.log(selectedTile[0]+", "+ selectedTile[1] +", "+ buildingTypeId);
 }

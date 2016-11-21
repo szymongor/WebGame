@@ -329,6 +329,11 @@ ol > li:first-child
 	text-align: center;
 }
 
+.gameDetailsBuildingToBuild:hover
+{
+	border: 2px solid #ABDD93;
+}
+
 .gameDetailsBuildingToBuildResources
 {
 	border-radius: 5px;
