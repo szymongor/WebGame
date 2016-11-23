@@ -1,5 +1,6 @@
 <?php
-  require_once "../api/dbInterface.php";
+  require $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+
   class Player
   {
     private $playerId;
@@ -13,6 +14,11 @@
     }
 
     public function getPlayerResources(){
+      return getUserResources($this->playerId);
+    }
+
+    public function getMap($x,$y){
+      return getTileMap($x,$y);
     }
 
   }

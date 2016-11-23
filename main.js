@@ -12,7 +12,7 @@ $( document ).ready(function(){
 function getPlayerId(){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/reg/api/player.php',
+		url: 'http://localhost/reg/api/playerId.php',
 		success: function(data){
 				idPlayer = ($.parseJSON(data))['id'];
 		}
@@ -108,7 +108,7 @@ function storeTiles(tileJSON){
 	var y_coord = tileJSON['y_coord']-mapXYCorner[1];
 	var element = "tile" +y_coord+"x" +x_coord;
 	var biome = tileJSON['biome'];
-	$('#'+element).prepend('<img id="theImg" src="img/'+biome+'.png" height="100%" width="100%"/>');
+	$('#'+element).prepend('<img id="theImg" src="img/Biomes/'+biome+'.png" height="100%" width="100%"/>');
 	if(tileJSON['id_owner']==idPlayer){
 		$('#'+element).addClass("ownedTile");
 		//console.log(tileJSON);
