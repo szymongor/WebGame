@@ -1,8 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 
-	function getUser($userId)
-	{
+	function getUser($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("SELECT `user` FROM `users` WHERE id = %s",$userId);
@@ -12,8 +11,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
 	}
 
-	function getUserResources($userId)
-  {
+	function getUserResources($userId){
 		upDateResources($userId);
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -24,8 +22,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
 	}
 
-	function upDateResources($userId)
-	{
+	function upDateResources($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$result = @$db_connect->query(sprintf("SELECT last_update FROM `user_resources_update` WHERE user_id = %s",$userId));
@@ -75,8 +72,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 	#	"Iron" => +500
 	#];
 
-	function transferResources($userId, $resourcesArray)
-	{
+	function transferResources($userId, $resourcesArray){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		upDateResources($userId);
@@ -104,8 +100,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 
 	}
 
-	function addResource($userId,$resourceName,$resouceAmount)
-	{
+	function addResource($userId,$resourceName,$resouceAmount){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		#UPDATE `user_resources` SET`Wood`=Wood + 2000 WHERE user_id=12
@@ -115,8 +110,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 	}
 
-	function getBuildingFromDB($xCoord,$yCoord)
-	{
+	function getBuildingFromDB($xCoord,$yCoord){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
@@ -129,8 +123,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
 	}
 
-	function changeTileOwner($userId,$xCoord,$yCoord)
-	{
+	function changeTileOwner($userId,$xCoord,$yCoord){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("UPDATE `map` SET `id_owner`=%s WHERE x_coord = %s AND y_coord = %s",$userId,$xCoord,$yCoord);
@@ -138,8 +131,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 	}
 
-	function getTileMap($x,$y)
-  {
+	function getTileMap($x,$y){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
     $query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`,`building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
@@ -171,8 +163,21 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $jsonResponse;
   }
 
-	function getBuildingsToBuild()
-	{
+	function getMapRegion($userId,$xFrom,$xTo,$yFrom,$yTo){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT `x_coord`, `y_coord`, `id_owner`, `biome`, `building_id` FROM `map` WHERE x_coord >=%s AND x_coord <= %s AND y_coord >=%s AND y_coord <=%s AND id_owner = %s ",$xFrom,$xTo,$yFrom,$yTo,$userId);
+		$result = @$db_connect->query($queryStr);
+		$mapArray = array();
+		while($mapRow = $result->fetch_assoc()){
+			array_push($mapArray,$mapRow);
+		}
+		mysqli_close($db_connect);
+		return $mapArray;
+
+	}
+
+	function getBuildingsToBuild(){
 		$buildingsInfo = array();
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -218,8 +223,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 	}
 
-	function setTileBuilding($x,$y,$buildingTypeId)
-	{
+	function setTileBuilding($x,$y,$buildingTypeId){
 		$success;
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);

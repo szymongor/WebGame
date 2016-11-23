@@ -13,10 +13,20 @@
 		switch($method)
 		{
 			case 'GET':
-			$response = $_SESSION['Player']->getMap($_GET['x'],$_GET['y']);
-      //$response = getTileMap($_GET['x'],$_GET['y']);
-			echo($response);
-      break;
+			$request = explode('/', $_SERVER['REQUEST_URI'])[4];
+			switch($request){
+				case 'tile':
+					$response = $_SESSION['Player']->getMapTile($_GET['x'],$_GET['y']);
+					echo($response);
+		      break;
+				case 'region':
+					// eg. http://localhost/reg/api/map.php/region/?xFrom=0&xTo=7&yFrom=0&yTo=7
+					$response = $_SESSION['Player']->getMapRegion($_GET['xFrom'],$_GET['xTo'],$_GET['yFrom'],$_GET['yTo']);
+					echo($response);
+					break;
+			}
+			break;
+
     }
   }
 ?>

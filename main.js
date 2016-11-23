@@ -39,7 +39,7 @@ function showResources(){
 function getTile(x,y){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/reg/api/map.php?x='+x+'&y='+y,
+		url: 'http://localhost/reg/api/map.php/tile/?x='+x+'&y='+y,
 		success: function(data){
 				storeTiles($.parseJSON(data));
 		}
