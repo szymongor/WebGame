@@ -18,7 +18,7 @@
     }
 
     public function getMapTile($x,$y){
-      $map = getMapRegion($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
+      $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
       if(count($map) > 0 ){
         return json_encode(getTileMapFromDB($x,$y));
       }
@@ -31,7 +31,7 @@
 
     public function getMapRegion($xFrom, $xTo, $yFrom, $yTo){
       $mapView = array();
-      $ownedTiles = getMapRegion($this->playerId, $xFrom, $xTo, $yFrom, $yTo);
+      $ownedTiles = getMapRegionFromDB($this->playerId, $xFrom, $xTo, $yFrom, $yTo);
       for($i = $xFrom; $i <= $xTo ; $i++){
         $row = array();
         for($j = $yFrom; $j <= $yTo ; $j++){
@@ -42,26 +42,36 @@
       }
 
       foreach ($ownedTiles as $value) {
-        $mapView[$value['x_coord']][$value['y_coord']] = $value;
+        $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom] = $value;
       }
 
+
+
       foreach ($ownedTiles as $value) {
-        if($mapView[$value['x_coord']-1][$value['y_coord']]['biome'] == 'Fog')
-        $mapView[$value['x_coord']-1][$value['y_coord']] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']);
+        if($value['x_coord']-1>=$xFrom && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom]['biome'] == 'Fog')
+        $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']);
 
-        if($mapView[$value['x_coord']][$value['y_coord']-1]['biome'] == 'Fog')
-        $mapView[$value['x_coord']][$value['y_coord']-1] = getTileMapFromDB($value['x_coord'],$value['y_coord']-1);
+        if($value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog')
+        $mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord'],$value['y_coord']-1);
 
-        if($mapView[$value['x_coord']+1][$value['y_coord']]['biome'] == 'Fog')
-        $mapView[$value['x_coord']+1][$value['y_coord']] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']);
+        if($value['x_coord']+1<=$xTo && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom]['biome'] == 'Fog')
+        $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']);
 
-        if($mapView[$value['x_coord']][$value['y_coord']+1]['biome'] == 'Fog')
-        $mapView[$value['x_coord']][$value['y_coord']+1] = getTileMapFromDB($value['x_coord'],$value['y_coord']+1);
+        if($value['y_coord']+1<=$yTo && $mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog')
+        $mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord'],$value['y_coord']+1);
       }
 
       $response = json_encode($mapView);
       return $response;
     }
 
+    public function conquer($x, $y){
+      $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
+      if(count($map) > 0){
+        changeTileOwner($this->playerId, $x, $y);
+      }
+       return $this->getMapRegion($x - 1 , $x + 1 , $y - 1, $y + 1);
+
+    }
   }
 ?>

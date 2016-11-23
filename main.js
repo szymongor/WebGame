@@ -195,6 +195,10 @@ function setDetailsMap(){
 		mapTileStr += "Owner: "+selectedTileObject.id_owner;
 	}
 
+	if(selectedTileObject.biome == "Fog"){
+		mapTileStr = "Location is too far."
+	}
+
 	$('#detailsView').empty();
 	$('#detailsView').append(mapTileStr);
 }
@@ -225,14 +229,20 @@ function conquer(){
 			type: 'GET',
 			url: 'http://localhost/reg/api/conquer.php?x='+selectedTile[1]+'&y='+selectedTile[0],
 			success: function(data){
-				var newTile = $.parseJSON(data);
+				var newRegionTiles = $.parseJSON(data);
 
+				$.each(newRegionTiles, function(i,row){
+					$.each(row, function(j,value){
+						tiles = $.grep(tiles, function(e) {
+		  				return (e.x_coord != value.x_coord || e.y_coord != value.y_coord);
 
-				tiles = $.grep(tiles, function(e) {
-  				return (e.x_coord != newTile.x_coord || e.y_coord != newTile.y_coord);
+						});
+						storeTiles(value);
+					});
+
 				});
 
-				storeTiles(newTile);
+
 			}
 		});
 	}
