@@ -131,7 +131,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 	}
 
-	function getTileMap($x,$y){
+	function getTileMapFromDB($x,$y){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
     $query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`,`building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
@@ -150,17 +150,17 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
     }
     else
     {
-			$jsonResponse = json_encode($row);
-      return $jsonResponse;
+			//$jsonResponse = json_encode($row);
+      return $row;
     }
 		$query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`, `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
     $x,$y);
     $result = @$db_connect->query($query);
     $row = $result->fetch_assoc();
 
-		$jsonResponse = json_encode($row);
+		//$jsonResponse = json_encode($row);
 		mysqli_close($db_connect);
-		return $jsonResponse;
+		return $row;
   }
 
 	function getMapRegion($userId,$xFrom,$xTo,$yFrom,$yTo){

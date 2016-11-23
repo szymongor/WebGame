@@ -16,6 +16,7 @@
 			$request = explode('/', $_SERVER['REQUEST_URI'])[4];
 			switch($request){
 				case 'tile':
+					// eg. http://localhost/reg/api/map.php/tile/?x=0&y=7
 					$response = $_SESSION['Player']->getMapTile($_GET['x'],$_GET['y']);
 					echo($response);
 		      break;

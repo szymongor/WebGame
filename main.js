@@ -46,6 +46,22 @@ function getTile(x,y){
 	});
 };
 
+function getRegion(xFrom,xTo,yFrom,yTo){
+	tiles =[];
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/reg/api/map.php/region/?xFrom='+xFrom+'&xTo='+xTo+'&yFrom='+yFrom+'&yTo='+yTo,
+		success: function(data){
+				var region = $.parseJSON(data);
+				$.each(region, function(i,row){
+					$.each(row, function(j,value){
+						storeTiles(value);
+					});
+				});
+		}
+	});
+}
+
 function getBuildingDetails(x,y,f,element){
 	$.ajax({
 		type: 'GET',
@@ -108,6 +124,7 @@ function storeTiles(tileJSON){
 	var y_coord = tileJSON['y_coord']-mapXYCorner[1];
 	var element = "tile" +y_coord+"x" +x_coord;
 	var biome = tileJSON['biome'];
+	$('#'+element).empty();
 	$('#'+element).prepend('<img id="theImg" src="img/Biomes/'+biome+'.png" height="100%" width="100%"/>');
 	if(tileJSON['id_owner']==idPlayer){
 		$('#'+element).addClass("ownedTile");
@@ -133,17 +150,20 @@ function showMapGrid(){
 	tiles = [];
 	var div_content ="";
 	$('#gameMap').empty();
+	getRegion(0,7,0,7);
+
 	for (i=0; i < 8; i++){
 		for(j=0; j < 8 ; j++){
 			var element = "tile" +i+"x" +j;
 			//console.log(tile['biome']);
-			getTile(mapXYCorner[0]+i,mapXYCorner[1]+j);
+			//getTile(mapXYCorner[0]+i,mapXYCorner[1]+j);
 			$('#gameMap').append('<div class="mapTile" onclick="setTile('+i+','+j+')" ondblclick="setTile('+i+','+j+'), setDetailsBuilding()" id="'+element+'">'+'</div>');
 			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
 		}
 		$('#gameMap').append('<div style="clear:both;"></div>');
 		//div_content = div_content + '<div style="clear:both;"></div>';
 	}
+
 }
 
 function setTile(x,y){

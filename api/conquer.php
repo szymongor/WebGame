@@ -1,5 +1,5 @@
 <?php
-
+	//require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Player.php";
 	session_start();
 
 	if (!isset($_SESSION['logged_on']))
