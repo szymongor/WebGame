@@ -13,7 +13,7 @@
 			switch($method)
 			{
 				case 'GET':
-				//eg. 
+				//eg. http://localhost/reg/api/conquer.php?x=4&y=4
         $response = $_SESSION['Player']->conquer($_GET['x'], $_GET['y']);
 				echo($response);
         break;

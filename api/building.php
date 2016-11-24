@@ -1,5 +1,6 @@
 <?php
-
+	//require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Player.php";
+	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
 	session_start();
 
 		if (!isset($_SESSION['logged_on']))
@@ -9,7 +10,6 @@
 		}
 		else
 		{
-			require "dbInterface.php";
       $method = $_SERVER['REQUEST_METHOD'];
 					switch($method)
 					{
@@ -19,49 +19,16 @@
 							switch($request)
 							{
 								case "toBuild":
-									getBuildingsToBuild();
+									//getBuildingsToBuild();
+									$response = Building::getBuildingListToBuild();
+									echo($response);
 									break;
 								case "build":
-									buildBuilding();
+									//buildBuilding();
 									break;
-								case "map":
-									getBuilding();
-								 break;
 							}
 
               break;
           }
     }
-
-		function getBuilding()
-		{
-			$building = getBuildingFromDB($_GET['xCoord'],$_GET['yCoord']);
-			$building_json = json_encode($building);
-			echo($building_json);
-		}
-
-		function buildBuilding()
-		{
-			$tile = json_decode(getTileMap($_GET['xCoord'],$_GET['yCoord']),true);
-			$success;
-			//echo($tile['id_owner']." : ". $_SESSION['id']."<br/>");
-			if($tile['id_owner']==$_SESSION['id'])
-			{
-				//echo("Equals<br/>");
-				$success = setTileBuilding($_GET['xCoord'],$_GET['yCoord'],$_GET['buildingType']);
-			}
-			else
-			{
-				$success = false;
-			}
-
-			if($success)
-			{
-				getBuilding();
-			}
-			else
-			{
-				echo("Failed!");
-			}
-		}
 ?>

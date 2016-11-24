@@ -65,7 +65,7 @@ function getRegion(xFrom,xTo,yFrom,yTo){
 function getBuildingDetails(x,y,f,element){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/reg/api/building.php/map/?xCoord='+x+'&yCoord='+y,
+		url: 'http://localhost/reg/api/map.php/building/?x='+x+'&y='+y,
 		success: function(data){
 				f($.parseJSON(data),element);
 		}
