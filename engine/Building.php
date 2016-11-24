@@ -1,5 +1,5 @@
 <?php
-  require $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
 
   class Building
   {
@@ -10,10 +10,22 @@
     }
 
     public static function getBuildingListToBuild(){
-      return getBuildingsToBuild();
+      $files = glob($_SERVER['DOCUMENT_ROOT'].'/Reg/engine/Buildings/*.{json}', GLOB_BRACE);
+      $buildingsList = array();
+      foreach($files as $file) {
+        $buildingFile = fopen($file, "r");
+        $buildingInfo = json_decode(fread($buildingFile,filesize($file)),true);
+        fclose($buildingFile);
+        $infoToBuild = array();
+        $infoToBuild['Type']=$buildingInfo['Type'];
+        $infoToBuild['Cost']=$buildingInfo['Cost'];
+        array_push($buildingsList,$infoToBuild);
+      }
+      $response = json_encode($buildingsList);
+      return $response;
     }
 
+
+
   }
-
-
 ?>

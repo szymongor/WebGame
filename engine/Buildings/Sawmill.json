@@ -1,0 +1,8 @@
+{
+	"Type": "Sawmill",
+	"Cost": {
+		"Wood": "50",
+		"Stone": "20",
+		"Iron": "20"
+	}
+}

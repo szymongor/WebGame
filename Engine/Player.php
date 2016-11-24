@@ -1,5 +1,5 @@
 <?php
-  require $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
 
   class Player
   {

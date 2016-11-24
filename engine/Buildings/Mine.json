@@ -1,0 +1,8 @@
+{
+	"Type": "Mine",
+	"Cost": {
+		"Wood": "100",
+		"Stone": "20",
+		"Iron": "50"
+	}
+}
