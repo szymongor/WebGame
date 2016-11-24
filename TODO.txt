@@ -3,6 +3,10 @@ CSS:
 
 API:
 	validate get/post variables
+	building.php
+	{
+
+	}
 
 	map.php:
 	{
@@ -16,8 +20,9 @@ API:
 	}
 
 JS:
+	Sort list of buildings to build. (desc. by sum of resources)
 	file with links to api.
-	getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
+	DONE: getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
 	DONE: Store conquered tile (to show it details without refreshing board)
 	DONE: class to store tiles (storeTile method)
 	DONE: getTile - fix to async.

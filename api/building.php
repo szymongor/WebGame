@@ -17,13 +17,15 @@
 							$request = explode('/', $_SERVER['REQUEST_URI'])[4];
 							switch($request)
 							{
-								case "toBuild":
-									//eg. http://localhost/reg/api/building.php/toBuild
+								case "buildingList":
+									//eg. http://localhost/reg/api/building.php/buildingList
 									$response = Building::getBuildingListToBuild();
 									echo($response);
 									break;
 								case "build":
-									//buildBuilding();
+									//eg. http://localhost/reg/api/building.php/build/?x=2&y=4&BuildingType=House
+									$response = json_encode($_SESSION['Player']->buildBuilding($_GET['x'], $_GET['y'],$_GET['BuildingType']));
+									echo($response);
 									break;
 							}
 

@@ -96,7 +96,7 @@ function showBuildingsToBuild(){
 function getBuildingsToBuild(){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/reg/api/building.php/toBuild',
+		url: 'http://localhost/reg/api/building.php/buildingList',
 		success: function(data){
 				var buildingList = $.parseJSON(data);
 				$.each(buildingList, function(i,value){
@@ -107,7 +107,7 @@ function getBuildingsToBuild(){
 }
 
 function appendBuildingToBuild(building){
-	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build("+building.id+") id='"+building.Type+"ToBuild' ></div>");
+	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build('"+building.Type+"') id='"+building.Type+"ToBuild' ></div>");
 	$('#'+building.Type+"ToBuild").append(building.Type + "<br/>");
 	$('#'+building.Type+"ToBuild").append('<img src="img/Buildings/'+building.Type+'.png" height="70px" width="70px "/>');
 	$('#'+building.Type+"ToBuild").append("<div class='gameDetailsBuildingToBuildResources' id='"+building.Type+"ToBuildCost' ></div>");
@@ -138,6 +138,14 @@ function storeTiles(tileJSON){
 		getBuildingDetails(x_coord,y_coord,showBuilding,element);
 	}
 
+}
+
+function updateTile(tileJSON){
+	tiles = $.grep(tiles, function(e) {
+		return (e.x_coord != tileJSON.x_coord || e.y_coord != tileJSON.y_coord);
+
+	});
+	storeTiles(tileJSON);
 }
 
 function showBuilding(buildingJSON, element){
@@ -233,11 +241,7 @@ function conquer(){
 
 				$.each(newRegionTiles, function(i,row){
 					$.each(row, function(j,value){
-						tiles = $.grep(tiles, function(e) {
-		  				return (e.x_coord != value.x_coord || e.y_coord != value.y_coord);
-
-						});
-						storeTiles(value);
+						updateTile(value);
 					});
 
 				});
@@ -248,6 +252,19 @@ function conquer(){
 	}
 }
 
-function build(buildingTypeId){
-	console.log(selectedTile[0]+", "+ selectedTile[1] +", "+ buildingTypeId);
+function build(buildingType){
+	var y = mapXYCorner[0]+selectedTile[0];
+	var x = mapXYCorner[1]+selectedTile[1];
+	console.log(x+","+y);
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/reg/api/building.php/build/?x='+x+'&y='+y+'&BuildingType='+buildingType,
+		success: function(data){
+				var result = $.parseJSON(data);
+				console.log(result);
+				if(result.hasOwnProperty('x_coord')){
+					updateTile(result);
+				}
+		}
+	});
 }

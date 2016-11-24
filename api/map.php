@@ -18,7 +18,7 @@
 				case 'tile':
 					// eg. http://localhost/reg/api/map.php/tile/?x=0&y=7
 					$response = $_SESSION['Player']->getMapTile($_GET['x'],$_GET['y']);
-					echo($response);
+					echo(json_encode($response));
 		      break;
 				case 'building':
 					//eg. http://localhost/reg/api/map.php/building/?x=0&y=7

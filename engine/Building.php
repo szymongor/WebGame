@@ -25,7 +25,12 @@
       return $response;
     }
 
-
-
+    public static function getBuildingInfo($buildingType){
+      $filePath = $_SERVER['DOCUMENT_ROOT'].'/Reg/engine/Buildings/'.$buildingType.'.json';
+      $file = fopen($filePath, "r");
+      $buildingInfo = json_decode(fread($file,filesize($filePath)),true);
+      fclose($file);
+      return $buildingInfo;
+    }
   }
 ?>

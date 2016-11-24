@@ -114,8 +114,8 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
-		$queryStr = sprintf("SELECT b.`building_id`,t.`type` FROM `buildings` as b JOIN gs_buildingstypes as t
-			WHERE b.type_id = t.id AND b.building_id = (SELECT `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s)",
+		$queryStr = sprintf("SELECT `building_id`, `type` FROM `buildings`
+		WHERE building_id = (SELECT `building_id` FROM `map` WHERE x_coord= %s AND y_coord = %s)",
 		$xCoord,$yCoord);
 		$result = @$db_connect->query($queryStr);
 		$row = $result->fetch_assoc();
@@ -223,14 +223,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 	}
 
-	function setTileBuilding($x,$y,$buildingTypeId){
+	function setTileBuilding($x,$y,$buildingType){
 		$success;
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$tile = json_decode(getTileMap($x,$y),true);
+		$tile = getTileMapFromDB($x,$y);
 		if($tile["building_id"]==NULL)
 		{
-			$queryStr = sprintf("INSERT INTO `buildings`(`type_id`) VALUES (%s);",$buildingTypeId);
+			$queryStr = sprintf("INSERT INTO `buildings`(`type`) VALUES ('%s'); ",$buildingType);
 			$queryStr .= sprintf("SELECT LAST_INSERT_ID();");
 
 			$buildingId;
