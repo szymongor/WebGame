@@ -131,7 +131,13 @@
         return "Not enough resources!";
       }
 
-      transferResources($this->playerId, $buildingInfo['Cost']);
+      $cost = $buildingInfo['Cost'];
+
+      foreach ($cost as $key => $value) {
+        $cost[$key] *= -1;
+      }
+
+      transferResources($this->playerId, $cost);
       setTileBuilding($x,$y,$buildingType);
 
       return $this->getMapTile($x,$y);

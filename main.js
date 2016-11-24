@@ -255,13 +255,11 @@ function conquer(){
 function build(buildingType){
 	var y = mapXYCorner[0]+selectedTile[0];
 	var x = mapXYCorner[1]+selectedTile[1];
-	console.log(x+","+y);
 	$.ajax({
 		type: 'GET',
 		url: 'http://localhost/reg/api/building.php/build/?x='+x+'&y='+y+'&BuildingType='+buildingType,
 		success: function(data){
 				var result = $.parseJSON(data);
-				console.log(result);
 				if(result.hasOwnProperty('x_coord')){
 					updateTile(result);
 				}
