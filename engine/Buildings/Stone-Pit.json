@@ -1,14 +1,14 @@
 {
-	"Type": "Mine",
+	"Type": "Stone-Pit",
 	"Cost": {
 		"Wood": "100",
-		"Stone": "20",
+		"Stone": "30",
 		"Iron": "50"
 	},
 
 	"Income": [{
 		"Resources": {
-			"Iron": 3
+			"Stone": 3
 		},
 		"Source": ["Mountains"]
 	}]

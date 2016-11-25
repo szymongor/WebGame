@@ -27,6 +27,13 @@
       return true;
     }
 
+    public function updatePlayerResourcesIncome(){
+      $userBuildings = getPlayersBuildings();
+      foreach ($userBuildings as $key => $value) {
+        # code...
+      }
+    }
+
     public function getMapTile($x,$y){
       $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
       if(count($map) > 0 ){
@@ -143,5 +150,11 @@
       return $this->getMapTile($x,$y);
     }
 
+    public function getPlayersBuildings(){
+      $userBuildings = getPlayersBuildingsFromDB($this->playerId);
+      return $userBuildings;
+    }
+
   }
+
 ?>

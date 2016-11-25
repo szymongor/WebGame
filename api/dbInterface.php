@@ -264,4 +264,19 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $success;
 	}
 
+	function getPlayersBuildingsFromDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+ 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+
+ 		$queryStr = sprintf("SELECT B.`building_id`, B.`type`, M.`x_coord`, M.`y_coord` FROM `buildings` as B JOIN `map` AS M
+			WHERE B.building_id = M.building_id AND M.id_owner = %s",
+ 		$userId);
+ 		$result = @$db_connect->query($queryStr);
+		$userBuildings = array();
+		while($row = $result->fetch_assoc()){
+			$userBuildings[]= $row;
+		}
+ 		mysqli_close($db_connect);
+ 		return $userBuildings;
+	}
 ?>

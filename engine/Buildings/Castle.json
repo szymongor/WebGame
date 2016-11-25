@@ -4,5 +4,15 @@
 		"Wood": "400",
 		"Stone": "600",
 		"Iron": "200"
-	}
+	},
+
+	"Income": [{
+		"Resources": {
+			"Food": 3,
+			"Wood": 2,
+			"Stone": 2,
+			"Iron": 1
+		}
+	}]
+
 }
