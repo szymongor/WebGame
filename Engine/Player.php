@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
 
   class Player
   {
@@ -28,10 +29,21 @@
     }
 
     public function updatePlayerResourcesIncome(){
-      $userBuildings = getPlayersBuildings();
-      foreach ($userBuildings as $key => $value) {
-        # code...
+      $playersBuildings = $this->getPlayersBuildings();
+      $playersIncome = array();
+      foreach ($playersBuildings as $value) {
+        $playersBuilding = new Building($value['type']);
+        $buildingIncome = $playersBuilding->calculateIncome($value['x_coord'],$value['y_coord'],$this->playerId);
+        foreach ($buildingIncome as $key => $value) {
+          if(isset($playersIncome[$key])){
+            $playersIncome[$key] += $value;
+          }
+          else{
+            $playersIncome[$key] = $value;
+          }
+        }
       }
+      return $playersIncome;
     }
 
     public function getMapTile($x,$y){
@@ -156,5 +168,8 @@
     }
 
   }
+
+  //session_start();
+  //print_r($_SESSION['Player']->updatePlayerResourcesIncome());
 
 ?>

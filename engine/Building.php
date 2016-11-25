@@ -4,9 +4,9 @@
   class Building
   {
     private $buildingType;
-    private $buildingId;
+
     public function __construct($buildingType){
-      $this->$buildingType=$buildingType;
+      $this->buildingType=$buildingType;
     }
 
     public static function getBuildingListToBuild(){
@@ -32,5 +32,46 @@
       fclose($file);
       return $buildingInfo;
     }
+
+    public function calculateIncome($x,$y,$userId){
+      $buildingIncome = array();
+      $buildingInfo = Building::getBuildingInfo($this->buildingType);
+      $buildingRange = 1;
+      if(isset($buildingInfo['Range'])){
+        $buildingRange = $buildingInfo['Range'];
+      }
+
+      $surroundings = getMapRegionFromDB($userId,$x-$buildingRange,$x+$buildingRange,$y-$buildingRange,$y+$buildingRange);
+
+      if(isset($buildingInfo['Income'])){
+        foreach ($buildingInfo['Income'] as $income) {
+          foreach ($income['Resources'] as $resource => $amount){
+            if(isset($buildingIncome[$resource])){
+              $buildingIncome[$resource] += $amount;
+            }
+            else{
+              $buildingIncome[$resource] = $amount;
+            }
+
+          }
+          if(isset($income['Source'])){
+            $numberOfSources = 0;
+            foreach ($income['Source'] as $sourceBiome) {
+              foreach ($surroundings as $tile) {
+                if($tile['biome']==$sourceBiome){
+                  $numberOfSources++;
+                }
+              }
+            }
+            foreach ($buildingIncome as $key => $value) {
+              $buildingIncome[$key] = $value * $numberOfSources;
+            }
+          }
+        }
+      }
+      return $buildingIncome;
+    }
   }
+
+  //print_r(Building::calculateIncome(2,4,12));
 ?>
