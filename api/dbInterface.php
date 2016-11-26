@@ -66,6 +66,18 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 	}
 
+	function setPlayersIncomeDB($userId, $income){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+
+		foreach ($income as $resourceName => $value) {
+			$queryStr = sprintf("UPDATE `user_resources_income` SET `%s_income`= %s WHERE user_id = %s",
+			$resourceName,$value,$userId);
+			@$db_connect->query($queryStr);
+		}
+		mysqli_close($db_connect);
+	}
+
 	# $resourcesArray example
 	#$res = [
 	#	"Wood" => -5000,

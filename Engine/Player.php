@@ -28,7 +28,7 @@
       return true;
     }
 
-    public function updatePlayerResourcesIncome(){
+    public function getPlayerResourcesIncome(){
       $playersBuildings = $this->getPlayersBuildings();
       $playersIncome = array();
       foreach ($playersBuildings as $value) {
@@ -43,7 +43,14 @@
           }
         }
       }
+
+
       return $playersIncome;
+    }
+
+    public function updatePlayerResourcesIncome(){
+      $playersIncome = $this->getPlayerResourcesIncome();
+      setPlayersIncomeDB($this->playerId,$playersIncome);
     }
 
     public function getMapTile($x,$y){
@@ -158,7 +165,7 @@
 
       transferResources($this->playerId, $cost);
       setTileBuilding($x,$y,$buildingType);
-
+      $this->updatePlayerResourcesIncome();
       return $this->getMapTile($x,$y);
     }
 
