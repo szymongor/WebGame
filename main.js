@@ -1,40 +1,26 @@
+var mv = new MapView(8,8,4,4,12);
+var apiClient = new ApiClient('http://localhost');
+var resourcesView = new ResourcesView();
 var selectedTile = null;
 var tiles = [];
 var mapXYCorner = [0,0];
-var idPlayer;
+var idPlayer = apiClient.getPlayerId();
 
 $( document ).ready(function(){
-	getPlayerId();
 	showResources();
-	showMapGrid();
+	showMap();
 });
 
-function getPlayerId(){
-	$.ajax({
-		type: 'GET',
-		url: 'http://localhost/reg/api/playerId.php',
-		success: function(data){
-				idPlayer = ($.parseJSON(data))['id'];
-		}
-	});
-};
+function showMap(){
+	mv.showMapGrid();
+	apiClient.getRegion(0,7,0,7,storeTiles);
+}
 
 function showResources(){
-	var $resourcesBar = $('#resourcesBar');
-	$.ajax({
-		type: 'GET',
-		url: 'http://localhost/reg/api/resources.php',
-		success: function(data){
-			resources = $.parseJSON(data);
-			resources = $.map(resources, function(key,val) { return [[val,key]] });
-			$resourcesBar.empty();
-			$.each(resources,function(id,resource){
-				//console.log('<div class="gameResource">'+resource[0]+':'+resource[1]+'</div>');
-				$resourcesBar.append('<div class="gameResource">'+resource[0]+':'+resource[1]+'</div>');
-			});
-		}
-	});
-};
+	apiClient.getPlayerResources(resourcesView.showResources);
+}
+
+/////////
 
 function getTile(x,y){
 	$.ajax({
@@ -151,27 +137,6 @@ function updateTile(tileJSON){
 function showBuilding(buildingJSON, element){
 	var type = buildingJSON['type'];
 	$('#'+element).append('<img id="theImgBuilding'+element+'" src="img/Buildings/'+type+'.png" height="100%" width="100%"/>');
-}
-
-function showMapGrid(){
-	selectedTile = null;
-	tiles = [];
-	var div_content ="";
-	$('#gameMap').empty();
-	getRegion(0,7,0,7);
-
-	for (i=0; i < 8; i++){
-		for(j=0; j < 8 ; j++){
-			var element = "tile" +i+"x" +j;
-			//console.log(tile['biome']);
-			//getTile(mapXYCorner[0]+i,mapXYCorner[1]+j);
-			$('#gameMap').append('<div class="mapTile" onclick="setTile('+i+','+j+')" ondblclick="setTile('+i+','+j+'), setDetailsBuilding()" id="'+element+'">'+'</div>');
-			//console.log('<div class="mapTile" onclick="setTile('+j+','+i+')" id="'+element+'">'+'</div>');
-		}
-		$('#gameMap').append('<div style="clear:both;"></div>');
-		//div_content = div_content + '<div style="clear:both;"></div>';
-	}
-
 }
 
 function setTile(x,y){

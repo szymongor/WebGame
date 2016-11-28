@@ -18,6 +18,9 @@
 	<title>Game</title>
 	<link  rel="stylesheet" href="style.css" type="text/css"/>
 	<script src="jquery\jquery-3.1.1.min.js"></script>
+	<script src="JSClasses\MapView.js"></script>
+	<script src="JSClasses\ResourcesView.js"></script>
+	<script src="JSClasses\ApiClient.js"></script>
 	<script src="main.js"></script>
 
 </head>
