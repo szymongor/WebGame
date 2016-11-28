@@ -18,7 +18,7 @@ function MapView(width, height, xCoord, yCoord, playerId){
   	this.tiles = [];
   	var div_content ="";
   	$('#gameMap').empty();
-  	getRegion(0,7,0,7);
+  	//getRegion(0,7,0,7);
 
   	for (i=0; i < this.width ; i++){
   		for(j=0; j < this.height ; j++){
@@ -32,5 +32,9 @@ function MapView(width, height, xCoord, yCoord, playerId){
   		//div_content = div_content + '<div style="clear:both;"></div>';
   	}
   };
+
+  this.showMapTile = function(){
+    
+  }
 
 }

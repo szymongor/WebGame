@@ -20,6 +20,11 @@ function showResources(){
 	apiClient.getPlayerResources(resourcesView.showResources);
 }
 
+function build(buildingType){
+	var y = mapXYCorner[0]+selectedTile[0];
+	var x = mapXYCorner[1]+selectedTile[1];
+	apiClient.build(x,y,buildingType,updateTile);
+}
 /////////
 
 function getTile(x,y){
@@ -215,19 +220,4 @@ function conquer(){
 			}
 		});
 	}
-}
-
-function build(buildingType){
-	var y = mapXYCorner[0]+selectedTile[0];
-	var x = mapXYCorner[1]+selectedTile[1];
-	$.ajax({
-		type: 'GET',
-		url: 'http://localhost/reg/api/building.php/build/?x='+x+'&y='+y+'&BuildingType='+buildingType,
-		success: function(data){
-				var result = $.parseJSON(data);
-				if(result.hasOwnProperty('x_coord')){
-					updateTile(result);
-				}
-		}
-	});
 }
