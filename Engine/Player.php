@@ -159,7 +159,7 @@
 
     public function getBuilding($x, $y){
       $tile = $this->getMapTile($x,$y);
-      if($tile["building_id"]!=NULL){
+      if($tile["building"]!=NULL){
         return getBuildingFromDB($x, $y);
       }
       return "null";
@@ -173,7 +173,7 @@
       if($tile['id_owner'] != $this->playerId ){
         return "Tile not owned!";
       }
-      if($tile['building_id'] != NULL){
+      if($tile['building'] != NULL){
         return "Tile already occupied!";
       }
       if(!$this->checkPlayerResourcesState($buildingInfo['Cost'])){

@@ -5,6 +5,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.selectedTile = null;
   this.tiles = [];
   this.apiClient = apiClient;
+  var mv = this;
 
   this.loguj = function(){
     console.log(this.mapXYCorner);
@@ -71,11 +72,13 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   }
 
   this.updateTile = function(tileJSON){
-    this.tiles = $.grep(tiles, function(e) {
+
+    console.log(tileJSON);
+    this.tiles = $.grep(this.tiles, function(e) {
   		return (e.x_coord != tileJSON.x_coord || e.y_coord != tileJSON.y_coord);
   	});
-    console.log(tileJSON);
-  	this.showMapTile(tileJSON);
+
+  	mv.showMapTile(tileJSON);
   }
 
   this.showMapTile = function(tileJSON){
