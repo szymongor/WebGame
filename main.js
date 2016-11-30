@@ -1,7 +1,7 @@
-var mv = new MapView(8,8,4,4,12);
 var apiClient = new ApiClient('http://localhost');
+var mv = new MapView(9,8,4,4,12,apiClient);
 var resourcesView = new ResourcesView();
-var selectedTile = null;
+//var selectedTile = null;
 var tiles = [];
 var mapXYCorner = [0,0];
 var idPlayer = apiClient.getPlayerId();
@@ -21,12 +21,20 @@ function showResources(){
 }
 
 function build(buildingType){
-	var y = mapXYCorner[0]+selectedTile[0];
-	var x = mapXYCorner[1]+selectedTile[1];
-	apiClient.build(x,y,buildingType,updateTile);
+	console.log(buildingType);
+	var coords = mv.getSelectedTileCoords();
+	apiClient.build(coords[1],coords[0],buildingType,mv.updateTile);
+}
+
+function setTile(x,y){
+	mv.selectTile(x,y);
+}
+
+function storeTiles(tileJSON){
+	mv.showMapTile(tileJSON);
 }
 /////////
-
+/*
 function getTile(x,y){
 	$.ajax({
 		type: 'GET',
@@ -62,26 +70,28 @@ function getBuildingDetails(x,y,f,element){
 		}
 	});
 }
+*/
 
-function showBuildingDetails(building){
-	if(building==null){
+function showBuildingDetails(tileInfo){
+	if(tileInfo['building']==null){
 			$('#detailsView').empty();
 			$('#detailsView').append("No building here.");
+			selectedTile = mv.getSelectedTile();
 			var element = "tile" +selectedTile[0]+"x" +selectedTile[1];
 			if($('#'+element).hasClass("ownedTile")){
 				showBuildingsToBuild();
 			}
-
 		return;
 	}
-	var buildingStr = "Type: "+building.type;
+	var buildingStr = "Type: "+tileInfo.building.type;
 	$('#detailsView').empty();
 	$('#detailsView').append(buildingStr);
 }
 
 function showBuildingsToBuild(){
 	$('#detailsView').append("<div class='gameDetailsList' id='buildingsToBuildList'></div>");
-	getBuildingsToBuild();
+	//getBuildingsToBuild();
+	apiClient.getBuildingsToBuild(appendBuildingToBuild);
 }
 
 function getBuildingsToBuild(){
@@ -109,6 +119,7 @@ function appendBuildingToBuild(building){
 
 }
 
+/*
 function storeTiles(tileJSON){
 	tiles.push(tileJSON);
 	var x_coord = tileJSON['x_coord']-mapXYCorner[0];
@@ -130,7 +141,11 @@ function storeTiles(tileJSON){
 	}
 
 }
+*/
 
+
+
+/*
 function updateTile(tileJSON){
 	tiles = $.grep(tiles, function(e) {
 		return (e.x_coord != tileJSON.x_coord || e.y_coord != tileJSON.y_coord);
@@ -138,34 +153,21 @@ function updateTile(tileJSON){
 	});
 	storeTiles(tileJSON);
 }
-
+/*
 function showBuilding(buildingJSON, element){
 	var type = buildingJSON['type'];
 	$('#'+element).append('<img id="theImgBuilding'+element+'" src="img/Buildings/'+type+'.png" height="100%" width="100%"/>');
 }
+*/
 
-function setTile(x,y){
-	if(selectedTile != null){
-		var element = "tile" +selectedTile[0]+ "x"+selectedTile[1];
-		$('#'+element).toggleClass("selectedTile");
-	}
-	var coords = [x,y];
-	var element = "tile" +x+ "x"+y;
-	$('#'+element).toggleClass("selectedTile");
-	selectedTile = coords;
-	setDetailsMap();
-
-}
 
 function setDetailsMap(){
 	$('#detailsMap').addClass("gameDetailsOptionSelected");
 	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
-	if(selectedTile == null){
+	if(mv.getSelectedTile() == null){
 		return;
 	}
-	var selectedTileObject = $.grep(tiles, function(e){ return (e.x_coord == selectedTile[1]+mapXYCorner[1] && e.y_coord == selectedTile[0]+mapXYCorner[0]); })[0];
-
-
+	var selectedTileObject = mv.getSelectedTileObject();
 	var mapTileStr = "Biome: "+selectedTileObject.biome;
 
 	if(selectedTileObject.id_owner != null){
@@ -184,24 +186,17 @@ function setDetailsMap(){
 function setDetailsBuilding(){
 	$('#detailsBuilding').addClass("gameDetailsOptionSelected");
 	$('#detailsMap').removeClass("gameDetailsOptionSelected");
-	if(selectedTile == null){
+	if(mv.getSelectedTile() == null){
 		return;
 	}
-
-	getBuildingDetails(selectedTile[1]+mapXYCorner[1],selectedTile[0]+mapXYCorner[0],showBuildingDetails);
-
-}
-
-function selectedTiles(){
-	var selectedTiles = [];
-	var $items = $('.selectedTile');
-	$.each($items, function(i,value){
-		console.log(value.id);
-	});
+	var selectedCoord = mv.getSelectedTileCoords();
+	//apiClient.getBuildingDetails(selectedCoord[1],selectedCoord[0],showBuildingDetails);
+	showBuildingDetails(mv.getSelectedTileObject());
 
 }
 
 function conquer(){
+	selectedTile = mv.getSelectedTile();
 	if(selectedTile != null){
 		$.ajax({
 			type: 'GET',
@@ -211,7 +206,7 @@ function conquer(){
 
 				$.each(newRegionTiles, function(i,row){
 					$.each(row, function(j,value){
-						updateTile(value);
+						mv.updateTile(value);
 					});
 
 				});

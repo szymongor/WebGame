@@ -1,6 +1,5 @@
 function ResourcesView(){
 
-
   this.showResources = function(resources){
     var resourcesBar = $('#resourcesBar');
     resources = $.map(resources, function(key,val) { return [[val,key]] });

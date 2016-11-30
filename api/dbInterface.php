@@ -135,6 +135,19 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
 	}
 
+	function getBuildingByIDFromDB($idBuilding){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT `building_id`, `type` FROM `buildings`
+		WHERE building_id = %s",
+		$idBuilding);
+
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+		return $row;
+	}
+
 	function changeTileOwner($userId,$xCoord,$yCoord){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -158,11 +171,11 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 			$query = sprintf("INSERT INTO `map`(`x_coord`, `y_coord`, `biome`) VALUES (%s,%s,'%s')",
       $x,$y,$biome);
 			@$db_connect->query($query);
-      //echo($biome);
     }
     else
     {
 			//$jsonResponse = json_encode($row);
+			mysqli_close($db_connect);
       return $row;
     }
 		$query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`, `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
@@ -189,6 +202,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 
 	}
 
+/*
 	function getBuildingsToBuild(){
 		$buildingsInfo = array();
 		global $host, $db_user, $db_password, $db_name;
@@ -234,7 +248,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 
 		mysqli_close($db_connect);
 	}
-
+*/
 	function setTileBuilding($x,$y,$buildingType){
 		$success;
 		global $host, $db_user, $db_password, $db_name;

@@ -56,7 +56,17 @@
     public function getMapTile($x,$y){
       $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
       if(count($map) > 0 ){
-        return getTileMapFromDB($x,$y);
+        $tile = getTileMapFromDB($x,$y);
+
+        if($tile['building_id'] != NULL){
+          $tile['building'] = getBuildingByIDFromDB($tile['building_id']);
+        }
+        else{
+          $tile['building'] = NULL;
+        }
+        unset($tile['building_id']);
+
+        return $tile;
       }
       else{
         $fogTile = array('x_coord' => $x, 'y_coord' => $y, 'id_owner' => NULL, 'biome' => 'Fog', 'building_id' => NULL);
@@ -89,6 +99,7 @@
 
       foreach ($ownedTiles as $value) {
         $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom] = $value;
+
       }
 
 
@@ -121,8 +132,20 @@
 
       }
 
-      $response = json_encode($mapView);
-      return $response;
+      for($i = $xFrom ; $i < $xTo ; $i++){
+        for($j = $yFrom ; $j < $yTo ; $j++){
+          if($mapView[$i][$j]['building_id'] != NULL){
+            $mapView[$i][$j]['building'] = getBuildingByIDFromDB($mapView[$i][$j]['building_id']);
+          }
+          else{
+            $mapView[$i][$j]['building'] = NULL;
+          }
+          unset($mapView[$i][$j]['building_id']);
+        }
+      }
+
+      //$response = json_encode($mapView);
+      return $mapView;
     }
 
     public function conquer($x, $y){
@@ -137,7 +160,7 @@
     public function getBuilding($x, $y){
       $tile = $this->getMapTile($x,$y);
       if($tile["building_id"]!=NULL){
-        return json_encode(getBuildingFromDB($x, $y));
+        return getBuildingFromDB($x, $y);
       }
       return "null";
     }

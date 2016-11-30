@@ -50,12 +50,12 @@ function ApiClient(server){
   	});
   }
 
-  this.getBuildingDetails = function(x,y,method){
+  this.getBuildingDetails = function(x,y,method,element){
     $.ajax({
   		type: 'GET',
   		url: this.server+'/reg/api/map.php/building/?x='+x+'&y='+y,
   		success: function(data){
-  				method($.parseJSON(data));
+  				method($.parseJSON(data),element);
   		}
   	});
   }
