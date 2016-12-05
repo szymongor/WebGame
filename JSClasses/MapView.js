@@ -83,8 +83,8 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
 
   this.showMapTile = function(tileJSON){
     this.tiles.push(tileJSON);
-  	var x_coord = tileJSON['x_coord']-mapXYCorner[0];
-  	var y_coord = tileJSON['y_coord']-mapXYCorner[1];
+  	var x_coord = tileJSON['x_coord']-this.mapXYCorner[0];
+  	var y_coord = tileJSON['y_coord']-this.mapXYCorner[1];
   	var element = "tile" +y_coord+"x" +x_coord;
   	var biome = tileJSON['biome'];
   	$('#'+element).empty();
