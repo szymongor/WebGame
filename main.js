@@ -10,7 +10,6 @@ $( document ).ready(function(){
 
 function showMap(){
 	mv.showMapGrid();
-	apiClient.getRegion(0,7,0,7,storeTiles);
 }
 
 function showResources(){

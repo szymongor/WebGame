@@ -107,7 +107,10 @@
 					if($db_connect->query("INSERT INTO users VALUES (NULL, '$nick','$pass_hash','$email')"))
 					{
 						$_SESSION['successful_registration']=true;
+
 						header('Location: welcome.php');
+						$msg = "Gratulacje";
+						mail("gornioczek.szymon@gmaill.com","HelloWorld",$msg);
 					}
 					else
 					{
