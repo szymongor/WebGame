@@ -7,6 +7,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.apiClient = apiClient;
   var mv = this;
   var scale = 50;
+  var mousePosition = null;
 
   this.loguj = function(){
     console.log(this.mapXYCorner);
@@ -35,12 +36,50 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     return coords;
   }
 
-  this.selectTile = function(event){
+  this.mouseDown = function(event){
     canvas=document.getElementById("mapViewCanv");
     var rect = canvas.getBoundingClientRect();
     var x = Math.floor(event.clientX - rect.left);
     var y = Math.floor(event.clientY - rect.top);
-    console.log("x: " + x + " y: " + y);
+    var x = Math.floor(x/scale);
+    var y = Math.floor(y/scale);
+    mv.mousePosition = [x,y];
+  }
+
+  this.mouseUp = function(event){
+    canvas=document.getElementById("mapViewCanv");
+    var rect = canvas.getBoundingClientRect();
+    var x = Math.floor(event.clientX - rect.left);
+    var y = Math.floor(event.clientY - rect.top);
+    var x = Math.floor(x/scale);
+    var y = Math.floor(y/scale);
+    var selectedTileNow =  $.grep(mv.tiles, function(e) {
+      return (e.x_coord == x && e.y_coord == y);
+    });
+    if(mv.mousePosition[0] == x && mv.mousePosition[1] == y){
+      console.log("Select:");
+      console.log([x,y]);
+      if(mv.selectedTile != null){
+        if(mv.selectedTile[0].x_coord == x && mv.selectedTile[0].y_coord == y){
+          return;
+        }
+        mv.updateTile(mv.selectedTile);
+      }
+      var context=canvas.getContext('2d');
+      context.globalAlpha = 0.4;
+      context.fillStyle="#0000FF";
+      context.fillRect(x*scale,y*scale,scale,scale);
+      context.globalAlpha = 1;
+      mv.selectedTile = selectedTileNow;
+
+    }else{
+      console.log("Move:");
+      console.log([mv.mousePosition[0]-x,mv.mousePosition[1]-y]);
+    }
+  }
+
+  this.selectTile = function(event){
+
   }
 
   this.showMapGrid = function(){
@@ -51,20 +90,22 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var w = $('#gameMap').innerWidth();
   	$('#gameMap').empty();
     $('#gameMap').append('<canvas id="mapViewCanv" width="'+w+'" height="'+h+'" style="border:1px solid #000000;"></canvas>')
-    $('#mapViewCanv').mousedown('someFunction',this.selectTile);
+    $('#mapViewCanv').mousedown('function',this.mouseDown);
+    $('#mapViewCanv').mouseup('someFunction',this.mouseUp);
     apiClient.getRegion(this.mapXYCorner[0],this.mapXYCorner[0]+this.width-1,
       this.mapXYCorner[1],this.mapXYCorner[1]+ this.height-1,this.showMapTile);
   };
 
-  this.showBuilding = function(buildingJSON, element){
-
-  }
-
   this.updateTile = function(tileJSON){
+    mv.tiles = $.grep(mv.tiles, function(e) {
+  		return (e.x_coord != tileJSON.x_coord || e.y_coord != tileJSON.y_coord);
+  	});
+    mv.showMapTile(tileJSON[0]);
   }
 
   this.showMapTile = function(tileJSON){
-    //this.tiles.push(tileJSON);
+    mv.tiles.push(tileJSON);
+    //console.log(tileJSON);
     var canvas=document.getElementById("mapViewCanv");
     var context=canvas.getContext('2d');
   	var x_coord = tileJSON['x_coord']-mv.mapXYCorner[0];

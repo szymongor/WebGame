@@ -3,6 +3,9 @@ body
 	background-color: #303030;
 	color: #ffffff;
 	margin: 0 !important;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 #container
@@ -351,9 +354,6 @@ ol > li:first-child
 
 .mapTile
 {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	box-sizing: border-box;
   -moz-box-sizing: border-box;
