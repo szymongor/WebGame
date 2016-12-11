@@ -5,9 +5,11 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.selectedTile = null;
   this.tiles = [];
   this.apiClient = apiClient;
+  this.mapGridReady = 0;
   var mv = this;
   var scale = 50;
   var mousePosition = null;
+
 
   this.loguj = function(){
     console.log(this.mapXYCorner);
@@ -57,8 +59,6 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       return (e.x_coord == x && e.y_coord == y);
     });
     if(mv.mousePosition[0] == x && mv.mousePosition[1] == y){
-      console.log("Select:");
-      console.log([x,y]);
       if(mv.selectedTile != null){
         if(mv.selectedTile[0].x_coord == x && mv.selectedTile[0].y_coord == y){
           return;
@@ -83,6 +83,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   }
 
   this.showMapGrid = function(){
+    mv.ready = 0;
     this.selectedTile = null;
   	this.tiles = [];
   	var div_content ="";
@@ -103,14 +104,55 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     mv.showMapTile(tileJSON[0]);
   }
 
+  this.drawBorders = function(){
+
+    var canvas=document.getElementById("mapViewCanv");
+    var context=canvas.getContext('2d');
+    context.globalAlpha = 0.9;
+    context.fillStyle="#00FF00";
+
+    //LEFT
+    //context.fillRect(value.x_coord*scale,value.x_coord*scale,scale/10,scale);
+    //UP
+    //context.fillRect(value.x_coord*scale,value.x_coord*scale,scale,scale/10);
+    //DOWN
+    //context.fillRect(value.x_coord*scale,value.x_coord*scale+9*scale/10,scale,scale/10);
+    //RIGHT
+    //context.fillRect(value.x_coord*scale+value.x_coord*scale/10,3*scale,scale/10,scale);
+
+    $.each(this.tiles,function(i,value){
+
+      switch(i) {
+        case 1:
+            context.fillRect(value.x_coord*scale,value.y_coord*scale,scale/10,scale);
+            break;
+        case 2:
+            context.fillRect(value.x_coord*scale,value.y_coord*scale,scale,scale/10);
+            break;
+        case 3:
+            context.fillRect(value.x_coord*scale,value.y_coord*scale+9*scale/10,scale,scale/10);
+            break;
+        case 0:
+            context.fillRect(value.x_coord*scale+9*scale/10,value.y_coord*scale,scale/10,scale);
+            break;
+        default:
+      }
+      console.log(i%3);
+      //context.fillRect(mv.scale * value.x_coord, mv.scale * value.y_coord,mv.scale * value.x_coord,mv.scale * value.x_coord);
+      //console.log(value);
+    })
+  }
+
   this.showMapTile = function(tileJSON){
     mv.tiles.push(tileJSON);
+
     //console.log(tileJSON);
     var canvas=document.getElementById("mapViewCanv");
     var context=canvas.getContext('2d');
   	var x_coord = tileJSON['x_coord']-mv.mapXYCorner[0];
   	var y_coord = tileJSON['y_coord']-mv.mapXYCorner[1];
   	var biome = tileJSON['biome'];
+    //mv.tiles[x_coord][y_coord] = tileJSON;
 
     var imgBiome = new Image();
     imgBiome.onload = function() {
@@ -126,7 +168,12 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       }
       imgBuilding.src = "img/Buildings/"+buildingType+".png";
   	}
-
+    mv.mapGridReady+=1;
+    if(mv.mapGridReady==64){
+      setTimeout(function(){
+        mv.drawBorders();
+      }, 1);
+    }
   }
 
 }
