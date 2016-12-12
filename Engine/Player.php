@@ -132,8 +132,8 @@
 
       }
 
-      for($i = $xFrom ; $i < $xTo ; $i++){
-        for($j = $yFrom ; $j < $yTo ; $j++){
+      for($i = 0 ; $i < $xTo-$xFrom ; $i++){
+        for($j = 0 ; $j < $yTo-$yFrom ; $j++){
           if($mapView[$i][$j]['building_id'] != NULL){
             $mapView[$i][$j]['building'] = getBuildingByIDFromDB($mapView[$i][$j]['building_id']);
           }
