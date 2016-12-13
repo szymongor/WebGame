@@ -59,7 +59,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var selectedTileNow =  mv.tiles[x][y];
     if(mv.mousePosition[0] == x && mv.mousePosition[1] == y){
       if(mv.selectedTile != null){
-        if(mv.selectedTile.x_coord == x && mv.selectedTile.y_coord == y){
+        if(mv.selectedTile.x_coord - mv.mapXYCorner[0] == x && mv.selectedTile.y_coord - mv.mapXYCorner[1]  == y){
           return;
         }
         mv.updateTile(mv.selectedTile);
@@ -75,7 +75,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       var moveVector = [x-mv.mousePosition[0],y-mv.mousePosition[1]]
       var newMapCorener =  [mv.mapXYCorner[0] - moveVector[0],mv.mapXYCorner[1] - moveVector[1]];
       mv.mapXYCorner = newMapCorener
-      mv.showMapGrid();
+      mv.updateMapGrid();
       mv.drawBorders();
     }
   }
@@ -104,6 +104,21 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       this.mapXYCorner[1],this.mapXYCorner[1]+ this.height-1,this.showMapTile);
   };
 
+  this.updateMapGrid = function(){
+    mv.mapGridReady = 0;
+    this.selectedTile = null;
+  	this.tiles = [];
+    for(i = 0 ; i < mv.width ; i++ ){
+      var row = [];
+      for(j = 0 ; j < mv.height ; j++ ){
+        row.push([]);
+      }
+      mv.tiles.push(row);
+    }
+    apiClient.getRegion(this.mapXYCorner[0],this.mapXYCorner[0]+this.width-1,
+      this.mapXYCorner[1],this.mapXYCorner[1]+ this.height-1,this.showMapTile);
+  }
+
   this.updateTile = function(tileJSON){
     var x = tileJSON.x_coord - mv.mapXYCorner[0];
     var y = tileJSON.y_coord - mv.mapXYCorner[1];
@@ -128,7 +143,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.drawTileBorder = function(tile){
     var canvas=document.getElementById("mapViewCanv");
     var context=canvas.getContext('2d');
-    context.globalAlpha = 0.8;
+    context.globalAlpha = 1;
     context.fillStyle="#00FF00";
     var x = tile.x_coord - mv.mapXYCorner[0];
     var y = tile.y_coord - mv.mapXYCorner[1];
