@@ -19,6 +19,7 @@
 	<link  rel="stylesheet" href="style.css" type="text/css"/>
 	<script src="jquery\jquery-3.1.1.min.js"></script>
 	<script src="JSClasses\MapView0.js"></script>
+	<script src="JSClasses\DetailView.js"></script>
 	<script src="JSClasses\ResourcesView.js"></script>
 	<script src="JSClasses\ApiClient.js"></script>
 	<script src="main.js"></script>
@@ -58,13 +59,7 @@
 
 	</div>
 	<div id="gameDetails">
-		<div class="gameDetailsOptionsContainer">
-			<div class="gameDetailsOption" id="detailsMap" onclick="setDetailsMap()">Map</div>
-			<div class="gameDetailsOption" id="detailsBuilding" onclick="setDetailsBuilding()">Building</div>
-		</div>
-		<div class="gameDetailsView" id="detailsView">
 
-		</div>
 	</div>
 
 </div>
@@ -72,6 +67,15 @@
 <?php
 
 /*
+<div class="gameDetailsOptionsContainer">
+	<div class="gameDetailsOption" id="detailsMap" onclick="setDetailsMap()">Map</div>
+	<div class="gameDetailsOption" id="detailsBuilding" onclick="setDetailsBuilding()">Building</div>
+</div>
+<div class="gameDetailsView" id="detailsView">
+
+</div>
+========================================
+
 	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
 	echo "<p><b>Drewno</b>: ".$_SESSION['drewno'];
 	echo " | <b>Kamień</b>: ".$_SESSION['kamien'];

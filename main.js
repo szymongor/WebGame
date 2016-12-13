@@ -1,11 +1,13 @@
 var apiClient = new ApiClient('http://localhost');
 var mv = new MapView(16,16,5,5,12,apiClient);
+var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
 $( document ).ready(function(){
 	showResources();
 	showMap();
+	detailView.initDetailsView();
 });
 
 function showMap(){

@@ -80,6 +80,23 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     }
   }
 
+  this.dbclick = function(event){
+    canvas=document.getElementById("mapViewCanv");
+    var rect = canvas.getBoundingClientRect();
+    var x = Math.floor(event.clientX - rect.left);
+    var y = Math.floor(event.clientY - rect.top);
+    var x = Math.floor(x/scale);
+    var y = Math.floor(y/scale);
+
+    var event = new CustomEvent("name-of-event", { "detail": x+":"+y });
+    document.dispatchEvent(event);
+    /*
+    document.addEventListener("name-of-event", function(e) {
+      console.log(e.detail); // Prints selected x and y
+    });
+    */
+  }
+
   this.selectTile = function(event){}
 
   this.showMapGrid = function(){
@@ -97,9 +114,10 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var h = $('#gameMap').innerHeight();
     var w = $('#gameMap').innerWidth();
   	$('#gameMap').empty();
-    $('#gameMap').append('<canvas id="mapViewCanv" width="'+w+'" height="'+h+'" style="border:1px solid #000000;"></canvas>')
+    $('#gameMap').append('<canvas id="mapViewCanv" width="'+w+'" height="'+h+'" style="border:1px solid #000000;"></canvas>');
     $('#mapViewCanv').mousedown('function',this.mouseDown);
     $('#mapViewCanv').mouseup('someFunction',this.mouseUp);
+    $('#mapViewCanv').dblclick('someFunction',this.dbclick);
     apiClient.getRegion(this.mapXYCorner[0],this.mapXYCorner[0]+this.width-1,
       this.mapXYCorner[1],this.mapXYCorner[1]+ this.height-1,this.showMapTile);
   };
