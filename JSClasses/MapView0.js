@@ -9,7 +9,8 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.playerId = playerId;
   var mv = this;
   var scale = 25;
-  var mousePosition = null;
+  this.mousePosition = null;
+  this.mapCornerVec = null;
 
 
   this.loguj = function(){
@@ -46,6 +47,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var y = Math.floor(event.clientY - rect.top);
     var x = Math.floor(x/scale);
     var y = Math.floor(y/scale);
+    mv.mapCornerVec = mv.mapXYCorner;
     mv.mousePosition = [x,y];
   }
 
@@ -70,6 +72,8 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       context.fillRect(x*scale,y*scale,scale,scale);
       context.globalAlpha = 1;
       mv.selectedTile = selectedTileNow;
+      var event = new CustomEvent("tileSelect", { "detail": x+":"+y });
+      document.dispatchEvent(event);
 
     }else{
       var moveVector = [x-mv.mousePosition[0],y-mv.mousePosition[1]]
@@ -78,6 +82,8 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       mv.updateMapGrid();
       mv.drawBorders();
     }
+    mv.mousePosition = null;
+    mv.mapCornerVec = mv.mapXYCorner;
   }
 
   this.dbclick = function(event){
@@ -88,13 +94,31 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var x = Math.floor(x/scale);
     var y = Math.floor(y/scale);
 
-    var event = new CustomEvent("name-of-event", { "detail": x+":"+y });
-    document.dispatchEvent(event);
+
     /*
     document.addEventListener("name-of-event", function(e) {
       console.log(e.detail); // Prints selected x and y
     });
     */
+  }
+
+  this.mouseMove = function(event){
+    if(mv.mousePosition == null){
+      return;
+    }
+    canvas=document.getElementById("mapViewCanv");
+    var rect = canvas.getBoundingClientRect();
+    var x = Math.floor(event.clientX - rect.left);
+    var y = Math.floor(event.clientY - rect.top);
+    var x = Math.floor(x/scale);
+    var y = Math.floor(y/scale);
+    var moveVector = [x-mv.mousePosition[0], y-mv.mousePosition[1]];
+    var newMapCorener =  [mv.mapCornerVec[0] - moveVector[0], mv.mapCornerVec[1] - moveVector[1]];
+    console.log(newMapCorener);
+    if(newMapCorener[0] != mv.mapXYCorner[0] || newMapCorener[1] != mv.mapXYCorner[1]){
+      mv.mapXYCorner = newMapCorener;
+      mv.updateMapGrid();
+    }
   }
 
   this.selectTile = function(event){}
@@ -117,6 +141,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     $('#gameMap').append('<canvas id="mapViewCanv" width="'+w+'" height="'+h+'" style="border:1px solid #000000;"></canvas>');
     $('#mapViewCanv').mousedown('function',this.mouseDown);
     $('#mapViewCanv').mouseup('someFunction',this.mouseUp);
+    //$('#mapViewCanv').mousemove('someFunction',this.mouseMove);
     $('#mapViewCanv').dblclick('someFunction',this.dbclick);
     apiClient.getRegion(this.mapXYCorner[0],this.mapXYCorner[0]+this.width-1,
       this.mapXYCorner[1],this.mapXYCorner[1]+ this.height-1,this.showMapTile);

@@ -4,6 +4,10 @@ var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
+document.addEventListener("tileSelect", function(e) {
+	console.log(e.detail); // Prints selected x and y
+});
+
 $( document ).ready(function(){
 	showResources();
 	showMap();
