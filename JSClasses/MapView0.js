@@ -72,8 +72,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       context.fillRect(x*scale,y*scale,scale,scale);
       context.globalAlpha = 1;
       mv.selectedTile = selectedTileNow;
-      var event = new CustomEvent("tileSelect", { "detail": x+":"+y });
-      document.dispatchEvent(event);
+
 
     }else{
       var moveVector = [x-mv.mousePosition[0],y-mv.mousePosition[1]]
@@ -93,13 +92,14 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var y = Math.floor(event.clientY - rect.top);
     var x = Math.floor(x/scale);
     var y = Math.floor(y/scale);
+    var selectedTile = mv.tiles[x][y];
+    var event = new CustomEvent("tileSelect", { "detail":selectedTile });
+    document.dispatchEvent(event);
 
+    //document.addEventListener("name-of-event", function(e) {
+    //  console.log(e.detail); // Prints selected x and y
+    //});
 
-    /*
-    document.addEventListener("name-of-event", function(e) {
-      console.log(e.detail); // Prints selected x and y
-    });
-    */
   }
 
   this.mouseMove = function(event){
@@ -114,7 +114,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var y = Math.floor(y/scale);
     var moveVector = [x-mv.mousePosition[0], y-mv.mousePosition[1]];
     var newMapCorener =  [mv.mapCornerVec[0] - moveVector[0], mv.mapCornerVec[1] - moveVector[1]];
-    console.log(newMapCorener);
+    //console.log(newMapCorener);
     if(newMapCorener[0] != mv.mapXYCorner[0] || newMapCorener[1] != mv.mapXYCorner[1]){
       mv.mapXYCorner = newMapCorener;
       mv.updateMapGrid();
