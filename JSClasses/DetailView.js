@@ -1,30 +1,29 @@
 function DetailView(){
 
   var DV= this;
+  this.selectedTile = null;
 
   this.initDetailsView = function(){
     $('#gameDetails').empty();
     $('#gameDetails').append('<div id="gameDetailsOptionsContainer" class="gameDetailsOptionsContainer"></div>');
-    $('#gameDetailsOptionsContainer').append('<div class="gameDetailsOption" id="detailsMap" onclick="setDetailsMap()">Map</div>');
-    $('#gameDetailsOptionsContainer').append('<div class="gameDetailsOption" id="detailsBuilding" onclick="setDetailsBuilding()">Building</div>');
+    $('#gameDetailsOptionsContainer').append('<div class="gameDetailsOption" id="detailsMap" onclick="detailView.setDetailsMap()">Map</div>');
+    $('#gameDetailsOptionsContainer').append('<div class="gameDetailsOption" id="detailsBuilding" onclick="detailView.setDetailsBuilding()">Building</div>');
     $('#gameDetails').append('<div class="gameDetailsView" id="detailsView"></div>;');
   }
 
-  this.setDetailsMap = function(e){
-    //console.log(e.detail);
-
-    var selectedTile = e.detail;
-    if(selectedTile['building']==null){
+  this.setDetailsBuilding = function(e){
+    this.selectedTile = e.detail;
+    if(this.selectedTile['building']==null){
   			$('#detailsView').empty();
   			$('#detailsView').append("No building here.")
-  			var element = "tile" +selectedTile[0]+"x" +selectedTile[1];
-  			if(selectedTile.id_owner == idPlayer){
+  			var element = "tile" +this.selectedTile[0]+"x" +this.selectedTile[1];
+  			if(this.selectedTile.id_owner == idPlayer){
   				DV.showBuildingsToBuild();
           console.log("showToBuild");
   			}
   		return;
   	}
-  	var buildingStr = "Type: "+selectedTile.building.type;
+  	var buildingStr = "Type: "+this.selectedTile.building.type;
   	$('#detailsView').empty();
   	$('#detailsView').append(buildingStr);
 
@@ -45,6 +44,29 @@ function DetailView(){
   		$('#'+building.Type+"ToBuildCost").append(i+":"+value+"<br/>");
   	});
 
+  }
+
+  this.setDetailsMap = function(){
+    console.log(this.selectedTile);
+  	$('#detailsMap').addClass("gameDetailsOptionSelected");
+  	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
+    var selectedTile = mv.getSelectedTileObject();
+  	if(selectedTile == null){
+  		return;
+  	}
+  	var mapTileStr = "Biome: "+selectedTile.biome;
+
+  	if(selectedTile.id_owner != null){
+  		mapTileStr += "<br />";
+  		mapTileStr += "Owner: "+selectedTile.id_owner;
+  	}
+
+  	if(selectedTile.biome == "Fog"){
+  		mapTileStr = "Location is too far."
+  	}
+
+  	$('#detailsView').empty();
+  	$('#detailsView').append(mapTileStr);
   }
 
 }

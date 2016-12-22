@@ -5,7 +5,7 @@ var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
 document.addEventListener("tileSelect", function(e) {
-	detailView.setDetailsMap(e);
+	detailView.setDetailsBuilding(e);
 	//console.log(e.detail); // Prints selected x and y
 });
 
@@ -57,18 +57,6 @@ function showBuildingsToBuild(){
 	apiClient.getBuildingsToBuild(appendBuildingToBuild);
 }
 
-function getBuildingsToBuild(){
-	$.ajax({
-		type: 'GET',
-		url: 'http://localhost/reg/api/building.php/buildingList',
-		success: function(data){
-				var buildingList = $.parseJSON(data);
-				$.each(buildingList, function(i,value){
-					appendBuildingToBuild(value);
-				});
-		}
-	});
-}
 
 function appendBuildingToBuild(building){
 	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build('"+building.Type+"') id='"+building.Type+"ToBuild' ></div>");

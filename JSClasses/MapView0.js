@@ -11,6 +11,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   var scale = 25;
   this.mousePosition = null;
   this.mapCornerVec = null;
+  this.selectedTile = null;
 
 
   this.loguj = function(){
@@ -26,9 +27,9 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   }
 
   this.getSelectedTileObject = function(){
-    var selectedCoords = this.getSelectedTileCoords();
-    var selectedTile = $.grep(this.tiles, function(e){ return (e.x_coord == selectedCoords[1] && e.y_coord == selectedCoords[0]); })[0];
-    return selectedTile;
+    //var selectedCoords = this.getSelectedTileCoords();
+    //var selectedTile = $.grep(this.tiles, function(e){ return (e.x_coord == selectedCoords[1] && e.y_coord == selectedCoords[0]); })[0];
+    return mv.selectedTile;
   }
 
   this.getSelectedTile = function(){
@@ -93,6 +94,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var x = Math.floor(x/scale);
     var y = Math.floor(y/scale);
     var selectedTile = mv.tiles[x][y];
+    //this.selectedTile = selctedTile;
     var event = new CustomEvent("tileSelect", { "detail":selectedTile });
     document.dispatchEvent(event);
 
