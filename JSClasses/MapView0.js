@@ -167,6 +167,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.updateTile = function(tileJSON){
     var x = tileJSON.x_coord - mv.mapXYCorner[0];
     var y = tileJSON.y_coord - mv.mapXYCorner[1];
+    console.log(mv.tiles[x][y]);
     mv.tiles[x][y] = tileJSON;
     mv.showMapTile(tileJSON);
     setTimeout(function(){

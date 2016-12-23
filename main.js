@@ -57,7 +57,6 @@ function showBuildingsToBuild(){
 	apiClient.getBuildingsToBuild(appendBuildingToBuild);
 }
 
-
 function appendBuildingToBuild(building){
 	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build('"+building.Type+"') id='"+building.Type+"ToBuild' ></div>");
 	$('#'+building.Type+"ToBuild").append(building.Type + "<br/>");

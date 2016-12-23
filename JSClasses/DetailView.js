@@ -73,7 +73,7 @@ function DetailView(){
   }
 
   this.appendBuildingToBuild = function(building){
-  	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build('"+building.Type+"') id='"+building.Type+"ToBuild' ></div>");
+  	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=detailView.build('"+building.Type+"') id='"+building.Type+"ToBuild' ></div>");
   	$('#'+building.Type+"ToBuild").append(building.Type + "<br/>");
   	$('#'+building.Type+"ToBuild").append('<img src="img/Buildings/'+building.Type+'.png" height="70px" width="70px "/>');
   	$('#'+building.Type+"ToBuild").append("<div class='gameDetailsBuildingToBuildResources' id='"+building.Type+"ToBuildCost' ></div>");
@@ -82,6 +82,16 @@ function DetailView(){
   		$('#'+building.Type+"ToBuildCost").append(i+":"+value+"<br/>");
   	});
 
+  }
+
+  this.build = function(buildingType){
+    if(detailView.selectedTile == null){
+      return;
+    }
+    var x = detailView.selectedTile.x_coord;
+    var y = detailView.selectedTile.y_coord;
+
+    apiClient.build(x,y,buildingType,mv.updateTile);
   }
 
 }
