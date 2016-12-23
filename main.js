@@ -5,7 +5,7 @@ var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
 document.addEventListener("tileSelect", function(e) {
-	detailView.setDetailsBuilding(e);
+	detailView.openDetailView(e);
 	//console.log(e.detail); // Prints selected x and y
 });
 

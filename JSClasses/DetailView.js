@@ -11,8 +11,17 @@ function DetailView(){
     $('#gameDetails').append('<div class="gameDetailsView" id="detailsView"></div>;');
   }
 
-  this.setDetailsBuilding = function(e){
-    this.selectedTile = e.detail;
+  this.openDetailView = function(e){
+    detailView.selectedTile = e.detail;
+    detailView.setDetailsBuilding();
+
+  }
+
+  this.setDetailsBuilding = function(){
+    //this.selectedTile = e.detail;
+    if(this.selectedTile == null){
+      return;
+    }
     if(this.selectedTile['building']==null){
   			$('#detailsView').empty();
   			$('#detailsView').append("No building here.")
@@ -26,12 +35,41 @@ function DetailView(){
   	var buildingStr = "Type: "+this.selectedTile.building.type;
   	$('#detailsView').empty();
   	$('#detailsView').append(buildingStr);
+    $('#detailsBuilding').addClass("gameDetailsOptionSelected");
+  	$('#detailsMap').removeClass("gameDetailsOptionSelected");
 
+  }
+
+  this.setDetailsMap = function(){
+    if(this.selectedTile == null){
+      return;
+    }
+    $('#detailsMap').addClass("gameDetailsOptionSelected");
+    $('#detailsBuilding').removeClass("gameDetailsOptionSelected");
+    var selectedTile = mv.getSelectedTileObject();
+    if(selectedTile == null){
+      return;
+    }
+    var mapTileStr = "Biome: "+selectedTile.biome;
+
+    if(selectedTile.id_owner != null){
+      mapTileStr += "<br />";
+      mapTileStr += "Owner: "+selectedTile.id_owner;
+    }
+
+    if(selectedTile.biome == "Fog"){
+      mapTileStr = "Location is too far."
+    }
+
+    $('#detailsView').empty();
+    $('#detailsView').append(mapTileStr);
   }
 
   this.showBuildingsToBuild = function(){
   	$('#detailsView').append("<div class='gameDetailsList' id='buildingsToBuildList'></div>");
   	apiClient.getBuildingsToBuild(DV.appendBuildingToBuild);
+    $('#detailsBuilding').addClass("gameDetailsOptionSelected");
+  	$('#detailsMap').removeClass("gameDetailsOptionSelected");
   }
 
   this.appendBuildingToBuild = function(building){
@@ -44,29 +82,6 @@ function DetailView(){
   		$('#'+building.Type+"ToBuildCost").append(i+":"+value+"<br/>");
   	});
 
-  }
-
-  this.setDetailsMap = function(){
-    console.log(this.selectedTile);
-  	$('#detailsMap').addClass("gameDetailsOptionSelected");
-  	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
-    var selectedTile = mv.getSelectedTileObject();
-  	if(selectedTile == null){
-  		return;
-  	}
-  	var mapTileStr = "Biome: "+selectedTile.biome;
-
-  	if(selectedTile.id_owner != null){
-  		mapTileStr += "<br />";
-  		mapTileStr += "Owner: "+selectedTile.id_owner;
-  	}
-
-  	if(selectedTile.biome == "Fog"){
-  		mapTileStr = "Location is too far."
-  	}
-
-  	$('#detailsView').empty();
-  	$('#detailsView').append(mapTileStr);
   }
 
 }
