@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 25 Lis 2016, 17:47
+-- Czas generowania: 24 Gru 2016, 13:30
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -45,7 +45,13 @@ INSERT INTO `buildings` (`building_id`, `type`) VALUES
 (44, 'Castle'),
 (45, 'Sawmill'),
 (46, 'Farm'),
-(47, 'Sawmill');
+(47, 'Sawmill'),
+(48, 'Sawmill'),
+(49, 'Stone-Pit'),
+(50, 'Farm'),
+(51, 'Farm'),
+(52, 'Farm'),
+(53, 'Farm');
 
 -- --------------------------------------------------------
 
@@ -140,7 +146,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`) VAL
 (1, 8, NULL, 'Forest', NULL),
 (2, 0, NULL, 'Swamp', NULL),
 (2, 1, NULL, 'Forest', NULL),
-(2, 2, NULL, 'Swamp', NULL),
+(2, 2, 12, 'Swamp', NULL),
 (2, 3, 12, 'Mountains', 3),
 (2, 4, 12, 'Swamp', 44),
 (2, 5, 12, 'Plains', NULL),
@@ -150,9 +156,9 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`) VAL
 (2, 9, NULL, 'Forest', NULL),
 (3, 0, NULL, 'Swamp', NULL),
 (3, 1, NULL, 'Forest', NULL),
-(3, 2, NULL, 'Forest', NULL),
+(3, 2, 12, 'Forest', NULL),
 (3, 3, NULL, 'Swamp', NULL),
-(3, 4, 12, 'Swamp', NULL),
+(3, 4, 12, 'Swamp', 49),
 (3, 5, 12, 'Plains', 46),
 (3, 6, NULL, 'Swamp', NULL),
 (3, 7, NULL, 'Plains', NULL),
@@ -160,30 +166,30 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`) VAL
 (3, 9, NULL, 'Plains', NULL),
 (4, 0, NULL, 'Forest', NULL),
 (4, 1, NULL, 'Swamp', NULL),
-(4, 2, NULL, 'Desert', NULL),
+(4, 2, 12, 'Desert', NULL),
 (4, 3, NULL, 'Plains', NULL),
-(4, 4, 12, 'Plains', NULL),
-(4, 5, 12, 'Forest', NULL),
+(4, 4, 12, 'Plains', 50),
+(4, 5, 12, 'Forest', 48),
 (4, 6, 12, 'Desert', NULL),
 (4, 7, NULL, 'Swamp', NULL),
 (4, 8, NULL, 'Forest', NULL),
 (4, 9, NULL, 'Swamp', NULL),
 (5, 0, NULL, 'Forest', NULL),
 (5, 1, NULL, 'Swamp', NULL),
-(5, 2, NULL, 'Forest', NULL),
-(5, 3, NULL, 'Swamp', NULL),
-(5, 4, NULL, 'Swamp', NULL),
-(5, 5, NULL, 'Plains', NULL),
-(5, 6, NULL, 'Swamp', NULL),
+(5, 2, 12, 'Forest', NULL),
+(5, 3, 12, 'Swamp', NULL),
+(5, 4, 12, 'Swamp', NULL),
+(5, 5, 12, 'Plains', 51),
+(5, 6, 12, 'Swamp', NULL),
 (5, 7, NULL, 'Desert', NULL),
 (5, 8, NULL, 'Plains', NULL),
 (5, 9, NULL, 'Swamp', NULL),
 (6, 0, NULL, 'Desert', NULL),
 (6, 1, NULL, 'Plains', NULL),
-(6, 2, NULL, 'Desert', NULL),
-(6, 3, NULL, 'Desert', NULL),
-(6, 4, NULL, 'Desert', NULL),
-(6, 5, NULL, 'Plains', NULL),
+(6, 2, 12, 'Desert', 52),
+(6, 3, 12, 'Desert', 53),
+(6, 4, 12, 'Desert', NULL),
+(6, 5, 12, 'Plains', NULL),
 (6, 6, NULL, 'Desert', NULL),
 (6, 7, NULL, 'Forest', NULL),
 (6, 8, NULL, 'Desert', NULL),
@@ -235,7 +241,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user`, `pass`, `email`) VALUES
 (12, 'Szymon', '$2y$10$vTv8VjWSOaU/Z96xp.un2.YCauEQUTDbqrCpiYx.3rnCfIUUT2.pC', 'gm@gmail.com'),
-(13, 'Blyp', '$2y$10$VQ8eZTjq0OGDHfK1jqz7JuzRRHnA/yfQLh2LHhBNmOoEBStNnUyOu', 'blyp@gmail.com');
+(13, 'Blyp', '$2y$10$VQ8eZTjq0OGDHfK1jqz7JuzRRHnA/yfQLh2LHhBNmOoEBStNnUyOu', 'blyp@gmail.com'),
+(14, 'Toran', '$2y$10$AjfqvJN4rf/X1gaBHnevvufQYa6s5wDjTPyXPROSA6N3HAEjnP8KK', 'gornioczek.szymon@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -256,7 +263,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 154246, 43064, 25666, 183701);
+(12, 549593, 312810, 222282, 1096459);
 
 -- --------------------------------------------------------
 
@@ -277,7 +284,7 @@ CREATE TABLE `user_resources_income` (
 --
 
 INSERT INTO `user_resources_income` (`user_id`, `Wood_income`, `Stone_income`, `Iron_income`, `Food_income`) VALUES
-(12, 3, 2, 1, 4);
+(12, 8, 5, 4, 30);
 
 -- --------------------------------------------------------
 
@@ -295,7 +302,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1480092358);
+(12, 1482582478);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -359,7 +366,7 @@ ALTER TABLE `user_resources_update`
 -- AUTO_INCREMENT dla tabeli `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT dla tabeli `gs_buildingstypes`
 --
@@ -374,7 +381,7 @@ ALTER TABLE `gs_costs`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

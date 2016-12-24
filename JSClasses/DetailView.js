@@ -46,7 +46,7 @@ function DetailView(){
     }
     $('#detailsMap').addClass("gameDetailsOptionSelected");
     $('#detailsBuilding').removeClass("gameDetailsOptionSelected");
-    var selectedTile = mv.getSelectedTileObject();
+    var selectedTile = mapView.getSelectedTileObject();
     if(selectedTile == null){
       return;
     }
@@ -91,7 +91,7 @@ function DetailView(){
     var x = detailView.selectedTile.x_coord;
     var y = detailView.selectedTile.y_coord;
 
-    apiClient.build(x,y,buildingType,mv.updateTile);
+    apiClient.build(x,y,buildingType,mapView.updateTile);
   }
 
 }

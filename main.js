@@ -1,5 +1,5 @@
 var apiClient = new ApiClient('http://localhost');
-var mv = new MapView(16,16,5,5,12,apiClient);
+var mapView = new MapView(16,16,5,5,12,apiClient);
 var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
@@ -16,7 +16,7 @@ $( document ).ready(function(){
 });
 
 function showMap(){
-	mv.showMapGrid();
+	mapView.showMapGrid();
 }
 
 function showResources(){
@@ -24,23 +24,23 @@ function showResources(){
 }
 
 function build(buildingType){
-	var coords = mv.getSelectedTileCoords();
+	var coords = mapView.getSelectedTileCoords();
 	apiClient.build(coords[1],coords[0],buildingType,mv.updateTile);
 }
 
 function setTile(x,y){
-	mv.selectTile(x,y);
+	mapView.selectTile(x,y);
 }
 
 function storeTiles(tileJSON){
-	mv.showMapTile(tileJSON);
+	mapView.showMapTile(tileJSON);
 }
 /////////
 function showBuildingDetails(tileInfo){
 	if(tileInfo['building']==null){
 			$('#detailsView').empty();
 			$('#detailsView').append("No building here.");
-			selectedTile = mv.getSelectedTile();
+			selectedTile = mapView.getSelectedTile();
 			var element = "tile" +selectedTile[0]+"x" +selectedTile[1];
 			if($('#'+element).hasClass("ownedTile")){
 				showBuildingsToBuild();
@@ -72,10 +72,10 @@ function appendBuildingToBuild(building){
 function setDetailsMap(){
 	$('#detailsMap').addClass("gameDetailsOptionSelected");
 	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
-	if(mv.getSelectedTile() == null){
+	if(mapView.getSelectedTile() == null){
 		return;
 	}
-	var selectedTileObject = mv.getSelectedTileObject();
+	var selectedTileObject = mapView.getSelectedTileObject();
 	var mapTileStr = "Biome: "+selectedTileObject.biome;
 
 	if(selectedTileObject.id_owner != null){
@@ -94,14 +94,14 @@ function setDetailsMap(){
 function setDetailsBuilding(){
 	$('#detailsBuilding').addClass("gameDetailsOptionSelected");
 	$('#detailsMap').removeClass("gameDetailsOptionSelected");
-	if(mv.getSelectedTile() == null){
+	if(mapView.getSelectedTile() == null){
 		return;
 	}
-	showBuildingDetails(mv.getSelectedTileObject());
+	showBuildingDetails(mapView.getSelectedTileObject());
 }
 
 function conquer(){
-	selectedTile = mv.getSelectedTile();
+	selectedTile = mapView.getSelectedTile();
 	if(selectedTile != null){
 		$.ajax({
 			type: 'GET',
@@ -110,7 +110,7 @@ function conquer(){
 				var newRegionTiles = $.parseJSON(data);
 				$.each(newRegionTiles, function(i,row){
 					$.each(row, function(j,value){
-						mv.updateTile(value);
+						mapView.updateTile(value);
 					});
 				});
 			}
