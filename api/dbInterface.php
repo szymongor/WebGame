@@ -159,7 +159,9 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 	function getTileMapFromDB($x,$y){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-    $query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`,`building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
+    /*$query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`,`building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
+    $x,$y);*/
+		$query = sprintf("SELECT * FROM `map` WHERE x_coord = %s AND y_coord = %s",
     $x,$y);
     $result = @$db_connect->query($query);
 
@@ -187,6 +189,23 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		mysqli_close($db_connect);
 		return $row;
   }
+
+	function getArmyFromDB($armyId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `army`
+		WHERE id = %s",
+		$armyId);
+
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		unset($row['id']);
+
+
+		mysqli_close($db_connect);
+		return $row;
+
+	}
 
 	function getMapRegionFromDB($userId,$xFrom,$xTo,$yFrom,$yTo){
 		global $host, $db_user, $db_password, $db_name;
@@ -305,4 +324,5 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
  		mysqli_close($db_connect);
  		return $userBuildings;
 	}
+
 ?>

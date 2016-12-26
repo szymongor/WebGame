@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Gru 2016, 13:30
+-- Czas generowania: 26 Gru 2016, 16:13
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `osadnicy`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `army`
+--
+
+CREATE TABLE `army` (
+  `id` int(11) NOT NULL,
+  `swordman` int(10) NOT NULL DEFAULT '0',
+  `bowman` int(10) NOT NULL DEFAULT '0',
+  `shieldbearer` int(10) NOT NULL DEFAULT '0',
+  `shaman` int(11) NOT NULL DEFAULT '0',
+  `wizard` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `army`
+--
+
+INSERT INTO `army` (`id`, `swordman`, `bowman`, `shieldbearer`, `shaman`, `wizard`) VALUES
+(1, 10, 5, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -115,112 +137,113 @@ CREATE TABLE `map` (
   `y_coord` smallint(6) NOT NULL,
   `id_owner` int(11) DEFAULT NULL,
   `biome` varchar(20) COLLATE utf8_polish_ci NOT NULL,
-  `building_id` int(11) DEFAULT NULL
+  `building_id` int(11) DEFAULT NULL,
+  `army_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `map`
 --
 
-INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`) VALUES
-(-3, 1, NULL, 'Desert', NULL),
-(-1, 0, NULL, 'Desert', NULL),
-(-1, 1, NULL, 'Plains', NULL),
-(-1, 3, NULL, 'Desert', NULL),
-(0, 0, NULL, 'Desert', NULL),
-(0, 1, NULL, 'Desert', NULL),
-(0, 2, NULL, 'Forest', NULL),
-(0, 3, NULL, 'Swamp', NULL),
-(0, 4, NULL, 'Swamp', NULL),
-(0, 5, NULL, 'Plains', NULL),
-(0, 6, NULL, 'Swamp', NULL),
-(0, 7, NULL, 'Forest', NULL),
-(1, 0, NULL, 'Forest', NULL),
-(1, 1, 21, 'Forest', 2),
-(1, 2, NULL, 'Forest', NULL),
-(1, 3, NULL, 'Forest', NULL),
-(1, 4, 12, 'Forest', 47),
-(1, 5, 12, 'Desert', 1),
-(1, 6, NULL, 'Swamp', NULL),
-(1, 7, NULL, 'Plains', NULL),
-(1, 8, NULL, 'Forest', NULL),
-(2, 0, NULL, 'Swamp', NULL),
-(2, 1, NULL, 'Forest', NULL),
-(2, 2, 12, 'Swamp', NULL),
-(2, 3, 12, 'Mountains', 3),
-(2, 4, 12, 'Swamp', 44),
-(2, 5, 12, 'Plains', NULL),
-(2, 6, NULL, 'Plains', NULL),
-(2, 7, NULL, 'Plains', NULL),
-(2, 8, NULL, 'Plains', NULL),
-(2, 9, NULL, 'Forest', NULL),
-(3, 0, NULL, 'Swamp', NULL),
-(3, 1, NULL, 'Forest', NULL),
-(3, 2, 12, 'Forest', NULL),
-(3, 3, NULL, 'Swamp', NULL),
-(3, 4, 12, 'Swamp', 49),
-(3, 5, 12, 'Plains', 46),
-(3, 6, NULL, 'Swamp', NULL),
-(3, 7, NULL, 'Plains', NULL),
-(3, 8, NULL, 'Swamp', NULL),
-(3, 9, NULL, 'Plains', NULL),
-(4, 0, NULL, 'Forest', NULL),
-(4, 1, NULL, 'Swamp', NULL),
-(4, 2, 12, 'Desert', NULL),
-(4, 3, NULL, 'Plains', NULL),
-(4, 4, 12, 'Plains', 50),
-(4, 5, 12, 'Forest', 48),
-(4, 6, 12, 'Desert', NULL),
-(4, 7, NULL, 'Swamp', NULL),
-(4, 8, NULL, 'Forest', NULL),
-(4, 9, NULL, 'Swamp', NULL),
-(5, 0, NULL, 'Forest', NULL),
-(5, 1, NULL, 'Swamp', NULL),
-(5, 2, 12, 'Forest', NULL),
-(5, 3, 12, 'Swamp', NULL),
-(5, 4, 12, 'Swamp', NULL),
-(5, 5, 12, 'Plains', 51),
-(5, 6, 12, 'Swamp', NULL),
-(5, 7, NULL, 'Desert', NULL),
-(5, 8, NULL, 'Plains', NULL),
-(5, 9, NULL, 'Swamp', NULL),
-(6, 0, NULL, 'Desert', NULL),
-(6, 1, NULL, 'Plains', NULL),
-(6, 2, 12, 'Desert', 52),
-(6, 3, 12, 'Desert', 53),
-(6, 4, 12, 'Desert', NULL),
-(6, 5, 12, 'Plains', NULL),
-(6, 6, NULL, 'Desert', NULL),
-(6, 7, NULL, 'Forest', NULL),
-(6, 8, NULL, 'Desert', NULL),
-(6, 9, NULL, 'Plains', NULL),
-(7, 0, NULL, 'Desert', NULL),
-(7, 1, NULL, 'Forest', NULL),
-(7, 2, NULL, 'Forest', NULL),
-(7, 3, NULL, 'Swamp', NULL),
-(7, 4, NULL, 'Forest', NULL),
-(7, 5, NULL, 'Forest', NULL),
-(7, 6, NULL, 'Forest', NULL),
-(7, 7, NULL, 'Forest', NULL),
-(7, 8, NULL, 'Swamp', NULL),
-(7, 9, NULL, 'Forest', NULL),
-(8, 1, NULL, 'Forest', NULL),
-(8, 2, NULL, 'Forest', NULL),
-(8, 3, NULL, 'Plains', NULL),
-(8, 4, NULL, 'Desert', NULL),
-(8, 5, NULL, 'Forest', NULL),
-(8, 6, NULL, 'Swamp', NULL),
-(8, 7, NULL, 'Plains', NULL),
-(8, 8, NULL, 'Swamp', NULL),
-(8, 9, NULL, 'Forest', NULL),
-(9, 2, NULL, 'Forest', NULL),
-(9, 3, NULL, 'Forest', NULL),
-(9, 4, NULL, 'Swamp', NULL),
-(9, 5, NULL, 'Swamp', NULL),
-(9, 6, NULL, 'Forest', NULL),
-(9, 7, NULL, 'Desert', NULL),
-(9, 8, NULL, 'Desert', NULL),
-(9, 9, NULL, 'Desert', NULL);
+INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `army_id`) VALUES
+(-3, 1, NULL, 'Desert', NULL, NULL),
+(-1, 0, NULL, 'Desert', NULL, NULL),
+(-1, 1, NULL, 'Plains', NULL, NULL),
+(-1, 3, NULL, 'Desert', NULL, NULL),
+(0, 0, NULL, 'Desert', NULL, NULL),
+(0, 1, NULL, 'Desert', NULL, NULL),
+(0, 2, NULL, 'Forest', NULL, NULL),
+(0, 3, NULL, 'Swamp', NULL, NULL),
+(0, 4, NULL, 'Swamp', NULL, NULL),
+(0, 5, NULL, 'Plains', NULL, NULL),
+(0, 6, NULL, 'Swamp', NULL, NULL),
+(0, 7, NULL, 'Forest', NULL, NULL),
+(1, 0, NULL, 'Forest', NULL, NULL),
+(1, 1, 21, 'Forest', 2, NULL),
+(1, 2, NULL, 'Forest', NULL, NULL),
+(1, 3, NULL, 'Forest', NULL, NULL),
+(1, 4, 12, 'Forest', 47, 1),
+(1, 5, 12, 'Desert', 1, NULL),
+(1, 6, NULL, 'Swamp', NULL, NULL),
+(1, 7, NULL, 'Plains', NULL, NULL),
+(1, 8, NULL, 'Forest', NULL, NULL),
+(2, 0, NULL, 'Swamp', NULL, NULL),
+(2, 1, NULL, 'Forest', NULL, NULL),
+(2, 2, 12, 'Swamp', NULL, NULL),
+(2, 3, 12, 'Mountains', 3, NULL),
+(2, 4, 12, 'Swamp', 44, NULL),
+(2, 5, 12, 'Plains', NULL, NULL),
+(2, 6, NULL, 'Plains', NULL, NULL),
+(2, 7, NULL, 'Plains', NULL, NULL),
+(2, 8, NULL, 'Plains', NULL, NULL),
+(2, 9, NULL, 'Forest', NULL, NULL),
+(3, 0, NULL, 'Swamp', NULL, NULL),
+(3, 1, NULL, 'Forest', NULL, NULL),
+(3, 2, 12, 'Forest', NULL, NULL),
+(3, 3, NULL, 'Swamp', NULL, NULL),
+(3, 4, 12, 'Swamp', 49, NULL),
+(3, 5, 12, 'Plains', 46, NULL),
+(3, 6, NULL, 'Swamp', NULL, NULL),
+(3, 7, NULL, 'Plains', NULL, NULL),
+(3, 8, NULL, 'Swamp', NULL, NULL),
+(3, 9, NULL, 'Plains', NULL, NULL),
+(4, 0, NULL, 'Forest', NULL, NULL),
+(4, 1, NULL, 'Swamp', NULL, NULL),
+(4, 2, 12, 'Desert', NULL, NULL),
+(4, 3, NULL, 'Plains', NULL, NULL),
+(4, 4, 12, 'Plains', 50, NULL),
+(4, 5, 12, 'Forest', 48, NULL),
+(4, 6, 12, 'Desert', NULL, NULL),
+(4, 7, NULL, 'Swamp', NULL, NULL),
+(4, 8, NULL, 'Forest', NULL, NULL),
+(4, 9, NULL, 'Swamp', NULL, NULL),
+(5, 0, NULL, 'Forest', NULL, NULL),
+(5, 1, NULL, 'Swamp', NULL, NULL),
+(5, 2, 12, 'Forest', NULL, NULL),
+(5, 3, 12, 'Swamp', NULL, NULL),
+(5, 4, 12, 'Swamp', NULL, NULL),
+(5, 5, 12, 'Plains', 51, NULL),
+(5, 6, 12, 'Swamp', NULL, NULL),
+(5, 7, NULL, 'Desert', NULL, NULL),
+(5, 8, NULL, 'Plains', NULL, NULL),
+(5, 9, NULL, 'Swamp', NULL, NULL),
+(6, 0, NULL, 'Desert', NULL, NULL),
+(6, 1, NULL, 'Plains', NULL, NULL),
+(6, 2, 12, 'Desert', 52, NULL),
+(6, 3, 12, 'Desert', 53, NULL),
+(6, 4, 12, 'Desert', NULL, NULL),
+(6, 5, 12, 'Plains', NULL, NULL),
+(6, 6, NULL, 'Desert', NULL, NULL),
+(6, 7, NULL, 'Forest', NULL, NULL),
+(6, 8, NULL, 'Desert', NULL, NULL),
+(6, 9, NULL, 'Plains', NULL, NULL),
+(7, 0, NULL, 'Desert', NULL, NULL),
+(7, 1, NULL, 'Forest', NULL, NULL),
+(7, 2, NULL, 'Forest', NULL, NULL),
+(7, 3, NULL, 'Swamp', NULL, NULL),
+(7, 4, NULL, 'Forest', NULL, NULL),
+(7, 5, NULL, 'Forest', NULL, NULL),
+(7, 6, NULL, 'Forest', NULL, NULL),
+(7, 7, NULL, 'Forest', NULL, NULL),
+(7, 8, NULL, 'Swamp', NULL, NULL),
+(7, 9, NULL, 'Forest', NULL, NULL),
+(8, 1, NULL, 'Forest', NULL, NULL),
+(8, 2, NULL, 'Forest', NULL, NULL),
+(8, 3, NULL, 'Plains', NULL, NULL),
+(8, 4, NULL, 'Desert', NULL, NULL),
+(8, 5, NULL, 'Forest', NULL, NULL),
+(8, 6, NULL, 'Swamp', NULL, NULL),
+(8, 7, NULL, 'Plains', NULL, NULL),
+(8, 8, NULL, 'Swamp', NULL, NULL),
+(8, 9, NULL, 'Forest', NULL, NULL),
+(9, 2, NULL, 'Forest', NULL, NULL),
+(9, 3, NULL, 'Forest', NULL, NULL),
+(9, 4, NULL, 'Swamp', NULL, NULL),
+(9, 5, NULL, 'Swamp', NULL, NULL),
+(9, 6, NULL, 'Forest', NULL, NULL),
+(9, 7, NULL, 'Desert', NULL, NULL),
+(9, 8, NULL, 'Desert', NULL, NULL),
+(9, 9, NULL, 'Desert', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,7 +286,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 549593, 312810, 222282, 1096459);
+(12, 573585, 327805, 234278, 1186429);
 
 -- --------------------------------------------------------
 
@@ -302,11 +325,17 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1482582478);
+(12, 1482762418);
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indexes for table `army`
+--
+ALTER TABLE `army`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `buildings`
@@ -362,6 +391,11 @@ ALTER TABLE `user_resources_update`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT dla tabeli `army`
+--
+ALTER TABLE `army`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT dla tabeli `buildings`
 --

@@ -66,6 +66,10 @@
         }
         unset($tile['building_id']);
 
+        if($tile['army_id'] != NULL){
+          $tile['army'] = getArmyFromDB($tile['army_id']);
+        }
+
         return $tile;
       }
       else{
