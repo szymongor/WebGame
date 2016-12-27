@@ -99,7 +99,7 @@
       for($i = $xFrom; $i <= $xTo ; $i++){
         $row = array();
         for($j = $yFrom; $j <= $yTo ; $j++){
-          $fogTile = array('x_coord' => $i, 'y_coord' => $j, 'id_owner' => NULL, 'biome' => 'Fog', 'building_id' => NULL);
+          $fogTile = array('x_coord' => $i, 'y_coord' => $j, 'id_owner' => NULL, 'biome' => 'Fog', 'building_id' => NULL, 'army' => NULL);
           array_push($row,$fogTile);
         }
         array_push($mapView,$row);
@@ -113,29 +113,53 @@
 
 
       foreach ($ownedTiles as $value) {
-        if($value['x_coord']-1>=$xFrom && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']);
+        if($value['x_coord']-1>=$xFrom && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']);
+          unset($mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-$yFrom]['army_id']);
+        }
 
-        if($value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord'],$value['y_coord']-1);
 
-        if($value['x_coord']+1<=$xTo && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']);
+        if($value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord'],$value['y_coord']-1);
+          unset($mapView[$value['x_coord']-$xFrom][$value['y_coord']-1-$yFrom]['army_id']);
+        }
 
-        if($value['y_coord']+1<=$yTo && $mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord'],$value['y_coord']+1);
 
-        if($value['x_coord']-1>=$xFrom && $value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']-1);
+        if($value['x_coord']+1<=$xTo && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']);
+          unset($mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-$yFrom]['army_id']);
+        }
 
-        if($value['x_coord']-1>=$xFrom && $value['y_coord']+1<=$yTo && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']+1);
 
-        if($value['x_coord']+1<=$xTo && $value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']-1);
+        if($value['y_coord']+1<=$yTo && $mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord'],$value['y_coord']+1);
+          unset($mapView[$value['x_coord']-$xFrom][$value['y_coord']+1-$yFrom]['army_id']);
+        }
 
-        if($value['x_coord']+1<=$xTo && $value['y_coord']+1<=$yTo && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog')
-        $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']+1);
+
+        if($value['x_coord']-1>=$xFrom && $value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']-1);
+          unset($mapView[$value['x_coord']-1-$xFrom][$value['y_coord']-1-$yFrom]['army_id']);
+        }
+
+
+        if($value['x_coord']-1>=$xFrom && $value['y_coord']+1<=$yTo && $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']-1-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord']-1,$value['y_coord']+1);
+          unset($mapView[$value['x_coord']-1-$xFrom][$value['y_coord']+1-$yFrom]['army_id']);
+        }
+
+
+        if($value['x_coord']+1<=$xTo && $value['y_coord']-1>=$yFrom && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-1-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-1-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']-1);
+          unset($mapView[$value['x_coord']+1-$xFrom][$value['y_coord']-1-$yFrom]['army_id']);
+        }
+
+
+        if($value['x_coord']+1<=$xTo && $value['y_coord']+1<=$yTo && $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']+1-$yFrom]['biome'] == 'Fog'){
+          $mapView[$value['x_coord']+1-$xFrom][$value['y_coord']+1-$yFrom] = getTileMapFromDB($value['x_coord']+1,$value['y_coord']+1);
+          unset($mapView[$value['x_coord']+1-$xFrom][$value['y_coord']+1-$yFrom]['army_id']);
+        }
+
 
 
       }
@@ -150,6 +174,17 @@
           }
           unset($mapView[$i][$j]['building_id']);
         }
+      }
+
+      foreach ($ownedTiles as $value){
+        if($value['army_id'] != NULL){
+          $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army'] = getArmyFromDB($value['army_id']);
+        }
+        else{
+          $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army'] = NULL;
+        }
+        unset($mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army_id']);
+
       }
 
       //$response = json_encode($mapView);

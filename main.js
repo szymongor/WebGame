@@ -28,13 +28,13 @@ function build(buildingType){
 	apiClient.build(coords[1],coords[0],buildingType,mv.updateTile);
 }
 
-function setTile(x,y){
-	mapView.selectTile(x,y);
-}
+//function setTile(x,y){
+//	mapView.selectTile(x,y);
+//}
 
-function storeTiles(tileJSON){
-	mapView.showMapTile(tileJSON);
-}
+//function storeTiles(tileJSON){
+//	mapView.showMapTile(tileJSON);
+//}
 /////////
 function showBuildingDetails(tileInfo){
 	if(tileInfo['building']==null){

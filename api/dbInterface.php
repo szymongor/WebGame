@@ -210,7 +210,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 	function getMapRegionFromDB($userId,$xFrom,$xTo,$yFrom,$yTo){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$queryStr = sprintf("SELECT `x_coord`, `y_coord`, `id_owner`, `biome`, `building_id` FROM `map` WHERE x_coord >=%s AND x_coord <= %s AND y_coord >=%s AND y_coord <=%s AND id_owner = %s ",$xFrom,$xTo,$yFrom,$yTo,$userId);
+		$queryStr = sprintf("SELECT *  FROM `map` WHERE x_coord >=%s AND x_coord <= %s AND y_coord >=%s AND y_coord <=%s AND id_owner = %s ",$xFrom,$xTo,$yFrom,$yTo,$userId);
 		$result = @$db_connect->query($queryStr);
 		$mapArray = array();
 		while($mapRow = $result->fetch_assoc()){
@@ -324,5 +324,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
  		mysqli_close($db_connect);
  		return $userBuildings;
 	}
+
+	//echo(json_encode(getMapRegionFromDB(12,0,6,0,6)));
 
 ?>

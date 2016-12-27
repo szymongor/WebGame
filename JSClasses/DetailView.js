@@ -44,6 +44,8 @@ function DetailView(){
     if(this.selectedTile == null){
       return;
     }
+
+    console.log(this.selectedTile);
     $('#detailsMap').addClass("gameDetailsOptionSelected");
     $('#detailsBuilding').removeClass("gameDetailsOptionSelected");
     var selectedTile = mapView.getSelectedTileObject();
