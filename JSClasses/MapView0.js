@@ -178,7 +178,6 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
 
     for(i = 0 ; i < mapView.width ; i ++){
       for( j = 0 ; j < mapView.height ; j++){
-        //console.log(mapView.tiles[i][j]);
         mapView.drawTileBorder(mapView.tiles[i][j]);
       }
     }
@@ -222,8 +221,6 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
 
   this.showMapTile = function(tileJSON){
     //mapView.tiles.push(tileJSON);
-
-    //console.log(tileJSON);
     var canvas=document.getElementById("mapViewCanv");
     var context=canvas.getContext('2d');
   	var x_coord = tileJSON['x_coord']-mapView.mapXYCorner[0];
@@ -246,10 +243,10 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       imgBuilding.src = "img/Buildings/"+buildingType+".png";
   	}
     mapView.mapGridReady+=1;
-    if(mapView.mapGridReady==64){
+    if(mapView.mapGridReady==mapView.width*mapView.height){
       setTimeout(function(){
         mapView.drawBorders();
-      }, 1);
+      }, 50);
     }
   }
 
