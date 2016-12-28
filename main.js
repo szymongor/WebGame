@@ -1,5 +1,5 @@
 var apiClient = new ApiClient('http://localhost');
-var mapView = new MapView(16,16,5,5,12,apiClient);
+var mapView = new MapView(10,10,4,4,12,apiClient);
 var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();

@@ -96,10 +96,11 @@
     public function getMapRegion($xFrom, $xTo, $yFrom, $yTo){
       $mapView = array();
       $ownedTiles = getMapRegionFromDB($this->playerId, $xFrom, $xTo, $yFrom, $yTo);
+      $initArmy = getArmyTypesFromDB();
       for($i = $xFrom; $i <= $xTo ; $i++){
         $row = array();
         for($j = $yFrom; $j <= $yTo ; $j++){
-          $fogTile = array('x_coord' => $i, 'y_coord' => $j, 'id_owner' => NULL, 'biome' => 'Fog', 'building_id' => NULL, 'army' => NULL);
+          $fogTile = array('x_coord' => $i, 'y_coord' => $j, 'id_owner' => NULL, 'biome' => 'Fog', 'building_id' => NULL, 'army' => $initArmy);
           array_push($row,$fogTile);
         }
         array_push($mapView,$row);
@@ -181,7 +182,7 @@
           $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army'] = getArmyFromDB($value['army_id']);
         }
         else{
-          $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army'] = NULL;
+          $mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army'] = $initArmy;
         }
         unset($mapView[$value['x_coord']-$xFrom][$value['y_coord']-$yFrom]['army_id']);
 

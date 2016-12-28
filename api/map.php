@@ -30,7 +30,6 @@
 					$response = $_SESSION['Player']->getMapRegion($_GET['xFrom'],$_GET['xTo'],$_GET['yFrom'],$_GET['yTo']);
 					echo(json_encode($response));
 					break;
-
 			}
 			break;
 

@@ -190,6 +190,24 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
   }
 
+	function getArmyTypesFromDB(){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `army` LIMIT 1");
+
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		unset($row['id']);
+
+		foreach ($row as $key => $value) {
+			$row[$key] = 0;
+		}
+
+
+		mysqli_close($db_connect);
+		return $row;
+	}
+
 	function getArmyFromDB($armyId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -325,6 +343,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
  		return $userBuildings;
 	}
 
-	//echo(json_encode(getMapRegionFromDB(12,0,6,0,6)));
+	//echo(json_encode(getArmyTypesFromDB()));
 
 ?>

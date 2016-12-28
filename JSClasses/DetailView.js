@@ -70,12 +70,14 @@ function DetailView(){
   }
 
   this.showArmy = function(){
+    if(detailView.selectedTile.id_owner != mapView.playerId){
+      return;
+    }
     $('#detailsView').append("</br> Army: ");
     $('#detailsView').append("<div class='gameDetailsList' id='armyUnitsList'></div>");
     $('#detailsBuilding').addClass("gameDetailsOptionSelected");
   	$('#detailsMap').removeClass("gameDetailsOptionSelected");
     $.each(detailView.selectedTile.army, function(type,amount){
-      if(amount != 0)
   		detailView.appendArmyUnits(type,amount);
   	});
 

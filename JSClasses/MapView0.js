@@ -7,7 +7,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
   this.apiClient = apiClient;
   this.mapGridReady = 0;
   this.playerId = playerId;
-  var scale = 25;
+  var scale = 40;
   this.mousePosition = null;
   this.mapCornerVec = null;
   this.selectedTile = null;
