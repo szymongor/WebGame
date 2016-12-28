@@ -13,7 +13,7 @@ function DetailView(){
 
   this.openDetailView = function(e){
     detailView.selectedTile = e.detail;
-    detailView.setDetailsBuilding();
+    detailView.setDetailsMap();
 
   }
 
@@ -44,10 +44,6 @@ function DetailView(){
     if(this.selectedTile == null){
       return;
     }
-
-    console.log(this.selectedTile);
-    $('#detailsMap').addClass("gameDetailsOptionSelected");
-    $('#detailsBuilding').removeClass("gameDetailsOptionSelected");
     var selectedTile = mapView.getSelectedTileObject();
     if(selectedTile == null){
       return;
@@ -66,6 +62,8 @@ function DetailView(){
     $('#detailsView').empty();
     $('#detailsView').append(mapTileStr);
     detailView.showArmy();
+    $('#detailsMap').addClass("gameDetailsOptionSelected");
+    $('#detailsBuilding').removeClass("gameDetailsOptionSelected");
 
   }
 
