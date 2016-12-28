@@ -225,6 +225,78 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 
 	}
 
+	function getArmyIdByLocationFromDB($x,$y){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT `army_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
+		$x,$y);
+
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+		return $row["army_id"];
+	}
+
+	function initArmy($x,$y){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+
+		$queryStr = sprintf("INSERT INTO `army`() VALUES ();");
+		$queryStr .= sprintf("SELECT LAST_INSERT_ID();");
+
+		$armyId;
+		if (mysqli_multi_query($db_connect,$queryStr))
+		{
+			do
+				{
+				if ($result=mysqli_store_result($db_connect)) {
+					while ($row=mysqli_fetch_row($result))
+					{
+						$armyId=$row[0];
+					}
+					// Free result set
+					mysqli_free_result($result);
+					}
+				}
+			while (mysqli_next_result($db_connect));
+		}
+		if($armyId != NULL){
+			$queryStr = sprintf("UPDATE `map` SET `army_id`=%s WHERE x_coord = %s AND y_coord = %s",$armyId,$x,$y);
+			@$db_connect->query($queryStr);
+		}
+
+		return $armyId;
+
+	}
+
+	function addArmyUnitsDB($armyId, $unitType, $amount){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("UPDATE `army` SET `%s`= %s + %s WHERE id=%s",
+		$unitType,$unitType,$amount,$armyId);
+		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
+	function addArmyDB($x,$y,$armyAmount){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$army = getArmyIdByLocationFromDB($x,$y);
+		$armyId;
+		if($army == NULL){
+			$armyId = initArmy($x,$y);
+		}
+		else{
+			$armyId = $army;
+		}
+
+		foreach ($armyAmount as $unitType => $amount) {
+			addArmyUnitsDB($armyId,$unitType,$amount);
+		}
+
+		mysqli_close($db_connect);
+	}
+
 	function getMapRegionFromDB($userId,$xFrom,$xTo,$yFrom,$yTo){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -343,6 +415,12 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
  		return $userBuildings;
 	}
 
-	//echo(json_encode(getArmyTypesFromDB()));
+
+	//$res = [
+	//	"Swordman" => 4,
+	//	"Shieldbearer" => 4
+	//];
+
+	//echo(json_encode(addArmyDB(-3, 1, $res)));
 
 ?>
