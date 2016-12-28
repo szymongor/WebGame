@@ -352,6 +352,19 @@ ol > li:first-child
 	overflow: auto;
 }
 
+.gameDetailsArmyBar
+{
+	border-radius: 5px;
+	border: 2px solid #017a1f;
+	padding: 0px 5px;
+	width: 90%;
+	height: 30%;
+	margin: 2%;
+	color: #ABDD93;
+	position: relative;
+	text-align: center;
+}
+
 .mapTile
 {
 	user-select: none;

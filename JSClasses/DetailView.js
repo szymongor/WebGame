@@ -55,7 +55,7 @@ function DetailView(){
     var mapTileStr = "Biome: "+selectedTile.biome;
 
     if(selectedTile.id_owner != null){
-      mapTileStr += "<br />";
+      mapTileStr += "  | ";
       mapTileStr += "Owner: "+selectedTile.id_owner;
     }
 
@@ -65,6 +65,20 @@ function DetailView(){
 
     $('#detailsView').empty();
     $('#detailsView').append(mapTileStr);
+    detailView.showArmy();
+
+  }
+
+  this.showArmy = function(){
+    $('#detailsView').append("</br> Army: ");
+    $('#detailsView').append("<div class='gameDetailsList' id='armyUnitsList'></div>");
+    $('#detailsBuilding').addClass("gameDetailsOptionSelected");
+  	$('#detailsMap').removeClass("gameDetailsOptionSelected");
+    $.each(detailView.selectedTile.army, function(type,amount){
+      if(amount != 0)
+  		detailView.appendArmyUnits(type,amount);
+  	});
+
   }
 
   this.showBuildingsToBuild = function(){
@@ -72,6 +86,7 @@ function DetailView(){
   	apiClient.getBuildingsToBuild(DV.appendBuildingToBuild);
     $('#detailsBuilding').addClass("gameDetailsOptionSelected");
   	$('#detailsMap').removeClass("gameDetailsOptionSelected");
+
   }
 
   this.appendBuildingToBuild = function(building){
@@ -83,7 +98,14 @@ function DetailView(){
   		if(value!=0)
   		$('#'+building.Type+"ToBuildCost").append(i+":"+value+"<br/>");
   	});
+  }
 
+  this.appendArmyUnits = function(armyUnit,amount){
+    $('#armyUnitsList').append("<div class='gameDetailsBuildingToBuild' id='"+armyUnit+"Details' ></div>");
+    $('#'+armyUnit+"Details").append( armyUnit+ "<br/>");
+    $('#'+armyUnit+"Details").append('<img src="img/Army/'+armyUnit+'.png" height="70px" width="70px "/>');
+    $('#'+armyUnit+"Details").append("<div class='gameDetailsBuildingToBuildResources' id='"+armyUnit+"ToBuildCost' ></div>");
+    $('#'+armyUnit+"ToBuildCost").append(amount+"<br/>");
   }
 
   this.build = function(buildingType){
