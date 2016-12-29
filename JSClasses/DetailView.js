@@ -101,11 +101,13 @@ function DetailView(){
   }
 
   this.appendArmyUnits = function(armyUnit,amount){
-    $('#armyUnitsList').append("<div class='gameDetailsBuildingToBuild' id='"+armyUnit+"Details' ></div>");
+    $('#armyUnitsList').append("<div class='gameDetailsArmyBar' id='"+armyUnit+"Details' ></div>");
     $('#'+armyUnit+"Details").append( armyUnit+ "<br/>");
-    $('#'+armyUnit+"Details").append('<img src="img/Army/'+armyUnit+'.png" height="70px" width="70px "/>');
-    $('#'+armyUnit+"Details").append("<div class='gameDetailsBuildingToBuildResources' id='"+armyUnit+"ToBuildCost' ></div>");
-    $('#'+armyUnit+"ToBuildCost").append(amount+"<br/>");
+    $('#'+armyUnit+"Details").append('<img src="img/Army/'+armyUnit+'.png" height=50vw" width="50vw "/>');
+    $('#'+armyUnit+"Details").append("<div class='gameDetailsArmySub' id='"+armyUnit+"Add' ></div>");
+    $('#'+armyUnit+"Details").append("<div class='gameDetailsArmySub' id='"+armyUnit+"Stats' ></div>");
+    $('#'+armyUnit+"Stats").append(amount+"<br/>");
+    $('#'+armyUnit+"Add").append("Add"+"<br/>");
   }
 
   this.build = function(buildingType){
