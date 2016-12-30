@@ -107,7 +107,15 @@ function DetailView(){
     $('#'+armyUnit+"Details").append("<div class='gameDetailsArmySub' id='"+armyUnit+"Add' ></div>");
     $('#'+armyUnit+"Details").append("<div class='gameDetailsArmySub' id='"+armyUnit+"Stats' ></div>");
     $('#'+armyUnit+"Stats").append(amount+"<br/>");
-    $('#'+armyUnit+"Add").append("Add"+"<br/>");
+    $('#'+armyUnit+"Add").append("<input type='number' id='"+armyUnit+"Number' class='gameDetailsArmyAddNumber'></input>");
+    $('#'+armyUnit+"Add").append('<div class="gameDetailsOption" onclick=detailView.addUnit("'+armyUnit+'") >Add</div>');
+
+
+  }
+
+  this.addUnit = function(Type){
+    var amount = $('#'+Type+'Number').val();
+    console.log(Type+":"+amount);
   }
 
   this.build = function(buildingType){

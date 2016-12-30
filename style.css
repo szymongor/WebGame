@@ -380,6 +380,12 @@ ol > li:first-child
 	overflow: auto;
 }
 
+input[type="number"].gameDetailsArmyAddNumber
+{
+	width: 90%;
+	height: 25%;
+}
+
 img{
 		display:block;
     position: absolute;
