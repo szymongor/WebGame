@@ -241,6 +241,9 @@
       return $userBuildings;
     }
 
+    public function getPlayersArmy(){
+      return getPlayersArmyByIdDB($this->playerId);
+    }
   }
 
   //session_start();

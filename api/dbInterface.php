@@ -237,7 +237,32 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row["army_id"];
 	}
 
-	function initArmy($x,$y){
+	function getPlayersArmyByIdDB($playerId){
+		//SELECT * FROM `user_army` WHERE user_id = 12
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `user_army` WHERE user_id = %s",
+		$playerId);
+
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		$armyId;
+		if($row == NULL){
+			$armyId = initArmy();
+			$queryStr = sprintf("INSERT INTO `user_army`(`user_id`, `army_id`) VALUES (%s,%s)",
+			$playerId,$armyId);
+			@$db_connect->query($queryStr);
+		}
+		else{
+			$armyId = $row["army_id"];
+		}
+
+
+		mysqli_close($db_connect);
+		return getArmyFromDB($armyId);
+	}
+
+	function initArmy(){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
@@ -260,13 +285,18 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 				}
 			while (mysqli_next_result($db_connect));
 		}
+		return $armyId;
+	}
+
+	function initTileArmy($x,$y){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$armyId = initArmy();
 		if($armyId != NULL){
 			$queryStr = sprintf("UPDATE `map` SET `army_id`=%s WHERE x_coord = %s AND y_coord = %s",$armyId,$x,$y);
 			@$db_connect->query($queryStr);
 		}
-
 		return $armyId;
-
 	}
 
 	function addArmyUnitsDB($armyId, $unitType, $amount){
@@ -284,7 +314,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		$army = getArmyIdByLocationFromDB($x,$y);
 		$armyId;
 		if($army == NULL){
-			$armyId = initArmy($x,$y);
+			$armyId = initTileArmy($x,$y);
 		}
 		else{
 			$armyId = $army;
@@ -414,7 +444,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
  		mysqli_close($db_connect);
  		return $userBuildings;
 	}
-
 
 	//$res = [
 	//	"Swordman" => 4,

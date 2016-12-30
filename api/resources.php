@@ -13,9 +13,22 @@
 					switch($method)
 					{
 						case 'GET':
-								$row = $_SESSION['Player']->getPlayerResources();
-								$resources_json = json_encode($row);
-								echo($resources_json);
+							$request = explode('/', $_SERVER['REQUEST_URI'])[4];
+							switch($request){
+								case 'Resources':
+								//eg. http://localhost/reg/api/resources.php/Resources
+									$row = $_SESSION['Player']->getPlayerResources();
+									$resources_json = json_encode($row);
+									echo($resources_json);
+									break;
+								case 'Army':
+								//eg http://localhost/reg/api/resources.php/Army
+									$row = $_SESSION['Player']->getPlayersArmy();
+									$resources_json = json_encode($row);
+									echo($resources_json);
+									break;
+							}
+
 							break;
 						case 'PUT':
 							break;

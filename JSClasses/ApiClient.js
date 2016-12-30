@@ -17,7 +17,7 @@ function ApiClient(server){
   this.getPlayerResources = function(method){
     $.ajax({
   		type: 'GET',
-  		url: this.server+'/reg/api/resources.php',
+  		url: '/reg/api/resources.php/Resources',
   		success: function(data){
   			resources = $.parseJSON(data);
   			method(resources);
