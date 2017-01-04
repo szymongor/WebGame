@@ -22,6 +22,23 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
 	}
 
+	function initUserResources($userId){
+		upDateResources($userId);
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+
+		$queryStr= sprintf("INSERT INTO `user_resources`(`user_id`) VALUES (%s)",$userId);
+		@$db_connect->query($queryStr);
+
+		$queryStr= sprintf("INSERT INTO `user_resources_income`(`user_id`) VALUES (%s)",$userId);
+		@$db_connect->query($queryStr);
+
+		$queryStr= sprintf("INSERT INTO `user_resources_update`(`user_id`, `last_update`) VALUES (%s,%s)",$userId,time());
+		@$db_connect->query($queryStr);
+
+		mysqli_close($db_connect);
+	}
+
 	function upDateResources($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -451,5 +468,4 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 	//];
 
 	//echo(json_encode(addArmyDB(-3, 1, $res)));
-
 ?>
