@@ -1,0 +1,9 @@
+{
+	"Type": "Barrack",
+	"Cost": {
+		"Wood": "400",
+		"Stone": "600",
+		"Iron": "200"
+	}
+
+}
