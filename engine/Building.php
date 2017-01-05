@@ -5,7 +5,7 @@
   {
     private $buildingType;
 
-    public function __construct($buildingType){
+    public function __construct($buildingType,$buildingLevel){
       $this->buildingType=$buildingType;
     }
 

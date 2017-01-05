@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 26 Gru 2016, 16:13
+-- Czas generowania: 05 Sty 2017, 18:54
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -28,19 +28,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `army` (
   `id` int(11) NOT NULL,
-  `swordman` int(10) NOT NULL DEFAULT '0',
-  `bowman` int(10) NOT NULL DEFAULT '0',
-  `shieldbearer` int(10) NOT NULL DEFAULT '0',
-  `shaman` int(11) NOT NULL DEFAULT '0',
-  `wizard` int(11) NOT NULL DEFAULT '0'
+  `Swordman` int(10) NOT NULL DEFAULT '0',
+  `Bowman` int(10) NOT NULL DEFAULT '0',
+  `Shieldbearer` int(10) NOT NULL DEFAULT '0',
+  `Shaman` int(11) NOT NULL DEFAULT '0',
+  `Wizard` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `army`
 --
 
-INSERT INTO `army` (`id`, `swordman`, `bowman`, `shieldbearer`, `shaman`, `wizard`) VALUES
-(1, 10, 5, 2, 1, 1);
+INSERT INTO `army` (`id`, `Swordman`, `Bowman`, `Shieldbearer`, `Shaman`, `Wizard`) VALUES
+(1, 14, 5, 6, 4, 1),
+(8, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -50,30 +51,34 @@ INSERT INTO `army` (`id`, `swordman`, `bowman`, `shieldbearer`, `shaman`, `wizar
 
 CREATE TABLE `buildings` (
   `building_id` int(11) NOT NULL,
-  `type` varchar(20) COLLATE utf8_polish_ci DEFAULT NULL
+  `type` varchar(20) COLLATE utf8_polish_ci DEFAULT NULL,
+  `level` int(10) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `buildings`
 --
 
-INSERT INTO `buildings` (`building_id`, `type`) VALUES
-(1, 'House'),
-(2, 'Sawmill'),
-(3, 'Mine'),
-(4, 'Forge'),
-(5, 'Farm'),
-(6, 'Castle'),
-(44, 'Castle'),
-(45, 'Sawmill'),
-(46, 'Farm'),
-(47, 'Sawmill'),
-(48, 'Sawmill'),
-(49, 'Stone-Pit'),
-(50, 'Farm'),
-(51, 'Farm'),
-(52, 'Farm'),
-(53, 'Farm');
+INSERT INTO `buildings` (`building_id`, `type`, `level`) VALUES
+(1, 'House', 1),
+(2, 'Sawmill', 1),
+(3, 'Mine', 1),
+(4, 'Forge', 1),
+(5, 'Farm', 1),
+(6, 'Castle', 1),
+(44, 'Castle', 1),
+(45, 'Sawmill', 1),
+(46, 'Farm', 1),
+(47, 'Sawmill', 1),
+(48, 'Sawmill', 1),
+(49, 'Stone-Pit', 1),
+(50, 'Farm', 1),
+(51, 'Farm', 1),
+(52, 'Farm', 1),
+(53, 'Farm', 1),
+(54, 'Farm', 1),
+(55, 'Barrack', 1),
+(56, 'Forge', 1);
 
 -- --------------------------------------------------------
 
@@ -169,7 +174,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (1, 8, NULL, 'Forest', NULL, NULL),
 (2, 0, NULL, 'Swamp', NULL, NULL),
 (2, 1, NULL, 'Forest', NULL, NULL),
-(2, 2, 12, 'Swamp', NULL, NULL),
+(2, 2, 12, 'Swamp', 55, NULL),
 (2, 3, 12, 'Mountains', 3, NULL),
 (2, 4, 12, 'Swamp', 44, NULL),
 (2, 5, 12, 'Plains', NULL, NULL),
@@ -179,7 +184,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (2, 9, NULL, 'Forest', NULL, NULL),
 (3, 0, NULL, 'Swamp', NULL, NULL),
 (3, 1, NULL, 'Forest', NULL, NULL),
-(3, 2, 12, 'Forest', NULL, NULL),
+(3, 2, 12, 'Forest', 56, NULL),
 (3, 3, NULL, 'Swamp', NULL, NULL),
 (3, 4, 12, 'Swamp', 49, NULL),
 (3, 5, 12, 'Plains', 46, NULL),
@@ -201,7 +206,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (5, 1, NULL, 'Swamp', NULL, NULL),
 (5, 2, 12, 'Forest', NULL, NULL),
 (5, 3, 12, 'Swamp', NULL, NULL),
-(5, 4, 12, 'Swamp', NULL, NULL),
+(5, 4, 12, 'Swamp', 54, NULL),
 (5, 5, 12, 'Plains', 51, NULL),
 (5, 6, 12, 'Swamp', NULL, NULL),
 (5, 7, NULL, 'Desert', NULL, NULL),
@@ -270,6 +275,24 @@ INSERT INTO `users` (`id`, `user`, `pass`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `user_army`
+--
+
+CREATE TABLE `user_army` (
+  `user_id` int(11) NOT NULL,
+  `army_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `user_army`
+--
+
+INSERT INTO `user_army` (`user_id`, `army_id`) VALUES
+(12, 8);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `user_resources`
 --
 
@@ -286,7 +309,8 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 573585, 327805, 234278, 1186429);
+(12, 689883, 400085, 292442, 1678573),
+(13, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -307,7 +331,8 @@ CREATE TABLE `user_resources_income` (
 --
 
 INSERT INTO `user_resources_income` (`user_id`, `Wood_income`, `Stone_income`, `Iron_income`, `Food_income`) VALUES
-(12, 8, 5, 4, 30);
+(12, 8, 5, 4, 39),
+(13, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -325,7 +350,8 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1482762418);
+(12, 1483638778),
+(13, 1483516160);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -370,6 +396,13 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `user_army`
+--
+ALTER TABLE `user_army`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `user_resources`
 --
 ALTER TABLE `user_resources`
@@ -395,12 +428,12 @@ ALTER TABLE `user_resources_update`
 -- AUTO_INCREMENT dla tabeli `army`
 --
 ALTER TABLE `army`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT dla tabeli `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT dla tabeli `gs_buildingstypes`
 --

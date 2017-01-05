@@ -32,7 +32,7 @@
       $playersBuildings = $this->getPlayersBuildings();
       $playersIncome = array();
       foreach ($playersBuildings as $value) {
-        $playersBuilding = new Building($value['type']);
+        $playersBuilding = new Building($value['type'],$value['level']);
         $buildingIncome = $playersBuilding->calculateIncome($value['x_coord'],$value['y_coord'],$this->playerId);
         foreach ($buildingIncome as $key => $value) {
           if(isset($playersIncome[$key])){
@@ -219,7 +219,7 @@
           return "No building here!";
         }
         else{
-          $buildingInfo = new Building($buildingDB["type"]);
+          $buildingInfo = new Building($buildingDB["type"],$buildingDB["level"]);
           return $buildingInfo->getBuildingFunctions();
         }
       }
