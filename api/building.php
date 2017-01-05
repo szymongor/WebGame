@@ -27,6 +27,10 @@
 									$response = json_encode($_SESSION['Player']->buildBuilding($_GET['x'], $_GET['y'],$_GET['BuildingType']));
 									echo($response);
 									break;
+								case "buildingFunctions":
+									$response = json_encode($_SESSION['Player']->getBuildingFunctions($_GET['x'], $_GET['y']));
+									echo($response);
+									break;
 							}
 
               break;

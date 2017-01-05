@@ -34,7 +34,6 @@ function DetailView(){
   			var element = "tile" +this.selectedTile[0]+"x" +this.selectedTile[1];
   			if(this.selectedTile.id_owner == idPlayer){
   				DV.showBuildingsToBuild();
-          console.log("showToBuild");
   			}
   		return;
   	}
@@ -43,7 +42,7 @@ function DetailView(){
   	$('#detailsView').append(buildingStr);
     $('#detailsBuilding').addClass("gameDetailsOptionSelected");
   	$('#detailsMap').removeClass("gameDetailsOptionSelected");
-
+    console.log(this.selectedTile.building);
   }
 
   this.setDetailsMap = function(){

@@ -203,10 +203,27 @@
 
     public function getBuilding($x, $y){
       $tile = $this->getMapTile($x,$y);
-      if($tile["building"]!=NULL){
+      if($tile!=NULL || $tile["building"]!=NULL){
         return getBuildingFromDB($x, $y);
       }
       return "null";
+    }
+
+    public function getBuildingFunctions($x,$y){
+      if( !$this->isTileOwned($x,$y)){
+        return "Not owned";
+      }
+      else{
+        $buildingDB = $this->getBuilding($x,$y);
+        if($buildingDB == null){
+          return "No building here!";
+        }
+        else{
+          $buildingInfo = new Building($buildingDB["type"]);
+          return $buildingInfo->getBuildingFunctions();
+        }
+      }
+
     }
 
     public function buildBuilding($x,$y,$buildingType){

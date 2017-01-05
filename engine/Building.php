@@ -33,6 +33,15 @@
       return $buildingInfo;
     }
 
+    public function getBuildingFunctions(){
+      $buildingInfo = Building::getBuildingInfo($this->buildingType);
+      $buildingFunctions = array();
+      if(isset($buildingInfo['Functions'])){
+        $buildingFunctions = $buildingInfo['Functions'];
+      }
+      return $buildingFunctions;
+    }
+
     public function calculateIncome($x,$y,$userId){
       $buildingIncome = array();
       $buildingInfo = Building::getBuildingInfo($this->buildingType);
