@@ -11,9 +11,15 @@ function DetailView(){
     $('#gameDetails').append('<div class="gameDetailsView" id="detailsView"></div>;');
   }
 
-  this.openDetailView = function(e){
+  this.openDetailView = function(e,openWindow){
     detailView.selectedTile = e.detail;
-    detailView.setDetailsMap();
+    if(openWindow == "Map"){
+      detailView.setDetailsMap();
+    }
+    else if (openWindow == "Building") {
+      detailView.setDetailsBuilding();
+    }
+
 
   }
 

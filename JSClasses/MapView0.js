@@ -74,6 +74,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       mapView.selectedTile = selectedTileNow;
 
 
+
     }else{
       var moveVector = [x-mapView.mousePosition[0],y-mapView.mousePosition[1]]
       var newMapCorener =  [mapView.mapXYCorner[0] - moveVector[0],mapView.mapXYCorner[1] - moveVector[1]];
@@ -83,6 +84,9 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     }
     mapView.mousePosition = null;
     mapView.mapCornerVec = mapView.mapXYCorner;
+
+    var event = new CustomEvent("tileSelectOneClick", { "detail":selectedTileNow });
+    document.dispatchEvent(event);
   }
 
   this.dbclick = function(event){
@@ -94,7 +98,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var y = Math.floor(y/scale);
     var selectedTile = mapView.tiles[x][y];
     //this.selectedTile = selctedTile;
-    var event = new CustomEvent("tileSelect", { "detail":selectedTile });
+    var event = new CustomEvent("tileSelectDbClick", { "detail":selectedTile });
     document.dispatchEvent(event);
 
     //document.addEventListener("name-of-event", function(e) {

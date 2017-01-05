@@ -4,8 +4,13 @@ var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
-document.addEventListener("tileSelect", function(e) {
-	detailView.openDetailView(e);
+document.addEventListener("tileSelectDbClick", function(e) {
+	detailView.openDetailView(e,"Building");
+	//console.log(e.detail); // Prints selected x and y
+});
+
+document.addEventListener("tileSelectOneClick", function(e) {
+	detailView.openDetailView(e, "Map");
 	//console.log(e.detail); // Prints selected x and y
 });
 
