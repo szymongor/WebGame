@@ -28,6 +28,7 @@
 									echo($response);
 									break;
 								case "buildingFunctions":
+									//eg. http://localhost/reg/api/building.php/buildingFunctions/?x=3&y=2
 									$response = json_encode($_SESSION['Player']->getBuildingFunctions($_GET['x'], $_GET['y']));
 									echo($response);
 									break;
