@@ -86,6 +86,21 @@ function ApiClient(server){
   	});
   }
 
+  this.getBuildingsFunctions = function(x,y,functionType,method){
+  	$.ajax({
+  		type: 'GET',
+  		url: this.server+'/reg/api/building.php/buildingFunctions/?x='+x+'&y='+y,
+  		success: function(data){
+  				var result = $.parseJSON(data);
+  				if(result != "Not owned" ){
+            method(result[0], functionType);
+          }
+  		}
+  	});
+  }
+
+
+
   this.conquer = function(x,y,method){
     $.ajax({
 			type: 'GET',

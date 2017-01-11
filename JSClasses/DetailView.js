@@ -43,7 +43,7 @@ function DetailView(){
     $('#detailsBuilding').addClass("gameDetailsOptionSelected");
   	$('#detailsMap').removeClass("gameDetailsOptionSelected");
     DV.setBuildingsFunctions();
-    console.log(this.selectedTile.building);
+    //console.log(this.selectedTile.building);
   }
 
   this.setBuildingsFunctions = function(){
@@ -51,7 +51,10 @@ function DetailView(){
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsRecruit" onclick="" style ="width : 30%">Recruit</div>');
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsTechnology" onclick="" style ="width : 30%">Technology</div>');
     $('#detailsView').append("<div class='gameDetailsList' id='buildingsFunctionsList'></div>");
-    DV.appendBuildingsFunctions(1,1);
+    //DV.appendBuildingsFunctions(1,1);
+    var x = DV.selectedTile.x_coord;
+    var y = DV.selectedTile.y_coord;
+    apiClient.getBuildingsFunctions(x,y,"Production",DV.appendBuildingsFunctions);
   }
 
   this.setDetailsMap = function(){
@@ -128,9 +131,18 @@ function DetailView(){
   }
 
   this.appendBuildingsFunctions = function(builsingsFunctions,functionType){
-    $('#detailsBuilding').addClass("gameDetailsOptionSelected");
-  	$('#detailsMap').removeClass("gameDetailsOptionSelected");
-    $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functions' ></div>");
+    if(builsingsFunctions == null){
+      return;
+    }
+    var functions = builsingsFunctions[functionType];
+    $.each(functions,function(i,func){
+      $('#detailsBuilding').addClass("gameDetailsOptionSelected");
+    	$('#detailsMap').removeClass("gameDetailsOptionSelected");
+      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functionsProduction"+func["Name"]+"' ></div>");
+      $('#functionsProduction'+func["Name"]).append(func["Name"]);
+      console.log(func["Name"]);
+    });
+    //console.log(Object.keys(functions));
   }
 
   this.addUnit = function(Type){
