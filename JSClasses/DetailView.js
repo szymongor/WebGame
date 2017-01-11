@@ -51,6 +51,7 @@ function DetailView(){
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsRecruit" onclick="" style ="width : 30%">Recruit</div>');
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsTechnology" onclick="" style ="width : 30%">Technology</div>');
     $('#detailsView').append("<div class='gameDetailsList' id='buildingsFunctionsList'></div>");
+    $('#detailsProduction').addClass("gameDetailsOptionSelected")
     //DV.appendBuildingsFunctions(1,1);
     var x = DV.selectedTile.x_coord;
     var y = DV.selectedTile.y_coord;
@@ -138,9 +139,14 @@ function DetailView(){
     $.each(functions,function(i,func){
       $('#detailsBuilding').addClass("gameDetailsOptionSelected");
     	$('#detailsMap').removeClass("gameDetailsOptionSelected");
-      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functionsProduction"+func["Name"]+"' ></div>");
-      $('#functionsProduction'+func["Name"]).append(func["Name"]);
-      console.log(func["Name"]);
+      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functions"+func["Name"]+"' ></div>");
+      $('#functions'+func["Name"]).append(func["Name"]+"</br>");
+      $('#functions'+func["Name"]).append("<div class='gameDetailsBuildingToBuildResources' id='function"+func["Name"]+"Cost' ></div>");
+      $.each(func["Cost"],function(i,cost){
+        $("#function"+func["Name"]+"Cost").append(i+" : "+cost +"</br>");
+        //console.log(i+":"+cost);
+      })
+      //console.log(func);
     });
     //console.log(Object.keys(functions));
   }
