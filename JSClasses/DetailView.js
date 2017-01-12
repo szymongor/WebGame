@@ -47,15 +47,25 @@ function DetailView(){
   }
 
   this.setBuildingsFunctions = function(){
-    $('#detailsView').append('<div class="gameDetailsOption" id="detailsProduction" onclick="" style ="width : 30%">Production</div>');
-    $('#detailsView').append('<div class="gameDetailsOption" id="detailsRecruit" onclick="" style ="width : 30%">Recruit</div>');
-    $('#detailsView').append('<div class="gameDetailsOption" id="detailsTechnology" onclick="" style ="width : 30%">Technology</div>');
+    $('#detailsView').append('<div class="gameDetailsOption" id="detailsProduction" onclick="detailView.appendBuildingTypeFunction(\'Production\')" style ="width : 30%">Production</div>');
+    $('#detailsView').append('<div class="gameDetailsOption" id="detailsRecruit" onclick="detailView.appendBuildingTypeFunction(\'Recruit\')" style ="width : 30%">Recruit</div>');
+    $('#detailsView').append('<div class="gameDetailsOption" id="detailsTechnology" onclick="detailView.appendBuildingTypeFunction(\'Technology\')" style ="width : 30%">Technology</div>');
     $('#detailsView').append("<div class='gameDetailsList' id='buildingsFunctionsList'></div>");
-    $('#detailsProduction').addClass("gameDetailsOptionSelected")
     //DV.appendBuildingsFunctions(1,1);
+    DV.appendBuildingTypeFunction("Production");
+  }
+
+  this.appendBuildingTypeFunction = function(functionType){
+    $('#detailsProduction').removeClass("gameDetailsOptionSelected");
+    $('#detailsRecruit').removeClass("gameDetailsOptionSelected");
+    $('#detailsTechnology').removeClass("gameDetailsOptionSelected");
+
+    $('#details'+functionType).addClass("gameDetailsOptionSelected")
+
+
     var x = DV.selectedTile.x_coord;
     var y = DV.selectedTile.y_coord;
-    apiClient.getBuildingsFunctions(x,y,"Production",DV.appendBuildingsFunctions);
+    apiClient.getBuildingsFunctions(x,y,functionType,DV.appendBuildingsFunctions);
   }
 
   this.setDetailsMap = function(){
@@ -132,6 +142,7 @@ function DetailView(){
   }
 
   this.appendBuildingsFunctions = function(builsingsFunctions,functionType){
+    $('#buildingsFunctionsList').empty();
     if(builsingsFunctions == null){
       return;
     }

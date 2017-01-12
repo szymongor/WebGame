@@ -174,7 +174,7 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     mapView.showMapTile(tileJSON);
     setTimeout(function(){
       mapView.drawTileBorder(tileJSON);
-    }, 5);
+      }, 25);
 
   }
 

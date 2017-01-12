@@ -95,11 +95,10 @@ function ApiClient(server){
   				if(result != "Not owned" ){
             method(result[0], functionType);
           }
+
   		}
   	});
   }
-
-
 
   this.conquer = function(x,y,method){
     $.ajax({
