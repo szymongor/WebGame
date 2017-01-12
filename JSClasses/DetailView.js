@@ -148,8 +148,7 @@ function DetailView(){
     }
     var functions = builsingsFunctions[functionType];
     $.each(functions,function(i,func){
-      $('#detailsBuilding').addClass("gameDetailsOptionSelected");
-    	$('#detailsMap').removeClass("gameDetailsOptionSelected");
+      console.log(functions);
       $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functions"+func["Name"]+"' ></div>");
       $('#functions'+func["Name"]).append(func["Name"]+"</br>");
       $('#functions'+func["Name"]).append("<div class='gameDetailsBuildingToBuildResources' id='function"+func["Name"]+"Cost' ></div>");

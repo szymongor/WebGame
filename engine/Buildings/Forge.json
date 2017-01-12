@@ -21,6 +21,15 @@
 				}
 			}
 
+		],
+		"Technology": [{
+				"Name": "Hardening",
+				"Cost": {
+					"Gold": "20",
+					"Stone": "50"
+				}
+			}
+
 		]
 	}]
 
