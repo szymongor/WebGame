@@ -11,5 +11,17 @@
 			"Wood": 3
 		},
 		"Source": ["Forest"]
+	}],
+
+	"Functions": [{
+		"Technology": [{
+				"Name": "Seasoning",
+				"Cost": {
+					"Gold": "20",
+					"Wood": "50"
+				}
+			}
+
+		]
 	}]
 }

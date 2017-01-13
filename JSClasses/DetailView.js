@@ -47,6 +47,9 @@ function DetailView(){
   }
 
   this.setBuildingsFunctions = function(){
+    if(DV.selectedTile.id_owner != idPlayer){
+      return;
+    }
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsProduction" onclick="detailView.appendBuildingTypeFunction(\'Production\')" style ="width : 30%">Production</div>');
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsRecruit" onclick="detailView.appendBuildingTypeFunction(\'Recruit\')" style ="width : 30%">Recruit</div>');
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsTechnology" onclick="detailView.appendBuildingTypeFunction(\'Technology\')" style ="width : 30%">Technology</div>');
