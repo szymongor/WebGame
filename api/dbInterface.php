@@ -22,6 +22,20 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		return $row;
 	}
 
+	function getUserItemsDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr= sprintf("SELECT * FROM `user_items` WHERE user_id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+		if($row == NULL){
+			return initUserItemsDB($userId);
+		}else{
+			return $row;
+		}
+	}
+
 	function initUserResources($userId){
 		upDateResources($userId);
 		global $host, $db_user, $db_password, $db_name;
@@ -37,6 +51,18 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		@$db_connect->query($queryStr);
 
 		mysqli_close($db_connect);
+	}
+
+	function initUserItemsDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr= sprintf("INSERT INTO `user_items`(`user_id`) VALUES (%s)", $userId);
+		@$db_connect->query($queryStr);
+		$queryStr= sprintf("SELECT * FROM `user_items` WHERE user_id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+		return $row;
 	}
 
 	function upDateResources($userId){
@@ -467,5 +493,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 	//	"Shieldbearer" => 4
 	//];
 
-	//echo(json_encode(addArmyDB(-3, 1, $res)));
+	//echo(json_encode(getUserItemsDB(12)));
+
 ?>

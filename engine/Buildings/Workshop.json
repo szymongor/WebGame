@@ -9,12 +9,14 @@
 	"Functions": [{
 		"Production": [{
 				"Name": "Tools",
+				"Time": "20",
 				"Cost": {
 					"Wood": "20",
 					"Iron": "10"
 				}
 			}, {
 				"Name": "Bow",
+				"Time": "30",
 				"Cost": {
 					"Wood": "20",
 					"Stone": "10"

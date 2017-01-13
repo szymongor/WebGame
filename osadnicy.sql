@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 05 Sty 2017, 18:54
+-- Czas generowania: 13 Sty 2017, 15:19
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -78,7 +78,8 @@ INSERT INTO `buildings` (`building_id`, `type`, `level`) VALUES
 (53, 'Farm', 1),
 (54, 'Farm', 1),
 (55, 'Barrack', 1),
-(56, 'Forge', 1);
+(56, 'Forge', 1),
+(67, 'Workshop', 1);
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (3, 9, NULL, 'Plains', NULL, NULL),
 (4, 0, NULL, 'Forest', NULL, NULL),
 (4, 1, NULL, 'Swamp', NULL, NULL),
-(4, 2, 12, 'Desert', NULL, NULL),
+(4, 2, 12, 'Desert', 67, NULL),
 (4, 3, NULL, 'Plains', NULL, NULL),
 (4, 4, 12, 'Plains', 50, NULL),
 (4, 5, 12, 'Forest', 48, NULL),
@@ -293,6 +294,29 @@ INSERT INTO `user_army` (`user_id`, `army_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `user_items`
+--
+
+CREATE TABLE `user_items` (
+  `user_id` int(11) NOT NULL,
+  `Tools` int(10) NOT NULL DEFAULT '0',
+  `Swords` int(10) NOT NULL DEFAULT '0',
+  `Bows` int(10) NOT NULL DEFAULT '0',
+  `Armors` int(10) NOT NULL DEFAULT '0',
+  `Runes` int(10) NOT NULL DEFAULT '0',
+  `Wands` int(10) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `user_items`
+--
+
+INSERT INTO `user_items` (`user_id`, `Tools`, `Swords`, `Bows`, `Armors`, `Runes`, `Wands`) VALUES
+(12, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `user_resources`
 --
 
@@ -309,7 +333,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 689883, 400085, 292442, 1678573),
+(12, 778991, 455290, 336996, 2119312),
 (13, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
@@ -350,7 +374,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1483638778),
+(12, 1484316838),
 (13, 1483516160);
 
 --
@@ -403,6 +427,12 @@ ALTER TABLE `user_army`
   ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `user_items`
+--
+ALTER TABLE `user_items`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- Indexes for table `user_resources`
 --
 ALTER TABLE `user_resources`
@@ -433,7 +463,7 @@ ALTER TABLE `army`
 -- AUTO_INCREMENT dla tabeli `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
 -- AUTO_INCREMENT dla tabeli `gs_buildingstypes`
 --
