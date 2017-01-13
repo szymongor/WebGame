@@ -171,6 +171,8 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
     var x = tileJSON.x_coord - mapView.mapXYCorner[0];
     var y = tileJSON.y_coord - mapView.mapXYCorner[1];
     mapView.tiles[x][y] = tileJSON;
+    //console.log(tileJSON);
+    //console.log(mapView.tiles[x][y]);
     mapView.showMapTile(tileJSON);
     setTimeout(function(){
       mapView.drawTileBorder(tileJSON);

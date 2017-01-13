@@ -450,7 +450,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		global $host, $db_user, $db_password, $db_name;
  		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
- 		$queryStr = sprintf("SELECT B.`building_id`, B.`type`, M.`x_coord`, M.`y_coord` FROM `buildings` as B JOIN `map` AS M
+ 		$queryStr = sprintf("SELECT B.`building_id`, B.`type`, B.`level`, M.`x_coord`, M.`y_coord` FROM `buildings` as B JOIN `map` AS M
 			WHERE B.building_id = M.building_id AND M.id_owner = %s",
  		$userId);
  		$result = @$db_connect->query($queryStr);

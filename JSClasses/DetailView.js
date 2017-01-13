@@ -83,6 +83,11 @@ function DetailView(){
       mapTileStr += "Owner: "+selectedTile.id_owner;
     }
 
+    if(selectedTile.x_coord != null && selectedTile.y_coord != null){
+      mapTileStr += "  | ";
+      mapTileStr += "X : "+selectedTile.x_coord+" | Y : "+selectedTile.y_coord;
+    }
+
     if(selectedTile.biome == "Fog"){
       mapTileStr = "Location is too far."
     }
@@ -148,7 +153,6 @@ function DetailView(){
     }
     var functions = builsingsFunctions[functionType];
     $.each(functions,function(i,func){
-      console.log(functions);
       $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functions"+func["Name"]+"' ></div>");
       $('#functions'+func["Name"]).append(func["Name"]+"</br>");
       $('#functions'+func["Name"]).append("<div class='gameDetailsBuildingToBuildResources' id='function"+func["Name"]+"Cost' ></div>");
