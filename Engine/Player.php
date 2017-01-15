@@ -226,6 +226,28 @@
 
     }
 
+    public function addBuildingTask($x,$y,$task,$amount){
+      $buildingFunctions = $this->getBuildingFunctions($x,$y)[0];
+      $function;
+      foreach ($buildingFunctions as $key => $functions) {
+        foreach ($functions as $key => $buildingFunction) {
+          if($buildingFunction['Name'] == $task){
+            $function = $buildingFunction;
+            break;
+          }
+        }
+      }
+      if(!isset($function)){
+        return "No such function!";
+      }
+
+      $taskCost = $function["Cost"];
+      foreach ($taskCost as $key => $value) {
+        $taskCost[$key] = $amount*$value;
+      }
+      return $taskCost;
+    }
+
     public function buildBuilding($x,$y,$buildingType){
       $tile = $this->getMapTile($x,$y);
       $result = true;

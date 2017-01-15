@@ -243,7 +243,9 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       var buildingType = tileJSON['building']['type'];
       var imgBuilding = new Image();
       imgBuilding.onload = function() {
-        context.drawImage(imgBuilding, x_coord*scale, y_coord*scale, scale, scale);
+        setTimeout( function(){
+          context.drawImage(imgBuilding, x_coord*scale, y_coord*scale, scale, scale);
+        }, 50);
       }
       imgBuilding.src = "img/Buildings/"+buildingType+".png";
   	}
