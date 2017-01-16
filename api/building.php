@@ -1,6 +1,7 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Player.php";
 	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
+	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 	session_start();
 
 		if (!isset($_SESSION['logged_on']))
@@ -14,7 +15,7 @@
 					switch($method)
 					{
 						case 'GET':
-							$request = explode('/', $_SERVER['REQUEST_URI'])[4];
+							$request = getRequestType($_SERVER['REQUEST_URI']);
 							switch($request)
 							{
 								case "buildingList":
