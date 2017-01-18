@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
 	function getUser($userId){
 		global $host, $db_user, $db_password, $db_name;
@@ -132,15 +133,15 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		upDateResources($userId);
 		$currentResources = getUserResources($userId);
-		$sufficeAmount = true;
+		$sufficeAmount = chceckSufficientAmount($currentResources,$resourcesArray);
 		#check amount of all needed resources
-		foreach ($resourcesArray as $transferedResource => $amount)
-		{
-			if($currentResources[$transferedResource]+$amount < 0)
-			{
-				$sufficeAmount = false;
-			}
-		}
+		#foreach ($resourcesArray as $transferedResource => $amount)
+		#{
+		#	if($currentResources[$transferedResource]+$amount < 0)
+		#	{
+		#		$sufficeAmount = false;
+		#	}
+		#}
 		#if enough then add/substract
 
 		if($sufficeAmount)
@@ -158,7 +159,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 	function addResource($userId,$resourceName,$resouceAmount){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		#UPDATE `user_resources` SET`Wood`=Wood + 2000 WHERE user_id=12
 		$queryStr = sprintf("UPDATE `user_resources` SET `%s`= %s + %s WHERE user_id=%s",
 		$resourceName,$resourceName,$resouceAmount,$userId);
 		@$db_connect->query($queryStr);
@@ -384,53 +384,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 
 	}
 
-/*
-	function getBuildingsToBuild(){
-		$buildingsInfo = array();
-		global $host, $db_user, $db_password, $db_name;
-		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$queryStr = sprintf("SELECT * FROM `gs_buildingstypes`");
-		$result = @$db_connect->query($queryStr);
-
-		$row = $result->fetch_assoc();
-
-		while($row != NULL)
-		{
-			$buildingInfo = array(
-					"id"=>$row["id"],
-					"Type"=>$row["Type"]
-			);
-			if($row["Cost"] != NULL)
-			{
-				$cost = array();
-				$queryStrCost = sprintf("SELECT * FROM `gs_costs` WHERE id = %s",$row["Cost"]);
-				$resultCost = @$db_connect->query($queryStrCost);
-				$rowCost = $resultCost->fetch_assoc();
-				foreach ($rowCost as $key => $value)
-				{
-					if($key != "id")
-					{
-						$cost[$key] = $value;
-					}
-				}
-				$buildingInfo["Cost"]=$cost;
-			}
-
-			if($row["technology_requirements_id"] != NULL)
-			{
-				//get tech req.
-			}
-			$row = $result->fetch_assoc();
-			array_push($buildingsInfo,$buildingInfo);
-		}
-
-		$jsonResponse = json_encode($buildingsInfo);
-		echo ($jsonResponse);
-
-
-		mysqli_close($db_connect);
-	}
-*/
 	function setTileBuilding($x,$y,$buildingType){
 		$success;
 		global $host, $db_user, $db_password, $db_name;

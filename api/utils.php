@@ -11,4 +11,15 @@
     return "None";
   }
 
+  function chceckSufficientAmount($storageArray, $requiredArray){
+    $sufficeAmount = true;
+
+    foreach ($requiredArray as $key => $value) {
+      if(!(isset($storageArray[$key]) && $storageArray[$key]-$value >= 0)){
+        $sufficeAmount = false;
+      }
+    }
+    return $sufficeAmount;
+  }
+
 ?>
