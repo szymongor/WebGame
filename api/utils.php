@@ -15,7 +15,7 @@
     $sufficeAmount = true;
 
     foreach ($requiredArray as $key => $value) {
-      if(!(isset($storageArray[$key]) && $storageArray[$key]-$value >= 0)){
+      if(!(isset($storageArray[$key]) && $storageArray[$key] + $value >= 0)){
         $sufficeAmount = false;
       }
     }

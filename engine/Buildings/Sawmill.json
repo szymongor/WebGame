@@ -1,9 +1,9 @@
 {
 	"Type": "Sawmill",
 	"Cost": {
-		"Wood": "50",
-		"Stone": "20",
-		"Iron": "20"
+		"Wood": "-50",
+		"Stone": "-20",
+		"Iron": "-20"
 	},
 
 	"Income": [{
@@ -17,8 +17,8 @@
 		"Technology": [{
 				"Name": "Seasoning",
 				"Cost": {
-					"Gold": "20",
-					"Wood": "50"
+					"Gold": "-20",
+					"Wood": "-50"
 				}
 			}
 

@@ -132,7 +132,7 @@ function DetailView(){
   	$('#'+building.Type+"ToBuild").append("<div class='gameDetailsBuildingToBuildResources' id='"+building.Type+"ToBuildCost' ></div>");
   	$.each(building.Cost, function(i,value){
   		if(value!=0)
-  		$('#'+building.Type+"ToBuildCost").append(i+":"+value+"<br/>");
+  		$('#'+building.Type+"ToBuildCost").append(i+":"+-value+"<br/>");
   	});
   }
 
@@ -160,7 +160,7 @@ function DetailView(){
       $('#functions'+func["Name"]).append(func["Name"]+"</br>");
       $('#functions'+func["Name"]).append("<div class='gameDetailsBuildingToBuildResources' id='function"+func["Name"]+"Cost' ></div>");
       $.each(func["Cost"],function(i,cost){
-        $("#function"+func["Name"]+"Cost").append(i+" : "+cost +"</br>");
+        $("#function"+func["Name"]+"Cost").append(i+" : "+-cost +"</br>");
         //console.log(i+":"+cost);
       })
       //console.log(func);

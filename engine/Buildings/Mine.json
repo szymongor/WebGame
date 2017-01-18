@@ -1,9 +1,9 @@
 {
 	"Type": "Mine",
 	"Cost": {
-		"Wood": "100",
-		"Stone": "20",
-		"Iron": "50"
+		"Wood": "-100",
+		"Stone": "-20",
+		"Iron": "-50"
 	},
 
 	"Income": [{

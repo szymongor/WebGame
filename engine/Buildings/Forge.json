@@ -1,9 +1,9 @@
 {
 	"Type": "Forge",
 	"Cost": {
-		"Wood": "100",
-		"Stone": "100",
-		"Iron": "50"
+		"Wood": "-100",
+		"Stone": "-100",
+		"Iron": "-50"
 	},
 
 	"Functions": [{
@@ -11,15 +11,15 @@
 				"Name": "Sword",
 				"Time": "30",
 				"Cost": {
-					"Wood": "20",
-					"Iron": "10"
+					"Wood": "-20",
+					"Iron": "-10"
 				}
 			}, {
 				"Name": "Armor",
 				"Time": "50",
 				"Cost": {
-					"Stone": "20",
-					"Iron": "10"
+					"Stone": "-20",
+					"Iron": "-10"
 				}
 			}
 

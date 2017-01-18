@@ -1,9 +1,9 @@
 {
 	"Type": "Farm",
 	"Cost": {
-		"Wood": "50",
-		"Stone": "50",
-		"Iron": "10"
+		"Wood": "-50",
+		"Stone": "-50",
+		"Iron": "-10"
 	},
 
 	"Income": [{

@@ -1,9 +1,9 @@
 {
 	"Type": "Stone-Pit",
 	"Cost": {
-		"Wood": "100",
-		"Stone": "30",
-		"Iron": "50"
+		"Wood": "-100",
+		"Stone": "-30",
+		"Iron": "-50"
 	},
 
 	"Income": [{

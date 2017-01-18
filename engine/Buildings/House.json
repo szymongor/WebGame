@@ -1,8 +1,8 @@
 {
 	"Type": "House",
 	"Cost": {
-		"Wood": "100",
-		"Stone": "20",
-		"Iron": "10"
+		"Wood": "-100",
+		"Stone": "-20",
+		"Iron": "-10"
 	}
 }

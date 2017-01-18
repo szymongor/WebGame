@@ -134,16 +134,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		upDateResources($userId);
 		$currentResources = getUserResources($userId);
 		$sufficeAmount = chceckSufficientAmount($currentResources,$resourcesArray);
-		#check amount of all needed resources
-		#foreach ($resourcesArray as $transferedResource => $amount)
-		#{
-		#	if($currentResources[$transferedResource]+$amount < 0)
-		#	{
-		#		$sufficeAmount = false;
-		#	}
-		#}
-		#if enough then add/substract
-
 		if($sufficeAmount)
 		{
 
@@ -280,8 +270,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		return $row["army_id"];
 	}
 
-	function getPlayersArmyByIdDB($playerId){
-		//SELECT * FROM `user_army` WHERE user_id = 12
+	function getPlayersArmyId($playerId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("SELECT * FROM `user_army` WHERE user_id = %s",
@@ -300,8 +289,11 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 			$armyId = $row["army_id"];
 		}
 
+		return $armyId;
+	}
 
-		mysqli_close($db_connect);
+	function getPlayersArmyByIdDB($playerId){
+		$armyId = getPlayersArmyId($playerId);
 		return getArmyFromDB($armyId);
 	}
 
@@ -351,7 +343,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		mysqli_close($db_connect);
 	}
 
-	function addArmyDB($x,$y,$armyAmount){
+	function addArmyToTileDB($x,$y,$armyAmount){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$army = getArmyIdByLocationFromDB($x,$y);
@@ -368,6 +360,17 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		}
 
 		mysqli_close($db_connect);
+	}
+
+	function transferPlayersArmyDB($playerId,$armyAmount){
+		$playersArmy = getPlayersArmyByIdDB($playerId);
+		$sufficeAmount = chceckSufficientAmount($playersArmy, $armyAmount);
+		if($sufficeAmount){
+			$armyId = getPlayersArmyId($playerId);
+			foreach ($armyAmount as $type => $amount) {
+				addArmyUnitsDB($armyId,$type,$amount);
+			}
+		}
 	}
 
 	function getMapRegionFromDB($userId,$xFrom,$xTo,$yFrom,$yTo){
@@ -448,4 +451,5 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
 	//echo(json_encode(getUserItemsDB(12)));
 
+	//transferPlayersArmyDB(12,$res);
 ?>
