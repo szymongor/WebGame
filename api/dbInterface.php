@@ -12,11 +12,46 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		return $row;
 	}
 
-	function getUserResources($userId){
+	function getUserResourcesDB($userId){
 		upDateResources($userId);
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr= sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources` WHERE user_id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+
+
+		if($row == NULL){
+			initUserResources($userId);
+			$result = @$db_connect->query($queryStr);
+			$row = $result->fetch_assoc();
+		}
+			mysqli_close($db_connect);
+			return $row;
+	}
+
+	function getUserResourcesCapacityDB($userId){
+		upDateResources($userId);
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+
+		if($row == NULL){
+			return initUserResourcesCapacityDB($userId);
+		}else{
+			return $row;
+		}
+	}
+
+	function initUserResourcesCapacityDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr= sprintf("INSERT INTO `user_resources_capacity`(`user_id`) VALUES (%s)", $userId);
+		@$db_connect->query($queryStr);
+		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$userId);
 		$result = @$db_connect->query($queryStr);
 		$row = $result->fetch_assoc();
 		mysqli_close($db_connect);
@@ -132,7 +167,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		upDateResources($userId);
-		$currentResources = getUserResources($userId);
+		$currentResources = getUserResourcesDB($userId);
 		$sufficeAmount = chceckSufficientAmount($currentResources,$resourcesArray);
 		if($sufficeAmount)
 		{
@@ -451,5 +486,5 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
 	//echo(json_encode(getUserItemsDB(12)));
 
-	//transferPlayersArmyDB(12,$res);
+	//echo json_encode(getUserResourcesDB(15));
 ?>

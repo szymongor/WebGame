@@ -15,7 +15,7 @@
     }
 
     public function getPlayerResources(){
-      return getUserResources($this->playerId);
+      return getUserResourcesDB($this->playerId);
     }
 
     public function checkPlayerResourcesState($requiredResources){
