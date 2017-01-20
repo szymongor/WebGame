@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 
 	function getUser($userId){
 		global $host, $db_user, $db_password, $db_name;
@@ -51,6 +52,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr= sprintf("INSERT INTO `user_resources_capacity`(`user_id`) VALUES (%s)", $userId);
 		@$db_connect->query($queryStr);
+
+		$rules = Rules::getRules("Resources");
+		foreach ($rules["BaseResourcesCapacity"] as $key => $value) {
+			$queryStr= sprintf("UPDATE `user_resources_capacity` SET `%s`=%s WHERE User_id = %s", $key ,$value, $userId);
+			@$db_connect->query($queryStr);
+
+		}
+
 		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$userId);
 		$result = @$db_connect->query($queryStr);
 		$row = $result->fetch_assoc();
@@ -145,11 +154,11 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		mysqli_close($db_connect);
 	}
 
-	function setPlayersIncomeDB($userId, $income){
+	function setPlayersIncomeDB($userId, $resourcesIncome){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
-		foreach ($income as $resourceName => $value) {
+		foreach ($resourcesIncome as $resourceName => $value) {
 			$queryStr = sprintf("UPDATE `user_resources_income` SET `%s_income`= %s WHERE user_id = %s",
 			$resourceName,$value,$userId);
 			@$db_connect->query($queryStr);
@@ -157,11 +166,17 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 		mysqli_close($db_connect);
 	}
 
-	# $resourcesArray example
-	#$res = [
-	#	"Wood" => -5000,
-	#	"Iron" => +500
-	#];
+	function setPlayersResourcesCapacityDB($userId,$resourcesCapacity){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+
+		foreach ($resourcesCapacity as $resourceName => $value) {
+			$queryStr = sprintf("UPDATE `user_resources_capacity` SET `%s`= %s WHERE user_id = %s",
+			$resourceName,$value,$userId);
+			@$db_connect->query($queryStr);
+		}
+		mysqli_close($db_connect);
+	}
 
 	function transferResources($userId, $resourcesArray){
 		global $host, $db_user, $db_password, $db_name;

@@ -13,6 +13,10 @@
 		"Source": ["Forest"]
 	}],
 
+	"ResourcesCapacity": {
+		"Wood": 300
+	},
+
 	"Functions": [{
 		"Technology": [{
 				"Name": "Seasoning",

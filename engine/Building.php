@@ -4,9 +4,11 @@
   class Building
   {
     private $buildingType;
+    private $buildingLevel;
 
     public function __construct($buildingType,$buildingLevel){
       $this->buildingType=$buildingType;
+      $this->buildingLevel=$buildingLevel;
     }
 
     public static function getBuildingListToBuild(){
@@ -31,6 +33,20 @@
       $buildingInfo = json_decode(fread($file,filesize($filePath)),true);
       fclose($file);
       return $buildingInfo;
+    }
+
+    public function getBuildingCapacity(){
+      $buildingInfo = Building::getBuildingInfo($this->buildingType);
+      $buildingCapacity = Rules::getRules("Resources")["BaseResourcesCapacity"];
+      foreach ($buildingCapacity as $key => $value) {
+        $buildingCapacity[$key] = 0;
+      }
+      if(isset($buildingInfo["ResourcesCapacity"])){
+        foreach ($buildingInfo["ResourcesCapacity"] as $key => $value) {
+          $buildingCapacity[$key] += $value;
+        }
+      }
+      return $buildingCapacity;
     }
 
     public function getBuildingFunctions(){
@@ -79,6 +95,10 @@
         }
       }
       return $buildingIncome;
+    }
+
+    public function calculateCapacity(){
+
     }
   }
 

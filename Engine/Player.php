@@ -53,6 +53,24 @@
       setPlayersIncomeDB($this->playerId,$playersIncome);
     }
 
+    public function updatePlayerResourcesCapacity(){
+      $playersResourcesCapacity = $this->getPlayerResourcesCapacity();
+      setPlayersResourcesCapacityDB($this->playerId,$playersResourcesCapacity);
+    }
+
+    public function getPlayerResourcesCapacity(){
+      $playersBuildings = $this->getPlayersBuildings();
+      $playersResourcesCapacity = Rules::getRules("Resources")['BaseResourcesCapacity'];
+      foreach ($playersBuildings as $value) {
+        $playersBuilding = new Building($value['type'],$value['level']);
+        $buildingIncome = $playersBuilding->getBuildingCapacity();
+        foreach ($buildingIncome as $key => $value) {
+          $playersResourcesCapacity[$key] += $value;
+        }
+      }
+      return $playersResourcesCapacity;
+    }
+
     public function getMapTile($x,$y){
       $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
       if(count($map) > 0 ){
@@ -287,5 +305,8 @@
 
   //session_start();
   //print_r($_SESSION['Player']->updatePlayerResourcesIncome());
+
+  //$_SESSION['Player']->updatePlayerResourcesCapacity();
+  //echo json_encode($_SESSION['Player']->getPlayerResourcesCapacity());
 
 ?>

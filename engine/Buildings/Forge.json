@@ -27,8 +27,8 @@
 		"Technology": [{
 				"Name": "Hardening",
 				"Cost": {
-					"Gold": "20",
-					"Stone": "50"
+					"Gold": "-20",
+					"Stone": "-50"
 				}
 			}
 
