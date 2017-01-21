@@ -29,6 +29,21 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 			return $row;
 	}
 
+	function getUserResourcesIncomeDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr= sprintf("SELECT * FROM `user_resources_income` WHERE user_id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		if($row == NULL){
+			initUserResources($userId);
+			$result = @$db_connect->query($queryStr);
+			$row = $result->fetch_assoc();
+		}
+			mysqli_close($db_connect);
+			return $row;
+	}
+
 	function getUserResourcesCapacityDB($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -130,7 +145,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				//get user resources
 				$resourcesResult = @$db_connect->query(sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources` WHERE user_id = %s",$userId));
 
-				$incomeResult = @$db_connect->query(sprintf("SELECT `Wood_income`, `Stone_income`, `Iron_income`, `Food_income` FROM `user_resources_income` WHERE user_id = %s",$userId));
+				$incomeResult = @$db_connect->query(sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources_income` WHERE user_id = %s",$userId));
 
 				$resourcesRow = $resourcesResult->fetch_assoc();
 				$incomeRow = $incomeResult->fetch_assoc();
@@ -138,10 +153,10 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				$n = floor($timeSpan/60);
 				$timePass = $timeLastUpdate+$n*60;
 
-				$Wood = $resourcesRow['Wood'] +$n*$incomeRow['Wood_income'];
-				$Stone = $resourcesRow['Stone'] + $n*$incomeRow['Stone_income'];
-				$Iron = $resourcesRow['Iron'] + $n*$incomeRow['Iron_income'];
-				$Food = $resourcesRow['Food'] + $n*$incomeRow['Food_income'];
+				$Wood = $resourcesRow['Wood'] +$n*$incomeRow['Wood'];
+				$Stone = $resourcesRow['Stone'] + $n*$incomeRow['Stone'];
+				$Iron = $resourcesRow['Iron'] + $n*$incomeRow['Iron'];
+				$Food = $resourcesRow['Food'] + $n*$incomeRow['Food'];
 
 				if($Wood > $resourcesCapacity['Wood']){
 					$Wood = $resourcesCapacity['Wood'];
@@ -155,7 +170,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				if($Food > $resourcesCapacity['Food']){
 					$Food = $resourcesCapacity['Food'];
 				}
-				
+
 				@$db_connect->query(sprintf("UPDATE `user_resources_update` SET `last_update`= %s WHERE user_id=%s",$timePass,$userId));
 				@$db_connect->query(sprintf("UPDATE `user_resources` SET`Wood`=%s,`Stone`=%s,`Iron`=%s,`Food`=%s WHERE user_id=%s",
 				$Wood,$Stone,$Iron,$Food,$userId));
@@ -169,7 +184,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 
 		foreach ($resourcesIncome as $resourceName => $value) {
-			$queryStr = sprintf("UPDATE `user_resources_income` SET `%s_income`= %s WHERE user_id = %s",
+			$queryStr = sprintf("UPDATE `user_resources_income` SET `%s`= %s WHERE user_id = %s",
 			$resourceName,$value,$userId);
 			@$db_connect->query($queryStr);
 		}

@@ -22,6 +22,12 @@
 									$resources_json = json_encode($row);
 									echo($resources_json);
 									break;
+								case 'ResourcesIncome':
+								//eg. http://localhost/reg/api/resources.php/ResourcesIncome
+									$row = $_SESSION['Player']->getPlayerResourcesIncome();
+									$resources_json = json_encode($row);
+									echo($resources_json);
+									break;
 								case 'ResourcesCapacity':
 								//eg. http://localhost/reg/api/resources.php/ResourcesCapacity
 									$row = $_SESSION['Player']->getPlayerResourcesCapacity();

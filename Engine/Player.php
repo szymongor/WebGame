@@ -29,6 +29,10 @@
     }
 
     public function getPlayerResourcesIncome(){
+      return getUserResourcesIncomeDB($this->playerId);
+    }
+
+    public function calculatePlayerResourcesIncome(){
       $playersBuildings = $this->getPlayersBuildings();
       $playersIncome = array();
       foreach ($playersBuildings as $value) {
@@ -49,7 +53,7 @@
     }
 
     public function updatePlayerResourcesIncome(){
-      $playersIncome = $this->getPlayerResourcesIncome();
+      $playersIncome = $this->calculatePlayerResourcesIncome();
       setPlayersIncomeDB($this->playerId,$playersIncome);
     }
 
