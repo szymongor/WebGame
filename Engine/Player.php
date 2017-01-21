@@ -53,12 +53,16 @@
       setPlayersIncomeDB($this->playerId,$playersIncome);
     }
 
+    public function getPlayerResourcesCapacity(){
+      return getUserResourcesCapacityDB($this->playerId);
+    }
+
     public function updatePlayerResourcesCapacity(){
-      $playersResourcesCapacity = $this->getPlayerResourcesCapacity();
+      $playersResourcesCapacity = $this->calculatePlayerResourcesCapacity();
       setPlayersResourcesCapacityDB($this->playerId,$playersResourcesCapacity);
     }
 
-    public function getPlayerResourcesCapacity(){
+    public function calculatePlayerResourcesCapacity(){
       $playersBuildings = $this->getPlayersBuildings();
       $playersResourcesCapacity = Rules::getRules("Resources")['BaseResourcesCapacity'];
       foreach ($playersBuildings as $value) {
@@ -308,6 +312,6 @@
   //print_r($_SESSION['Player']->updatePlayerResourcesIncome());
 
   //$_SESSION['Player']->updatePlayerResourcesCapacity();
-  //echo json_encode($_SESSION['Player']->getPlayerResourcesCapacity());
+  //echo json_encode($_SESSION['Player']->calculatePlayerResourcesCapacity());
 
 ?>

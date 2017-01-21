@@ -25,7 +25,8 @@ function showMap(){
 }
 
 function showResources(){
-	apiClient.getPlayerResources(resourcesView.showResources);
+	apiClient.getPlayerResources(resourcesView.updatePlayersResources);
+	apiClient.getPlayerResourcesCapacity(resourcesView.updatePlayersResourcesCapacity);
 }
 
 function build(buildingType){

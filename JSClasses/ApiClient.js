@@ -25,6 +25,17 @@ function ApiClient(server){
   		});
   }
 
+  this.getPlayerResourcesCapacity = function(method){
+    $.ajax({
+  		type: 'GET',
+  		url: '/reg/api/resources.php/ResourcesCapacity',
+  		success: function(data){
+  			resources = $.parseJSON(data);
+  			method(resources);
+  			}
+  		});
+  }
+
   this.getTile = function(x,y,method){
     $.ajax({
   		type: 'GET',
