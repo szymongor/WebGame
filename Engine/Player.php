@@ -21,7 +21,7 @@
     public function checkPlayerResourcesState($requiredResources){
       $playerResources = $this->getPlayerResources();
       foreach ($requiredResources as $key => $value) {
-        if($playerResources[$key]<$value){
+        if(0>$playerResources[$key]+$value){
           return false;
         }
       }
@@ -291,9 +291,6 @@
 
       $cost = $buildingInfo['Cost'];
 
-      foreach ($cost as $key => $value) {
-        $cost[$key] *= -1;
-      }
 
       transferResources($this->playerId, $cost);
       setTileBuilding($x,$y,$buildingType);
