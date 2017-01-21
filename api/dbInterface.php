@@ -144,36 +144,26 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 			{
 				//get user resources
 				$resourcesResult = @$db_connect->query(sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources` WHERE user_id = %s",$userId));
-
-				$incomeResult = @$db_connect->query(sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources_income` WHERE user_id = %s",$userId));
-
+				//$resourcesResult = getUserResourcesDB($userId);
+				//$incomeResult = @$db_connect->query(sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources_income` WHERE user_id = %s",$userId));
+				//$incomeResult = getUserResourcesIncomeDB($userId);
 				$resourcesRow = $resourcesResult->fetch_assoc();
-				$incomeRow = $incomeResult->fetch_assoc();
+				$incomeRow = getUserResourcesIncomeDB($userId);
 
 				$n = floor($timeSpan/60);
 				$timePass = $timeLastUpdate+$n*60;
+				$resourcesAfterUpdate = array('Wood' => 0,'Stone' => 0, 'Iron' => 0, 'Food' => 0,  );
 
-				$Wood = $resourcesRow['Wood'] +$n*$incomeRow['Wood'];
-				$Stone = $resourcesRow['Stone'] + $n*$incomeRow['Stone'];
-				$Iron = $resourcesRow['Iron'] + $n*$incomeRow['Iron'];
-				$Food = $resourcesRow['Food'] + $n*$incomeRow['Food'];
-
-				if($Wood > $resourcesCapacity['Wood']){
-					$Wood = $resourcesCapacity['Wood'];
-				}
-				if($Stone > $resourcesCapacity['Stone']){
-					$Stone = $resourcesCapacity['Stone'];
-				}
-				if($Iron > $resourcesCapacity['Iron']){
-					$Iron = $resourcesCapacity['Iron'];
-				}
-				if($Food > $resourcesCapacity['Food']){
-					$Food = $resourcesCapacity['Food'];
+				foreach ($resourcesAfterUpdate as $key => $value) {
+					$resourcesAfterUpdate[$key] = $resourcesRow[$key] +$n*$incomeRow[$key];
+					if($resourcesAfterUpdate[$key] > $resourcesCapacity[$key]){
+						$resourcesAfterUpdate[$key] = $resourcesCapacity[$key];
+					}
 				}
 
 				@$db_connect->query(sprintf("UPDATE `user_resources_update` SET `last_update`= %s WHERE user_id=%s",$timePass,$userId));
 				@$db_connect->query(sprintf("UPDATE `user_resources` SET`Wood`=%s,`Stone`=%s,`Iron`=%s,`Food`=%s WHERE user_id=%s",
-				$Wood,$Stone,$Iron,$Food,$userId));
+				$resourcesAfterUpdate['Wood'],$resourcesAfterUpdate['Stone'],$resourcesAfterUpdate['Iron'],$resourcesAfterUpdate['Food'],$userId));
 			}
 		}
 		mysqli_close($db_connect);
