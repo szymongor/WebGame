@@ -11,5 +11,9 @@
 			"Stone": 3
 		},
 		"Source": ["Mountains"]
-	}]
+	}],
+
+	"ResourcesCapacity": {
+		"Stone": 300
+	}
 }

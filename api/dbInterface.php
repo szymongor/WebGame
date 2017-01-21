@@ -20,8 +20,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$queryStr= sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources` WHERE user_id = %s",$userId);
 		$result = @$db_connect->query($queryStr);
 		$row = $result->fetch_assoc();
-
-
 		if($row == NULL){
 			initUserResources($userId);
 			$result = @$db_connect->query($queryStr);
@@ -32,7 +30,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	}
 
 	function getUserResourcesCapacityDB($userId){
-		upDateResources($userId);
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$userId);
@@ -117,8 +114,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$row = $result->fetch_assoc();
 		$timeLastUpdate = $row['last_update'];
 		$timeNow = time();
-
-
+		$resourcesCapacity = getUserResourcesCapacityDB($userId);
 		if($timeLastUpdate = NULL)
 		{
 			//initialize user_resource_update with timestamp = now
@@ -146,6 +142,20 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				$Stone = $resourcesRow['Stone'] + $n*$incomeRow['Stone_income'];
 				$Iron = $resourcesRow['Iron'] + $n*$incomeRow['Iron_income'];
 				$Food = $resourcesRow['Food'] + $n*$incomeRow['Food_income'];
+
+				if($Wood > $resourcesCapacity['Wood']){
+					$Wood = $resourcesCapacity['Wood'];
+				}
+				if($Stone > $resourcesCapacity['Stone']){
+					$Stone = $resourcesCapacity['Stone'];
+				}
+				if($Iron > $resourcesCapacity['Iron']){
+					$Iron = $resourcesCapacity['Iron'];
+				}
+				if($Food > $resourcesCapacity['Food']){
+					$Food = $resourcesCapacity['Food'];
+				}
+				
 				@$db_connect->query(sprintf("UPDATE `user_resources_update` SET `last_update`= %s WHERE user_id=%s",$timePass,$userId));
 				@$db_connect->query(sprintf("UPDATE `user_resources` SET`Wood`=%s,`Stone`=%s,`Iron`=%s,`Food`=%s WHERE user_id=%s",
 				$Wood,$Stone,$Iron,$Food,$userId));

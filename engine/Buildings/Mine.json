@@ -11,5 +11,10 @@
 			"Iron": 3
 		},
 		"Source": ["Mountains"]
-	}]
+	}],
+
+	"ResourcesCapacity": {
+		"Iron": 300
+	}
+
 }

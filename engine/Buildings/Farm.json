@@ -11,6 +11,10 @@
 			"Food": 3
 		},
 		"Source": ["Plains"]
-	}]
+	}],
+
+	"ResourcesCapacity": {
+		"Food": 300
+	}
 
 }

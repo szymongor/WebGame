@@ -290,6 +290,7 @@
       transferResources($this->playerId, $cost);
       setTileBuilding($x,$y,$buildingType);
       $this->updatePlayerResourcesIncome();
+      $this->updatePlayerResourcesCapacity();
       return $this->getMapTile($x,$y);
     }
 
