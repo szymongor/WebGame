@@ -26,7 +26,9 @@ function showMap(){
 
 function showResources(){
 	apiClient.getPlayerResources(resourcesView.updatePlayersResources);
+	apiClient.getPlayerResourcesIncome(resourcesView.updatePlayersResourcesIncome);
 	apiClient.getPlayerResourcesCapacity(resourcesView.updatePlayersResourcesCapacity);
+
 }
 
 function build(buildingType){

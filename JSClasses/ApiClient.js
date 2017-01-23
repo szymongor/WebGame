@@ -25,6 +25,17 @@ function ApiClient(server){
   		});
   }
 
+  this.getPlayerResourcesIncome = function(method){
+    $.ajax({
+  		type: 'GET',
+  		url: '/reg/api/resources.php/ResourcesIncome',
+  		success: function(data){
+  			resources = $.parseJSON(data);
+  			method(resources);
+  			}
+  		});
+  }
+
   this.getPlayerResourcesCapacity = function(method){
     $.ajax({
   		type: 'GET',
