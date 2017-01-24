@@ -1,6 +1,7 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
   class Player
   {
@@ -26,6 +27,14 @@
         }
       }
       return true;
+    }
+
+    public function checkPlayersArmyState($requiredArmy){
+      $playersArmy = $this->getPlayersArmy();
+      foreach ($requiredArmy as $key => $value) {
+        $requiredArmy[$key] = -$value;
+      }
+      return chceckSufficientAmount($playersArmy, $requiredArmy);
     }
 
     public function getPlayerResourcesIncome(){
@@ -307,12 +316,30 @@
     public function getPlayersArmy(){
       return getPlayersArmyByIdDB($this->playerId);
     }
+
+    public function attackTile($army,$x,$y){
+      if($this->checkPlayersArmyState($army)){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
   }
 
-  //session_start();
+
   //print_r($_SESSION['Player']->updatePlayerResourcesIncome());
 
   //$_SESSION['Player']->updatePlayerResourcesCapacity();
-  //echo json_encode($_SESSION['Player']->calculatePlayerResourcesCapacity());
+
+
+  // session_start();
+  // $res = [
+	// 	"Swordman" => 4,
+	// 	"Shieldbearer" => 4,
+  //   "Bowman" => 0,
+  // ];
+  //
+  // echo json_encode($_SESSION['Player']->attackTile($res,2,3));
 
 ?>

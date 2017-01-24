@@ -335,6 +335,10 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $row["army_id"];
 	}
 
+	function getArmyByLocationDB($x,$y){
+		return getArmyFromDB(getArmyIdByLocationFromDB($x,$y));
+	}
+
 	function getPlayersArmyId($playerId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
