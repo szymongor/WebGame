@@ -321,7 +321,8 @@
     public function attackTile($army,$x,$y){
       if($this->checkPlayersArmyState($army)){
         $battle = new Combat($army,$x,$y);
-        return true;
+        $battle->performBattle();
+        return $battle->getBattleResult();
       }
       else{
         return false;
@@ -335,13 +336,13 @@
   //$_SESSION['Player']->updatePlayerResourcesCapacity();
 
 
-   session_start();
-   $res = [
-	 	"Swordman" => 4,
-	 	"Shieldbearer" => 4,
-     "Bowman" => 0,
-   ];
-
-   echo json_encode($_SESSION['Player']->attackTile($res,2,3));
+  //  session_start();
+  //  $res = [
+	//  	"Swordman" => 10,
+	//  	"Shieldbearer" => 0,
+  //    "Bowman" => 9,
+  //  ];
+   //
+  //  echo json_encode($_SESSION['Player']->attackTile($res,6,1));
 
 ?>

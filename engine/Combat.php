@@ -7,33 +7,33 @@
 
     public function __construct($attackingArmy,$x,$y){
       $this->attackingArmy=$attackingArmy;
-      $this->attackingArmy=getArmyByLocationDB($x,$y);
+      $this->defendingArmy = getArmyByLocationDB($x,$y);
     }
 
     public function performBattle(){
-      foreach ($attackingArmy as $key => $value) {
+      foreach ($this->attackingArmy as $key => $value) {
         $val = $value;
-        $attackingArmy[$key] = $val - $defendingArmy[$key];
-        $defendingArmy[$key] = $defendingArmy[$key] - $val;
-        if($attackingArmy[$key] < 0){
-          $attackingArmy[$key] = 0;
+        $this->attackingArmy[$key] = $val - $this->defendingArmy[$key];
+        $this->defendingArmy[$key] = $this->defendingArmy[$key] - $val;
+        if($this->attackingArmy[$key] < 0){
+          $this->attackingArmy[$key] = 0;
         }
-        if($defendingArmy[$key] < 0){
-          $defendingArmy[$key] = 0;
+        if($this->defendingArmy[$key] < 0){
+          $this->defendingArmy[$key] = 0;
         }
       }
     }
 
     public function getBattleResult(){
       $result = true;
-      foreach ($defendingArmy as $key => $value) {
+      foreach ($this->defendingArmy as $key => $value) {
         if($value > 0 ){
           $result = false;
         }
       }
       return $result;
     }
-    
+
   }
 
 ?>
