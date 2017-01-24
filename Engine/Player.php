@@ -1,6 +1,7 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Combat.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
   class Player
@@ -319,6 +320,7 @@
 
     public function attackTile($army,$x,$y){
       if($this->checkPlayersArmyState($army)){
+        $battle = new Combat($army,$x,$y);
         return true;
       }
       else{
@@ -333,13 +335,13 @@
   //$_SESSION['Player']->updatePlayerResourcesCapacity();
 
 
-  // session_start();
-  // $res = [
-	// 	"Swordman" => 4,
-	// 	"Shieldbearer" => 4,
-  //   "Bowman" => 0,
-  // ];
-  //
-  // echo json_encode($_SESSION['Player']->attackTile($res,2,3));
+   session_start();
+   $res = [
+	 	"Swordman" => 4,
+	 	"Shieldbearer" => 4,
+     "Bowman" => 0,
+   ];
+
+   echo json_encode($_SESSION['Player']->attackTile($res,2,3));
 
 ?>

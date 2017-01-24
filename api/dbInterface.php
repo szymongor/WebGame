@@ -314,8 +314,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$armyId);
 
 		$result = @$db_connect->query($queryStr);
-		$row = $result->fetch_assoc();
-		unset($row['id']);
+		if($result == null){
+			$row = getEmptyArmy();
+		}
+		else{
+			$row = $result->fetch_assoc();
+			unset($row['id']);
+		}
+
 
 
 		mysqli_close($db_connect);
