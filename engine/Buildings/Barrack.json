@@ -4,6 +4,34 @@
 		"Wood": "-400",
 		"Stone": "-600",
 		"Iron": "-200"
-	}
+	},
+
+	"Functions": [{
+		"Recruit": [{
+				"Name": "Swordman",
+				"Cost": {
+					"Iron": "-20",
+					"Food": "-50"
+				},
+				"Time": 20
+			}, {
+				"Name": "Bowman",
+				"Cost": {
+					"Wood": "-20",
+					"Stone": "-5",
+					"Food": "-50"
+				},
+				"Time": 15
+			}, {
+				"Name": "Shieldbearer",
+				"Cost": {
+					"Stone": "-20",
+					"Iron": "-20",
+					"Food": "-60"
+				},
+				"Time": 25
+			}
+		]
+	}]
 
 }

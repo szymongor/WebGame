@@ -8,12 +8,20 @@
 		}
 	},
 	"Bowman": {
-		"Atack": 5,
-		"Health": 50,
+		"Atack": 10,
+		"Health": 40,
 		"Effectiveness": {
 			"Shaman": 2,
 			"Swordman": 2,
 			"Shieldbearer": 0.5
+		}
+	},
+	"Shieldbearer": {
+		"Atack": 5,
+		"Health": 100,
+		"Effectiveness": {
+			"Wizard": 2,
+			"Swordman": 2
 		}
 	}
 }

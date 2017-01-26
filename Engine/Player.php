@@ -281,6 +281,13 @@
       foreach ($taskCost as $key => $value) {
         $taskCost[$key] = $amount*$value;
       }
+
+      if($this->checkPlayerResourcesState($taskCost)){
+        echo "Suffice";
+      }
+      else{
+        echo "NotSuffice";
+      }
       return $taskCost;
     }
 

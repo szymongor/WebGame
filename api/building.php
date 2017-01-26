@@ -39,7 +39,6 @@
 									//echo($_GET['x'].":". $_GET['y']."/".$_GET['Task'].":". $_GET['Amount']);
 									echo($response);
 									break;
-
 							}
 
               break;
