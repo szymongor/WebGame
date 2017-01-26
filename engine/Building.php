@@ -58,6 +58,28 @@
       return $buildingFunctions;
     }
 
+    public function calculateTaskCost($taskName,$amount){
+      $buildingFunctions = $this->getBuildingFunctions()[0];
+      $function;
+      foreach ($buildingFunctions as $key => $functions) {
+        foreach ($functions as $key => $buildingFunction) {
+          if($buildingFunction['Name'] == $taskName){
+            $function = $buildingFunction;
+            break;
+          }
+        }
+      }
+      if(!isset($function)){
+        return "No such function!";
+      }
+
+      $taskCost = $function["Cost"];
+      foreach ($taskCost as $key => $value) {
+        $taskCost[$key] = $amount*$value;
+      }
+      return $taskCost;
+    }
+
     public function calculateIncome($x,$y,$userId){
       $buildingIncome = array();
       $buildingInfo = Building::getBuildingInfo($this->buildingType);

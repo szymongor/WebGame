@@ -245,41 +245,33 @@
       return "null";
     }
 
-    public function getBuildingFunctions($x,$y){
+    public function getBuildingFromTile($x,$y){
       if( !$this->isTileOwned($x,$y)){
-        return "Not owned";
+        //return "Not owned!";
+        return NULL;
       }
       else{
         $buildingDB = $this->getBuilding($x,$y);
         if($buildingDB == null){
-          return "No building here!";
+          //return "No building here!";
+          return NULL;
         }
         else{
-          $buildingInfo = new Building($buildingDB["type"],$buildingDB["level"]);
-          return $buildingInfo->getBuildingFunctions();
+          $building = new Building($buildingDB["type"],$buildingDB["level"]);
+          return $building;
         }
       }
-
     }
 
-    public function addBuildingTask($x,$y,$task,$amount){
-      $buildingFunctions = $this->getBuildingFunctions($x,$y)[0];
-      $function;
-      foreach ($buildingFunctions as $key => $functions) {
-        foreach ($functions as $key => $buildingFunction) {
-          if($buildingFunction['Name'] == $task){
-            $function = $buildingFunction;
-            break;
-          }
-        }
+    public function addBuildingTask($x,$y,$taskName,$amount){
+      $building = $this->getBuildingFromTile($x,$y);
+      if($building == NULL){
+        return "No building here!";
       }
-      if(!isset($function)){
-        return "No such function!";
-      }
+      $taskCost = $building->calculateTaskCost($taskName,$amount);
 
-      $taskCost = $function["Cost"];
-      foreach ($taskCost as $key => $value) {
-        $taskCost[$key] = $amount*$value;
+      if($taskCost == "No such function!"){
+        return "No such function!";
       }
 
       if($this->checkPlayerResourcesState($taskCost)){
