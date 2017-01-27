@@ -519,7 +519,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
  		return $userBuildings;
 	}
 
-	function getPlayersTasks($userId){
+	function getPlayersTasksDB($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("SELECT * FROM `tasks` WHERE owner_id = %s",$userId);
@@ -532,14 +532,24 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
-	//$res = [
-	//	"Swordman" => 4,
-	//	"Shieldbearer" => 4
-	//];
+	function addTaskDB($ownerId,$buildingId,$taskEffect,$time){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$effect = str_replace("\"","\\\"",json_encode($taskEffect));
+		$queryStr = sprintf("INSERT INTO `tasks`(`owner_id`, `task_building`, `task_effect`, `time`) VALUES (%s,%s,\"%s\",%s)",
+		 $ownerId,$buildingId,$effect,time()+$time);
+		$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
+	// $res = [
+	// 	"Swordman" => 4,
+	// 	"Shieldbearer" => 4
+	// ];
 
 	//echo(json_encode(getUserItemsDB(12)));
 	//echo json_encode(getUserResourcesDB(15));
-
-	echo(json_encode(getPlayersTasks(12)));
+	// addTaskDB(12,2,$res,8000);
+	// echo(json_encode(getPlayersTasksDB(12)));
 
 ?>
