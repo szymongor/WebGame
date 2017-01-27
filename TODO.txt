@@ -2,6 +2,7 @@ CSS:
 	-gameOptions,Details,Map relative to parent div
 
 API:
+	BUILDINGS TASKS!
 	validate get/post variables
 	building.php
 	{
@@ -21,7 +22,7 @@ API:
 
 JS:
 	Sort list of buildings to build. (desc. by sum of resources)
-	file with links to api.
+	DONE: file with links to api.
 	DONE: getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
 	DONE: Store conquered tile (to show it details without refreshing board)
 	DONE: class to store tiles (storeTile method)

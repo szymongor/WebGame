@@ -519,12 +519,27 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
  		return $userBuildings;
 	}
 
+	function getPlayersTasks($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `tasks` WHERE owner_id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$tasksArray = array();
+		while($task = $result->fetch_assoc()){
+			array_push($tasksArray,$task);
+		}
+		mysqli_close($db_connect);
+		return $tasksArray;
+	}
+
 	//$res = [
 	//	"Swordman" => 4,
 	//	"Shieldbearer" => 4
 	//];
 
 	//echo(json_encode(getUserItemsDB(12)));
-
 	//echo json_encode(getUserResourcesDB(15));
+
+	echo(json_encode(getPlayersTasks(12)));
+
 ?>

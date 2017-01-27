@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Sty 2017, 18:42
+-- Czas generowania: 27 Sty 2017, 16:03
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -41,7 +41,8 @@ CREATE TABLE `army` (
 
 INSERT INTO `army` (`id`, `Swordman`, `Bowman`, `Shieldbearer`, `Shaman`, `Wizard`) VALUES
 (1, 14, 5, 6, 4, 1),
-(8, 4, 0, 4, 0, 0);
+(8, 14, 15, 4, 0, 0),
+(9, 10, 10, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -215,7 +216,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (5, 8, NULL, 'Plains', NULL, NULL),
 (5, 9, NULL, 'Swamp', NULL, NULL),
 (6, 0, NULL, 'Desert', NULL, NULL),
-(6, 1, NULL, 'Plains', NULL, NULL),
+(6, 1, NULL, 'Plains', NULL, 9),
 (6, 2, 12, 'Desert', 52, NULL),
 (6, 3, 12, 'Desert', 53, NULL),
 (6, 4, 12, 'Desert', NULL, NULL),
@@ -251,6 +252,28 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (9, 7, NULL, 'Desert', NULL, NULL),
 (9, 8, NULL, 'Desert', NULL, NULL),
 (9, 9, NULL, 'Desert', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `tasks`
+--
+
+CREATE TABLE `tasks` (
+  `task_id` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  `task_building` int(11) NOT NULL,
+  `task_effect` blob NOT NULL,
+  `time` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `tasks`
+--
+
+INSERT INTO `tasks` (`task_id`, `owner_id`, `task_building`, `task_effect`, `time`) VALUES
+(1, 12, 1, 0x5b5d, 444),
+(2, 12, 34, 0x7b2253776f72646d616e223a33302c22426f776d616e223a31327d, 333);
 
 -- --------------------------------------------------------
 
@@ -334,10 +357,8 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 849367, 10795, 372184, 2464345),
-(13, 0, 0, 0, 0),
-(14, 0, 0, 0, 0),
-(15, 0, 0, 0, 0);
+(12, 1200, 600, 500, 2300),
+(13, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -358,7 +379,7 @@ CREATE TABLE `user_resources_capacity` (
 --
 
 INSERT INTO `user_resources_capacity` (`User_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 0, 0, 0, 0);
+(12, 1200, 600, 500, 2300);
 
 -- --------------------------------------------------------
 
@@ -368,18 +389,18 @@ INSERT INTO `user_resources_capacity` (`User_id`, `Wood`, `Stone`, `Iron`, `Food
 
 CREATE TABLE `user_resources_income` (
   `user_id` int(11) NOT NULL,
-  `Wood_income` int(10) NOT NULL DEFAULT '0',
-  `Stone_income` int(10) NOT NULL DEFAULT '0',
-  `Iron_income` int(10) NOT NULL DEFAULT '0',
-  `Food_income` int(10) NOT NULL DEFAULT '0'
+  `Wood` int(10) NOT NULL DEFAULT '0',
+  `Stone` int(10) NOT NULL DEFAULT '0',
+  `Iron` int(10) NOT NULL DEFAULT '0',
+  `Food` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `user_resources_income`
 --
 
-INSERT INTO `user_resources_income` (`user_id`, `Wood_income`, `Stone_income`, `Iron_income`, `Food_income`) VALUES
-(12, 8, 5, 4, 39);
+INSERT INTO `user_resources_income` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
+(12, 11, 5, 4, 39);
 
 -- --------------------------------------------------------
 
@@ -397,7 +418,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1484847658),
+(12, 1485529138),
 (13, 1483516160),
 (14, 1484847486),
 (15, 1484847537);
@@ -436,6 +457,12 @@ ALTER TABLE `gs_costs`
 ALTER TABLE `map`
   ADD UNIQUE KEY `x_coord` (`x_coord`,`y_coord`),
   ADD KEY `coord` (`x_coord`,`y_coord`);
+
+--
+-- Indexes for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`task_id`);
 
 --
 -- Indexes for table `users`
@@ -489,7 +516,7 @@ ALTER TABLE `user_resources_update`
 -- AUTO_INCREMENT dla tabeli `army`
 --
 ALTER TABLE `army`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT dla tabeli `buildings`
 --
@@ -505,6 +532,11 @@ ALTER TABLE `gs_buildingstypes`
 --
 ALTER TABLE `gs_costs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT dla tabeli `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
