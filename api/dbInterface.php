@@ -536,7 +536,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$effect = str_replace("\"","\\\"",json_encode($taskEffect));
-		$queryStr = sprintf("INSERT INTO `tasks`(`owner_id`, `task_building`, `task_effect`, `time`) VALUES (%s,%s,\"%s\",%s)",
+		$queryStr = sprintf("INSERT INTO `tasks`(`owner_id`, `task_building`, `task_effect`, `timeEnd`) VALUES (%s,%s,\"%s\",%s)",
 		 $ownerId,$buildingId,$effect,time()+$time);
 		$db_connect->query($queryStr);
 		mysqli_close($db_connect);
@@ -547,7 +547,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	// 	"Shieldbearer" => 4
 	// ];
 
-	//echo(json_encode(getUserItemsDB(12)));
+	echo(json_encode(getPlayersTasksDB(12)));
 	//echo json_encode(getUserResourcesDB(15));
 	// addTaskDB(12,2,$res,8000);
 	// echo(json_encode(getPlayersTasksDB(12)));
