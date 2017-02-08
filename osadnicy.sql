@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 27 Sty 2017, 16:03
+-- Czas generowania: 08 Lut 2017, 18:03
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -264,16 +264,19 @@ CREATE TABLE `tasks` (
   `owner_id` int(11) NOT NULL,
   `task_building` int(11) NOT NULL,
   `task_effect` blob NOT NULL,
-  `time` bigint(20) NOT NULL
+  `timeEnd` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `tasks`
 --
 
-INSERT INTO `tasks` (`task_id`, `owner_id`, `task_building`, `task_effect`, `time`) VALUES
+INSERT INTO `tasks` (`task_id`, `owner_id`, `task_building`, `task_effect`, `timeEnd`) VALUES
 (1, 12, 1, 0x5b5d, 444),
-(2, 12, 34, 0x7b2253776f72646d616e223a33302c22426f776d616e223a31327d, 333);
+(2, 12, 34, 0x7b2253776f72646d616e223a33302c22426f776d616e223a31327d, 333),
+(3, 12, 2, 0x22, 1485538185),
+(4, 12, 2, 0x4172726179, 1485538253),
+(5, 12, 2, 0x7b2253776f72646d616e223a342c22536869656c64626561726572223a347d, 1485538425);
 
 -- --------------------------------------------------------
 
@@ -418,7 +421,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1485529138),
+(12, 1486570738),
 (13, 1483516160),
 (14, 1484847486),
 (15, 1484847537);
@@ -536,7 +539,7 @@ ALTER TABLE `gs_costs`
 -- AUTO_INCREMENT dla tabeli `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --

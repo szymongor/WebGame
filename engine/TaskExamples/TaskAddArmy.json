@@ -1,0 +1,14 @@
+{
+	"add": {
+		"resources": {
+			"destination": {
+				"buildingOwner": 32
+			},
+			"transfer": {
+				"Swordman": 10,
+				"Bowman": 10
+			}
+		}
+	}
+
+}

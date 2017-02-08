@@ -1,0 +1,14 @@
+{
+	"add": {
+		"resources": {
+			"destination": {
+				"buildingOwner": 31
+			},
+			"transfer": {
+				"Wood": 10,
+				"Food": 10
+			}
+		}
+	}
+
+}
