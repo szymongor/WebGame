@@ -34,9 +34,7 @@
 
     public function executeTask(){
       $taskEffect = $this->getTaskEffect();
-
       //TO DO
-
     }
 
   }

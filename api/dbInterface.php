@@ -547,7 +547,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	// 	"Shieldbearer" => 4
 	// ];
 
-	echo(json_encode(getPlayersTasksDB(12)));
+	//echo(json_encode(getPlayersTasksDB(12)));
 	//echo json_encode(getUserResourcesDB(15));
 	// addTaskDB(12,2,$res,8000);
 	// echo(json_encode(getPlayersTasksDB(12)));
