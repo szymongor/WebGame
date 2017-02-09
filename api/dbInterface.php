@@ -220,6 +220,16 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
+	function upDateBuilding($buildingId, $buildingData){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		foreach ($buildingData as $key => $value) {
+			$queryStr = sprintf("UPDATE `buildings` SET `%s`= %s WHERE building_id = %s",$key,$value,$buildingId);
+			@$db_connect->query($queryStr);
+		}
+		mysqli_close($db_connect);
+	}
+
 	function getBuildingFromDB($xCoord,$yCoord){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);

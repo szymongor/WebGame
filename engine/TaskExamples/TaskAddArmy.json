@@ -1,6 +1,6 @@
 {
 	"add": {
-		"resources": {
+		"army": {
 			"destination": {
 				"buildingOwner": 32
 			},
