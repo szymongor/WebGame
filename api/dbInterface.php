@@ -225,7 +225,8 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		foreach ($buildingData as $key => $value) {
 			$queryStr = sprintf("UPDATE `buildings` SET `%s`= %s WHERE building_id = %s",$key,$value,$buildingId);
-			@$db_connect->query($queryStr);
+			$db_connect->query($queryStr);
+			//echo($queryStr."</br>");
 		}
 		mysqli_close($db_connect);
 	}
@@ -552,11 +553,11 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
-	// $res = [
-	// 	"Swordman" => 4,
-	// 	"Shieldbearer" => 4
-	// ];
-
+	//$res = [
+	//	"level" => 3,
+	//	"type" => "\"Barack\""
+	//];
+	//upDateBuilding(68,$res);
 	//echo(json_encode(getPlayersTasksDB(12)));
 	//echo json_encode(getUserResourcesDB(15));
 	// addTaskDB(12,2,$res,8000);

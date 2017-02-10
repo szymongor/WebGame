@@ -328,6 +328,18 @@
       }
     }
 
+    public function getBuildingFunctions($x,$y){
+      $building = $this->getBuildingFromTile($x,$y);
+      $response;
+      if($building != NULL){
+        $response = $building->getBuildingFunctions();
+      }
+      else{
+        $response = "No building here";
+      }
+      return $response;
+    }
+
   }
 
 
