@@ -13,13 +13,17 @@
       return $task['task_effect'];
     }
 
-    private function addResources(){
+    private function addResources($resourcesData){
       $taskEffect = $this->getTaskEffect();
       if(isset($taskEffect['add'])){
         if(isset($taskEffect['add']['resources'])){
           //TO DO
         }
       }
+    }
+
+    private function updateBuilding($buildingData){
+      upDateBuildingDB($task['task_building'],$buildingData);
     }
 
     public function isTaskReady(){
@@ -34,7 +38,15 @@
 
     public function executeTask(){
       $taskEffect = $this->getTaskEffect();
-      //TO DO
+      if(isset($taskEffect['resources'])){
+        $this->addResources($taskEffect['resources']);
+      }
+      elseif (isset($taskEffect['army']) {
+        //TO DO
+      }
+      elseif(isset($taskEffect['build']){
+        $this->updateBuilding($taskEffect['build']);
+      }
     }
 
   }

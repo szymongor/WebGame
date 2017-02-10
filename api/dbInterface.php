@@ -220,7 +220,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
-	function upDateBuilding($buildingId, $buildingData){
+	function upDateBuildingDB($buildingId, $buildingData){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		foreach ($buildingData as $key => $value) {
