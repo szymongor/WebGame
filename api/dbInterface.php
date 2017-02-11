@@ -257,6 +257,21 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $row;
 	}
 
+	function getOwnerByBuildingIdDB($idBuilding){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT `id_owner` FROM `map` WHERE building_id = %s",$idBuilding);
+		$result = @$db_connect->query($queryStr);
+		if($result){
+			$row = $result->fetch_assoc()['id_owner'];
+		}
+		else{
+			$row = NULL;
+		}
+		mysqli_close($db_connect);
+		return $row;
+	}
+
 	function changeTileOwner($userId,$xCoord,$yCoord){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -553,6 +568,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
+	function deleteTaskDB($taskId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("DELETE FROM `tasks` WHERE task_id = %s", $taskId);
+		$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
 	//$res = [
 	//	"level" => 3,
 	//	"type" => "\"Barack\""
@@ -560,7 +583,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//upDateBuilding(68,$res);
 	//echo(json_encode(getPlayersTasksDB(12)));
 	//echo json_encode(getUserResourcesDB(15));
-	// addTaskDB(12,2,$res,8000);
-	// echo(json_encode(getPlayersTasksDB(12)));
+ 	//deleteTask(1);
+	//echo(json_encode(getOwnerByBuildingIdDB(68)));
 
 ?>
