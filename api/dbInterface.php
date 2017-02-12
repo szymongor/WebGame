@@ -576,13 +576,26 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
+	function getAllReadyTasksDB(){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `tasks` WHERE timeEnd < %s",time());
+		$result = @$db_connect->query($queryStr);
+		$tasksArray = array();
+		while($task = $result->fetch_assoc()){
+			array_push($tasksArray,$task);
+		}
+		mysqli_close($db_connect);
+		return $tasksArray;
+	}
+
 	//$res = [
 	//	"level" => 3,
 	//	"type" => "\"Barack\""
 	//];
 	//upDateBuilding(68,$res);
 	//echo(json_encode(getPlayersTasksDB(12)));
-	//echo json_encode(getUserResourcesDB(15));
+	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
 	//echo(json_encode(getOwnerByBuildingIdDB(68)));
 
