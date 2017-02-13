@@ -275,12 +275,12 @@
       }
 
       if($this->checkPlayerResourcesState($taskCost)){
-        echo "Suffice";
+        echo json_encode($building->makeTask($taskName,$amount));
       }
       else{
         echo "NotSuffice";
       }
-      return $taskCost;
+      //return $taskCost;
     }
 
     public function buildBuilding($x,$y,$buildingType){

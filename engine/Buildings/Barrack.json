@@ -13,7 +13,8 @@
 					"Iron": "-20",
 					"Food": "-50"
 				},
-				"Time": 20
+				"Time": 20,
+				"TaskType": "addArmy"
 			}, {
 				"Name": "Bowman",
 				"Cost": {

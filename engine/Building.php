@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/TaskBuilder.php";
 
   class Building
   {
@@ -58,6 +59,20 @@
       return $buildingFunctions;
     }
 
+    public function getTaskType($functionName){
+      $buildingFunctions = $this->getBuildingFunctions()[0];
+      foreach ($buildingFunctions as $key => $functions) {
+        foreach ($functions as $key => $buildingFunction) {
+          if( isset($buildingFunction['TaskType'])  && $buildingFunction['Name'] == $functionName){
+            $taskType = $buildingFunction['TaskType'];
+            return $taskType;
+          }
+        }
+      }
+      return "Not specified task type";
+
+    }
+
     public function calculateTaskCost($taskName,$amount){
       $buildingFunctions = $this->getBuildingFunctions()[0];
       $function;
@@ -78,6 +93,20 @@
         $taskCost[$key] = $amount*$value;
       }
       return $taskCost;
+    }
+
+    public function makeTask($function, $amount){
+      $taskType = $this->getTaskType($function);
+      $task = new TaskBuilder();
+      switch($taskType){
+        case "addArmy":
+          $army = array($function => $amount);
+          $task->addArmy(68,$army);
+          break;
+      }
+
+      return $task->getTask();
+
     }
 
     public function calculateIncome($x,$y,$userId){

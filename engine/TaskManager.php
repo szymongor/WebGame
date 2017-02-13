@@ -18,6 +18,12 @@
       }
     }
 
+    public function updateTask(){
+      foreach ($this->tasks as $value) {
+        $value->executeTask();
+      }
+    }
+
   }
 
 
