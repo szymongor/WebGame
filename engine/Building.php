@@ -116,7 +116,7 @@
       return $costs;
     }
 
-    public function makeTask($function, $amount){
+    public function makeTask($function, $amount, $playerId){
       $taskType = $this->getTaskType($function);
       $task = new TaskBuilder();
       switch($taskType){
@@ -125,7 +125,11 @@
           $task->addArmy($this->buildingId,$army);
           break;
       }
-      echo(json_encode($this->calculateTaskCost($function,$amount)));
+      $taskCosts = $this->calculateTaskCost($function,$amount);
+      $taskStr = json_encode($task->getTask());
+      transferResourcesDB($playerId,$taskCosts['Resources']);
+      addTaskDB($playerId,$this->buildingId,$taskStr,time()+$taskCosts['Time']);
+      //echo(json_encode($this->calculateTaskCost($function,$amount)));
       return $task->getTask();
     }
 

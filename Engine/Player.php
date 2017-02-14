@@ -276,7 +276,7 @@
       }
 
       if($this->checkPlayerResourcesState($taskCost['Resources'])){
-        echo json_encode($building->makeTask($taskName,$amount));
+        echo json_encode($building->makeTask($taskName,$amount,$this->playerId));
       }
       else{
         echo "NotSuffice";
@@ -302,7 +302,7 @@
       $cost = $buildingInfo['Cost'];
 
 
-      transferResources($this->playerId, $cost);
+      transferResourcesDB($this->playerId, $cost);
       setTileBuilding($x,$y,$buildingType);
       $this->updatePlayerResourcesIncome();
       $this->updatePlayerResourcesCapacity();

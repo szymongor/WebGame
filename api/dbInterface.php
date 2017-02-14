@@ -193,7 +193,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
-	function transferResources($userId, $resourcesArray){
+	function transferResourcesDB($userId, $resourcesArray){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		upDateResources($userId);
