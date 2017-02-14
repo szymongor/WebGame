@@ -275,7 +275,7 @@
         return "No such function!";
       }
 
-      if($this->checkPlayerResourcesState($taskCost)){
+      if($this->checkPlayerResourcesState($taskCost['Resources'])){
         echo json_encode($building->makeTask($taskName,$amount));
       }
       else{

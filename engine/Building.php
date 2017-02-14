@@ -104,11 +104,16 @@
         return "No such function!";
       }
 
-      $taskCost = $function["Cost"];
+      $taskCost= $function["Cost"];
       foreach ($taskCost as $key => $value) {
         $taskCost[$key] = $amount*$value;
       }
-      return $taskCost;
+
+      $time = $function['Time'] * $amount;
+
+      $costs['Resources'] = $taskCost;
+      $costs['Time'] = $time;
+      return $costs;
     }
 
     public function makeTask($function, $amount){
@@ -117,12 +122,11 @@
       switch($taskType){
         case "addArmy":
           $army = array($function => $amount);
-          $task->addArmy(68,$army);
+          $task->addArmy($this->buildingId,$army);
           break;
       }
-
+      echo(json_encode($this->calculateTaskCost($function,$amount)));
       return $task->getTask();
-
     }
 
     public function calculateIncome($x,$y,$userId){
