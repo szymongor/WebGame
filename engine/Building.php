@@ -4,12 +4,28 @@
 
   class Building
   {
+    private $buildingDataDB;
+    private $buildingId;
     private $buildingType;
     private $buildingLevel;
-
+    /*
     public function __construct($buildingType,$buildingLevel){
       $this->buildingType=$buildingType;
       $this->buildingLevel=$buildingLevel;
+    }
+    */
+
+    public function __construct($buildingId){
+      $buildingData = getBuildingByIDFromDB($buildingId);
+      if($buildingData != NULL){
+        $this->buildingDataDB = $buildingData;
+        $this->buildingType = $buildingData['type'];
+        if(isset($buildingData['level'])){
+          $this->buildingLevel = $buildingData['level'];
+        }
+
+        $this->buildingId = $buildingData['building_id'];
+      }
     }
 
     public static function getBuildingListToBuild(){

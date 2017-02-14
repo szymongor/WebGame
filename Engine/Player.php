@@ -46,7 +46,8 @@
       $playersBuildings = $this->getPlayersBuildings();
       $playersIncome = array();
       foreach ($playersBuildings as $value) {
-        $playersBuilding = new Building($value['type'],$value['level']);
+        //$playersBuilding = new Building($value['type'],$value['level']);
+        $playersBuilding = new Building($value['building_id']);
         $buildingIncome = $playersBuilding->calculateIncome($value['x_coord'],$value['y_coord'],$this->playerId);
         foreach ($buildingIncome as $key => $value) {
           if(isset($playersIncome[$key])){
@@ -80,7 +81,7 @@
       $playersBuildings = $this->getPlayersBuildings();
       $playersResourcesCapacity = Rules::getRules("Resources")['BaseResourcesCapacity'];
       foreach ($playersBuildings as $value) {
-        $playersBuilding = new Building($value['type'],$value['level']);
+        $playersBuilding = new Building($value['building_id']);
         $buildingIncome = $playersBuilding->getBuildingCapacity();
         foreach ($buildingIncome as $key => $value) {
           $playersResourcesCapacity[$key] += $value;
@@ -257,7 +258,7 @@
           return NULL;
         }
         else{
-          $building = new Building($buildingDB["type"],$buildingDB["level"]);
+          $building = new Building($buildingDB["building_id"]);
           return $building;
         }
       }
