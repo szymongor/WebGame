@@ -23,7 +23,8 @@
 				"Cost": {
 					"Gold": "-20",
 					"Wood": "-50"
-				}
+				},
+				"TaskType": "addTechnology"
 			}
 
 		]

@@ -22,7 +22,8 @@
 					"Stone": "-5",
 					"Food": "-50"
 				},
-				"Time": 15
+				"Time": 15,
+				"TaskType": "addArmy"
 			}, {
 				"Name": "Shieldbearer",
 				"Cost": {
@@ -30,7 +31,8 @@
 					"Iron": "-20",
 					"Food": "-60"
 				},
-				"Time": 25
+				"Time": 25,
+				"TaskType": "addArmy"
 			}
 		]
 	}]

@@ -13,14 +13,16 @@
 				"Cost": {
 					"Wood": "-20",
 					"Iron": "-10"
-				}
+				},
+				"TaskType": "addItem"
 			}, {
 				"Name": "Armor",
 				"Time": "50",
 				"Cost": {
 					"Stone": "-20",
 					"Iron": "-10"
-				}
+				},
+				"TaskType": "addItem"
 			}
 
 		],
@@ -29,7 +31,8 @@
 				"Cost": {
 					"Gold": "-20",
 					"Stone": "-50"
-				}
+				},
+				"TaskType": "addTechnology"
 			}
 
 		]
