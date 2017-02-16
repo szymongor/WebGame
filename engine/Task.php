@@ -18,10 +18,16 @@
     }
 
     private function addResources($resourcesData){
-      $taskEffect = $this->getTaskEffect();
-      if(isset($taskEffect['add'])){
-        if(isset($taskEffect['add']['resources'])){
-          //TO DO
+      $playerId;
+      if(isset($resourcesData['destination'])){
+        if(isset($resourcesData['destination']['buildingOwner'])){
+          $playerId = getOwnerByBuildingIdDB($resourcesData['destination']['buildingOwner']);;
+        }
+        elseif (isset($resourcesData['destination']['owner']) {
+          $playerId = $resourcesData['destination']['owner'];
+        }
+        if(isset($resourcesData['transfer']){
+          transferResourcesDB($playerId,$resourcesData['transfer']);
         }
       }
     }
@@ -35,9 +41,24 @@
         elseif (isset($armyData['destination']['owner']) {
           $playerId = $armyData['destination']['owner'];
         }
+        if(isset($armyData['transfer']){
+          transferPlayersArmyDB($playerId,$armyData['transfer']);
+        }
       }
-      if(isset($armyData['transfer']){
-        transferPlayersArmyDB($playerId,$armyData['transfer']);
+    }
+
+    private function addItems($itemsData){
+      $playerId;
+      if(isset($itemsData['destination'])){
+        if(isset($itemsData['destination']['buildingOwner'])){
+          $playerId = getOwnerByBuildingIdDB($itemsData['destination']['buildingOwner']);;
+        }
+        elseif (isset($itemsData['destination']['owner']) {
+          $playerId = $itemsData['destination']['owner'];
+        }
+        if(isset($itemsData['transfer']){
+          transferItemsDB($playerId,$itemsData['transfer']);
+        }
       }
     }
 
@@ -61,7 +82,10 @@
         $this->addResources($taskEffect['resources']);
       }
       elseif (isset($taskEffect['army']) {
-        //TO DO
+        $this->addArmy($taskEffect['army']);
+      }
+      elseif (isset($taskEffect['items']) {
+        $this->addItems($taskEffect['items']);
       }
       elseif(isset($taskEffect['build']){
         $this->updateBuilding($taskEffect['build']);

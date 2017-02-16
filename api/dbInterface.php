@@ -122,6 +122,36 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $row;
 	}
 
+	function addItemDB($userId, $itemName, $amount){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("UPDATE `user_items` SET `%s`= %s + %s WHERE user_id=%s",
+		$itemName,$itemName,$amount,$userId);
+		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
+	function transferItemsDB($userId, $itemsArray){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$currentItems = getUserItemsDB($userId);
+		$sufficeAmount = chceckSufficientAmount($currentItems,$itemsArray);
+		$response;
+		if($sufficeAmount)
+		{
+			foreach ($itemsArray as $transferedItems => $amount)
+			{
+				addItemDB($userId, $transferedItems, $amount);
+			}
+			$response = true;
+		}
+		else{
+			$response = false;
+		}
+		mysqli_close($db_connect);
+		return $response;
+	}
+
 	function upDateResources($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -598,5 +628,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
 	//echo(json_encode(getOwnerByBuildingIdDB(68)));
+	//addItemDB(12,"Tools",4);
 
 ?>
