@@ -124,13 +124,18 @@
           $army = array($function => $amount);
           $task->addArmy($this->buildingId,$army);
           break;
+        case "addItem":
+          $items = array($function => $amount);
+          $task->addItems($this->buildingId,$items);
+          break;
       }
       $taskCosts = $this->calculateTaskCost($function,$amount);
       $taskStr = $task->getTask();
       transferResourcesDB($playerId,$taskCosts['Resources']);
       addTaskDB($playerId,$this->buildingId,$taskStr,time()+$taskCosts['Time']);
       //echo(json_encode($this->calculateTaskCost($function,$amount)));
-      return $task->getTask();
+      //return $task->getTask();
+      return "Success";
     }
 
     public function calculateIncome($x,$y,$userId){

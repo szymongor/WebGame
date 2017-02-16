@@ -18,6 +18,11 @@
       $this->task['army']['transfer'] = $armyTable;
     }
 
+    public function addItems($buildingId, $itemsTable){
+      $this->task['items']['destination']['buildingOwner'] = $buildingId;
+      $this->task['items']['transfer'] = $itemsTable;
+    }
+
     public function buildBuilding($buildingId, $buildingType){
       $this->task['build']['buildingId'] = $buildingId;
       $this->task['build']['buildingType'] = $armyTable;

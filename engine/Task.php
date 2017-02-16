@@ -32,6 +32,9 @@
         if(isset($armyData['destination']['buildingOwner'])){
           $playerId = getOwnerByBuildingIdDB($armyData['destination']['buildingOwner']);;
         }
+        elseif (isset($armyData['destination']['owner']) {
+          $playerId = $armyData['destination']['owner'];
+        }
       }
       if(isset($armyData['transfer']){
         transferPlayersArmyDB($playerId,$armyData['transfer']);
