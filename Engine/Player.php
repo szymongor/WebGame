@@ -300,12 +300,18 @@
       }
 
       $cost = $buildingInfo['Cost'];
-
-
       transferResourcesDB($this->playerId, $cost);
-      setTileBuilding($x,$y,$buildingType);
-      $this->updatePlayerResourcesIncome();
-      $this->updatePlayerResourcesCapacity();
+      setTileBuilding($x,$y,"Temp");
+      //$this->updatePlayerResourcesIncome();
+      //$this->updatePlayerResourcesCapacity();
+      $buildingId = getBuildingFromDB($x,$y)['building_id'];
+      $buildingArray = array('type' => $buildingType);
+
+      $taskBuilder = new taskBuilder();
+      $taskBuilder->buildBuilding($buildingId, $buildingArray);
+      $taskStr = $taskBuilder->getTask();
+      addTaskDB($this->playerId,$buildingId,$taskStr,time()+$buildingInfo['BuildingTime']);
+
       return $this->getMapTile($x,$y);
     }
 

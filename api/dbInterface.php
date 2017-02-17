@@ -256,7 +256,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		foreach ($buildingData as $key => $value) {
 			$queryStr = sprintf("UPDATE `buildings` SET `%s`= %s WHERE building_id = %s",$key,$value,$buildingId);
 			$db_connect->query($queryStr);
-			//echo($queryStr."</br>");
 		}
 		mysqli_close($db_connect);
 	}

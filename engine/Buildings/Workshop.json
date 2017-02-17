@@ -5,6 +5,7 @@
 		"Stone": "-100",
 		"Iron": "-50"
 	},
+	"BuildingTime": 800,
 
 	"Functions": [{
 		"Production": [{

@@ -8,24 +8,24 @@
       $this->task = array();
     }
 
-    public function addResources($buildingId, $resourcesTable){
+    public function addResources($buildingId, $resourcesArray){
       $this->task['resources']['destination']['buildingOwner'] = $buildingId;
-      $this->task['resources']['transfer'] = $resourcesTable;
+      $this->task['resources']['transfer'] = $resourcesArray;
     }
 
-    public function addArmy($buildingId, $armyTable){
+    public function addArmy($buildingId, $armyArray){
       $this->task['army']['destination']['buildingOwner'] = $buildingId;
-      $this->task['army']['transfer'] = $armyTable;
+      $this->task['army']['transfer'] = $armyArray;
     }
 
-    public function addItems($buildingId, $itemsTable){
+    public function addItems($buildingId, $itemsArray){
       $this->task['items']['destination']['buildingOwner'] = $buildingId;
-      $this->task['items']['transfer'] = $itemsTable;
+      $this->task['items']['transfer'] = $itemsArray;
     }
 
-    public function buildBuilding($buildingId, $buildingType){
+    public function buildBuilding($buildingId, $buildingArray){
       $this->task['build']['buildingId'] = $buildingId;
-      $this->task['build']['buildingType'] = $armyTable;
+      $this->task['build']['buildingData'] = $buildingArray;
     }
 
     public function getTask(){

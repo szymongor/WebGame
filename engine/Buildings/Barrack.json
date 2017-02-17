@@ -5,6 +5,7 @@
 		"Stone": "-600",
 		"Iron": "-200"
 	},
+	"BuildingTime": 1200,
 
 	"Functions": [{
 		"Recruit": [{

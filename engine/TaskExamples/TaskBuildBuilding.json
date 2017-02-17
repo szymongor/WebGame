@@ -1,6 +1,9 @@
 {
 	"build": {
 		"buildingId": 80,
-		"buildingType": "Sawmill"
+		"buildingData": {
+			"type" : "Sawmill",
+			"level" : 1
+			}
 	}
 }

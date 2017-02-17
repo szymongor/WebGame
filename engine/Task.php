@@ -63,7 +63,7 @@
     }
 
     private function updateBuilding($buildingData){
-      upDateBuildingDB($task['task_building'],$buildingData);
+      upDateBuildingDB($buildingData['buildingId'],$buildingData['buildingData']);
     }
 
     public function isTaskReady(){
@@ -81,21 +81,18 @@
       if(isset($taskEffect['resources'])){
         $this->addResources($taskEffect['resources']);
       }
-      elseif (isset($taskEffect['army']) {
+      if (isset($taskEffect['army']) {
         $this->addArmy($taskEffect['army']);
       }
-      elseif (isset($taskEffect['items']) {
+      if (isset($taskEffect['items']) {
         $this->addItems($taskEffect['items']);
       }
-      elseif(isset($taskEffect['build']){
+      if(isset($taskEffect['build']){
         $this->updateBuilding($taskEffect['build']);
       }
       deleteTaskDB($this->getTaskId());
     }
 
   }
-
-
-
 
 ?>
