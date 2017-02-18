@@ -138,9 +138,8 @@
       $taskCosts = $this->calculateTaskCost($function,$amount);
       $taskStr = $task->getTask();
       transferResourcesDB($playerId,$taskCosts['Resources']);
-      addTaskDB($playerId,$this->buildingId,$taskStr,time()+$taskCosts['Time']);
-      //echo(json_encode($this->calculateTaskCost($function,$amount)));
-      //return $task->getTask();
+
+      addTaskDB($playerId,$this->buildingId,$taskStr,$taskCosts['Time']);
       return "Success";
     }
 

@@ -1,12 +1,13 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Task.php";
 
 
   class TaskManager{
 
-    $tasks;
+    private $tasks;
 
-    public __construct(){
+    public function __construct(){
       $this->tasks = array();
     }
 
@@ -15,16 +16,23 @@
       foreach ($tasksDB as $value) {
         $task = new Task($value);
         array_push($this->tasks, $task);
+        echo(json_encode($value));
+        echo("</br>");
       }
     }
 
-    public function updateTask(){
+    public function updateTasks(){
       foreach ($this->tasks as $value) {
         $value->executeTask();
       }
     }
 
+
   }
+
+  $taskMng = new TaskManager();
+  $taskMng->getAllReadyTasks();
+  $taskMng->updateTasks();
 
 
 ?>
