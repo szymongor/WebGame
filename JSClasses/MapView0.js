@@ -247,7 +247,13 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
           context.drawImage(imgBuilding, x_coord*scale, y_coord*scale, scale, scale);
         }, 50);
       }
-      imgBuilding.src = "img/Buildings/"+buildingType+".png";
+      if(buildingType.includes("Construction")){
+        imgBuilding.src = "img/Buildings/Construction.png";
+      }
+      else{
+        imgBuilding.src = "img/Buildings/"+buildingType+".png";
+      }
+
   	}
     mapView.mapGridReady+=1;
     if(mapView.mapGridReady==mapView.width*mapView.height){

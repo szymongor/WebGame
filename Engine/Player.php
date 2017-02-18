@@ -301,7 +301,7 @@
 
       $cost = $buildingInfo['Cost'];
       transferResourcesDB($this->playerId, $cost);
-      setTileBuilding($x,$y,"Temp");
+      setTileBuilding($x,$y,$buildingType." Construction");
       //$this->updatePlayerResourcesIncome();
       //$this->updatePlayerResourcesCapacity();
       $buildingId = getBuildingFromDB($x,$y)['building_id'];
