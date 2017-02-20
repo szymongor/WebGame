@@ -1,4 +1,5 @@
 <?php
+	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/TaskManager.php";
 
 	session_start();
 
@@ -39,6 +40,7 @@
 					$_SESSION['id'] = $row['id'];
 					$_SESSION['user'] = $row['user'];
 					$_SESSION['Player'] = new Player($row['id']);
+					$_SESSION['TaskManager'] = new TaskManager();
 
 					unset($_SESSION['error']);
 					$result->free_result();

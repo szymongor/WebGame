@@ -77,6 +77,11 @@
       setPlayersResourcesCapacityDB($this->playerId,$playersResourcesCapacity);
     }
 
+    public function updateStats(){
+      $this->updatePlayerResourcesIncome();
+      $this->updatePlayerResourcesCapacity();
+    }
+
     public function calculatePlayerResourcesCapacity(){
       $playersBuildings = $this->getPlayersBuildings();
       $playersResourcesCapacity = Rules::getRules("Resources")['BaseResourcesCapacity'];

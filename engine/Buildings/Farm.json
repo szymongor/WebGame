@@ -5,7 +5,7 @@
 		"Stone": "-50",
 		"Iron": "-10"
 	},
-	"BuildingTime": 600,
+	"BuildingTime": 20,
 
 	"Income": [{
 		"Resources": {

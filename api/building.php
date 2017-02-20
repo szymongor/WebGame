@@ -2,6 +2,7 @@
 	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Player.php";
 	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
 	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
+	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/TaskManager.php";
 	session_start();
 
 		if (!isset($_SESSION['logged_on']))
@@ -11,6 +12,7 @@
 		}
 		else
 		{
+			$_SESSION['TaskManager']->updateTasks();
       $method = $_SERVER['REQUEST_METHOD'];
 					switch($method)
 					{

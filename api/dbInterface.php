@@ -312,8 +312,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	function getTileMapFromDB($x,$y){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-    /*$query = sprintf("SELECT `x_coord`,`y_coord`,`id_owner`, `biome`,`building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
-    $x,$y);*/
 		$query = sprintf("SELECT * FROM `map` WHERE x_coord = %s AND y_coord = %s",
     $x,$y);
     $result = @$db_connect->query($query);
@@ -605,13 +603,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
-	function getAllReadyTasksDB(){
+	function popAllReadyTasksDB(){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("SELECT * FROM `tasks` WHERE timeEnd < %s",time());
 		$result = @$db_connect->query($queryStr);
 		$tasksArray = array();
 		while($task = $result->fetch_assoc()){
+			deleteTaskDB($task['task_id']);
 			array_push($tasksArray,$task);
 		}
 		mysqli_close($db_connect);

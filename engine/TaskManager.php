@@ -9,10 +9,11 @@
 
     public function __construct(){
       $this->tasks = array();
+      $this->updateTasks();
     }
 
     private function getAllReadyTasks(){
-      $tasksDB = getAllReadyTasksDB();
+      $tasksDB = popAllReadyTasksDB();
       foreach ($tasksDB as $value) {
         $task = new Task($value);
         array_push($this->tasks, $task);
@@ -26,11 +27,10 @@
       }
     }
 
-
   }
 
-  $taskMng = new TaskManager();
-  $taskMng->updateTasks();
+  //$taskMng = new TaskManager();
+  //$taskMng->updateTasks();
 
 
 ?>
