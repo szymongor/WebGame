@@ -565,9 +565,12 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
  		$userId);
  		$result = @$db_connect->query($queryStr);
 		$userBuildings = array();
-		while($row = $result->fetch_assoc()){
-			$userBuildings[]= $row;
+		if($result){
+			while($row = $result->fetch_assoc()){
+				$userBuildings[]= $row;
+			}
 		}
+
  		mysqli_close($db_connect);
  		return $userBuildings;
 	}
