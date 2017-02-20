@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Player.php";
 
   class Task{
 
@@ -63,7 +64,10 @@
     }
 
     private function updateBuilding($buildingData){
-      $ret = upDateBuildingDB($buildingData['buildingId'],$buildingData['buildingData']);
+      upDateBuildingDB($buildingData['buildingId'],$buildingData['buildingData']);
+      $buildingOwner = new Player(getOwnerByBuildingIdDB($buildingData['buildingId']));
+      $buildingOwner->updateStats();
+
     }
 
     public function isTaskReady(){
