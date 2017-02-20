@@ -620,6 +620,22 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
+	function getBuildingsTasksDB($x,$y){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `tasks` WHERE task_building
+			is not null AND task_building = (SELECT `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s)",$x,$y);
+		$result = @$db_connect->query($queryStr);
+		$tasksArray = array();
+		if($result){
+			while($task = $result->fetch_assoc()){
+				array_push($tasksArray,$task);
+			}
+		}
+		mysqli_close($db_connect);
+		return $tasksArray;
+	}
+
 	//$res = [
 	//	"level" => 3,
 	//	"type" => "\"Barack\""
@@ -628,7 +644,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//echo(json_encode(getPlayersTasksDB(12)));
 	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
-	//echo(json_encode(getOwnerByBuildingIdDB(68)));
+	//echo(json_encode(getBuildingsTasksDB(2,2)));
 	//addItemDB(12,"Tools",4);
 
 ?>

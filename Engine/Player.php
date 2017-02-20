@@ -352,6 +352,17 @@
       return $response;
     }
 
+    public function getBuildingsTasks($x,$y){
+      $response;
+      if($this->isTileOwned($x,$y)){
+        $response = getBuildingsTasksDB($x,$y);
+      }
+      else{
+        $response = "You are not the owner";
+      }
+      return $response;
+    }
+
   }
 
 
