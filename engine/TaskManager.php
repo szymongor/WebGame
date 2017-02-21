@@ -13,10 +13,12 @@
     }
 
     private function getAllReadyTasks(){
-      $tasksDB = popAllReadyTasksDB();
-      foreach ($tasksDB as $value) {
-        $task = new Task($value);
-        array_push($this->tasks, $task);
+      if(count($this->tasks) == 0){
+        $tasksDB = popAllReadyTasksDB();
+        foreach ($tasksDB as $value) {
+          $task = new Task($value);
+          array_push($this->tasks, $task);
+        }
       }
     }
 
@@ -25,6 +27,7 @@
       foreach ($this->tasks as $value) {
         $value->executeTask();
       }
+      $this->tasks = array();
     }
 
   }

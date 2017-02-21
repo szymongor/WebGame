@@ -149,23 +149,25 @@ function DetailView(){
 
   }
 
-  this.appendBuildingsFunctions = function(builsingsFunctions,functionType){
+  this.appendBuildingsFunctions = function(x,y,builsingsFunctions,functionType){
     $('#buildingsFunctionsList').empty();
     if(builsingsFunctions == null){
       return;
     }
     var functions = builsingsFunctions[functionType];
     $.each(functions,function(i,func){
-      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='' id='functions"+func["Name"]+"' ></div>");
+      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='detailView.addBuildingTask("+x+","+y+",\""+func["Name"]+"\",5)' id='functions"+
+      func["Name"]+"' ></div>");
       $('#functions'+func["Name"]).append(func["Name"]+"</br>");
       $('#functions'+func["Name"]).append("<div class='gameDetailsBuildingToBuildResources' id='function"+func["Name"]+"Cost' ></div>");
       $.each(func["Cost"],function(i,cost){
         $("#function"+func["Name"]+"Cost").append(i+" : "+-cost +"</br>");
-        //console.log(i+":"+cost);
       })
-      //console.log(func);
     });
-    //console.log(Object.keys(functions));
+  }
+
+  this.addBuildingTask = function(x, y, taskType, amount){
+    apiClient.makeBuildingTask(x,y,taskType,amount);
   }
 
   this.addUnit = function(Type){

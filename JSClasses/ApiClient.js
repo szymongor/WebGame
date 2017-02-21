@@ -115,9 +115,19 @@ function ApiClient(server){
   		success: function(data){
   				var result = $.parseJSON(data);
   				if(result != "Not owned" ){
-            method(result[0], functionType);
+            method(x,y,result[0], functionType);
           }
 
+  		}
+  	});
+  }
+
+  this.makeBuildingTask = function(x,y,type,amount){
+    $.ajax({
+  		type: 'GET',
+  		url: this.server+'/reg/api/building.php/addTask/?x='+x+'&y='+y+'&Task='+type+'&Amount='+amount,
+  		success: function(data){
+        console.log(data);
   		}
   	});
   }
