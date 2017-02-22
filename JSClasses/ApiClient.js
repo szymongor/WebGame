@@ -127,22 +127,18 @@ function ApiClient(server){
   		type: 'GET',
   		url: this.server+'/reg/api/building.php/addTask/?x='+x+'&y='+y+'&Task='+type+'&Amount='+amount,
   		success: function(data){
-        console.log(data);
+        //console.log(data);
   		}
   	});
   }
 
   this.conquer = function(x,y,method){
     $.ajax({
-			type: 'GET',
-			url: this.server+'/reg/api/conquer.php?x='+x+'&y='+y,
+			type: 'POST',
+			url: this.server+'/reg/api/conquer.php?x='+x+'&y='+y+'&BuildingType=House-',
+      data: {"lol":"lol"},
 			success: function(data){
-				var newRegionTiles = $.parseJSON(data);
-				$.each(newRegionTiles, function(i,row){
-					$.each(row, function(j,value){
-						method(value);
-					});
-				});
+				console.log(data);
 			}
 		});
 

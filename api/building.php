@@ -27,7 +27,12 @@
 									break;
 								case "build":
 									//eg. http://localhost/reg/api/building.php/build/?x=2&y=4&BuildingType=House
-									$response = json_encode($_SESSION['Player']->buildBuilding($_GET['x'], $_GET['y'],$_GET['BuildingType']));
+									if(checkVariables()){
+										$response = json_encode($_SESSION['Player']->buildBuilding($_GET['x'], $_GET['y'],$_GET['BuildingType']));
+									}
+									else{
+										$response = "Wrong data format";
+									}
 									echo($response);
 									break;
 								case "buildingFunctions":

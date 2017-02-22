@@ -38,4 +38,24 @@
 
     return $row;
   }
+
+  function checkVariables(){
+    $response = true;
+    foreach ($_GET as $key => $value) {
+      if(!is_numeric($value)){
+        switch($key){
+          case 'BuildingType':
+            if($value != preg_replace("/[^a-zA-Z0-9]+/", "", $value)){
+              $response = false;
+            }
+            break;
+          default:
+            $response = false;
+            break;
+        }
+      }
+    }
+    return $response;
+  }
+
 ?>
