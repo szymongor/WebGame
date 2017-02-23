@@ -42,6 +42,10 @@
       return getUserResourcesIncomeDB($this->playerId);
     }
 
+    public function getPlayersItems(){
+      return getUserItemsDB($this->playerId);
+    }
+
     public function calculatePlayerResourcesIncome(){
       $playersBuildings = $this->getPlayersBuildings();
       $playersIncome = array();

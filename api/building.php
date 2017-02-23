@@ -37,19 +37,34 @@
 									break;
 								case "buildingFunctions":
 									//eg. http://localhost/reg/api/building.php/buildingFunctions/?x=3&y=2
-									$response = json_encode($_SESSION['Player']->getBuildingFunctions($_GET['x'], $_GET['y']));
+									if(checkVariables()){
+										$response = json_encode($_SESSION['Player']->getBuildingFunctions($_GET['x'], $_GET['y']));
+									}
+									else{
+										$response = "Wrong data format";
+									}
 									echo($response);
 									break;
 								case "addTask":
 									//eg. http://localhost/reg/api/building.php/addTask/?x=2&y=2&Task=Swordman&Amount=5
-									$_SESSION['Player']->addBuildingTask($_GET['x'], $_GET['y'],$_GET['Task'],$_GET['Amount']);
+									if(checkVariables()){
+										$_SESSION['Player']->addBuildingTask($_GET['x'], $_GET['y'],$_GET['Task'],$_GET['Amount']);
+									}
+									else{
+										$response = "Wrong data format";
+									}
 									//$response = json_encode($_SESSION['Player']->addBuildingTask($_GET['x'], $_GET['y'],$_GET['Task'],$_GET['Amount']));
 									//echo($_GET['x'].":". $_GET['y']."/".$_GET['Task'].":". $_GET['Amount']);
 									//echo($response);
 									break;
 								case "currentBuildingTasks":
 									//eg. http://localhost/reg/api/building.php/currentBuildingTasks/?x=2&y=2
-									$response = json_encode($_SESSION['Player']->getBuildingsTasks($_GET['x'], $_GET['y']));
+									if(checkVariables()){
+										$response = json_encode($_SESSION['Player']->getBuildingsTasks($_GET['x'], $_GET['y']));
+									}
+									else{
+										$response = "Wrong data format";
+									}
 									echo($response);
 									break;
 
