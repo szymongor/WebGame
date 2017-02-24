@@ -238,12 +238,38 @@
       return $mapView;
     }
 
-    public function conquer($x, $y){
-      $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
-      if(count($map) > 0){
-        changeTileOwner($this->playerId, $x, $y);
+    public function conquer($x, $y, $armyData){
+      $tileLocation = "";
+      if($this->isTileOwned($x,$y)){
+        $tileLocation = "Owned";
       }
-       return $this->getMapRegion($x - 1 , $x + 1 , $y - 1, $y + 1);
+      else{
+        $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
+        if(count($map) > 0){
+          $tileLocation = "Connected";
+        }
+        else{
+          $tileLocation = "Not Connected";
+        }
+      }
+
+      if($tileLocation == "Connected"){
+        $combat = new Combat($armyData, $x,$y);
+        $combat->performBattle();
+        $ret = $combat->getBattleResult();
+        if($ret){
+          return "Win";
+        }
+        else{
+          return "Defeat";
+        }
+      }
+      else{
+        return "Wrong Tile";
+      }
+
+
+       return $ret;
 
     }
 
