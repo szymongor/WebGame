@@ -4,6 +4,8 @@ var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
+var armyData = {'Army':{"Swordman":4,"Bowman":3,"Wizard":2}};
+
 document.addEventListener("tileSelectDbClick", function(e) {
 	detailView.openDetailView(e,"Building");
 	//console.log(e.detail); // Prints selected x and y
@@ -44,6 +46,7 @@ function build(buildingType){
 //	mapView.showMapTile(tileJSON);
 //}
 /////////
+/*
 function showBuildingDetails(tileInfo){
 	if(tileInfo['building']==null){
 			$('#detailsView').empty();
@@ -59,12 +62,14 @@ function showBuildingDetails(tileInfo){
 	$('#detailsView').empty();
 	$('#detailsView').append(buildingStr);
 }
-
+*/
+/*
 function showBuildingsToBuild(){
 	$('#detailsView').append("<div class='gameDetailsList' id='buildingsToBuildList'></div>");
 	apiClient.getBuildingsToBuild(appendBuildingToBuild);
 }
-
+*/
+/*
 function appendBuildingToBuild(building){
 	$('#buildingsToBuildList').append("<div class='gameDetailsBuildingToBuild' onclick=build('"+building.Type+"') id='"+building.Type+"ToBuild' ></div>");
 	$('#'+building.Type+"ToBuild").append(building.Type + "<br/>");
@@ -76,7 +81,8 @@ function appendBuildingToBuild(building){
 	});
 
 }
-
+*/
+/*
 function setDetailsMap(){
 	$('#detailsMap').addClass("gameDetailsOptionSelected");
 	$('#detailsBuilding').removeClass("gameDetailsOptionSelected");
@@ -98,7 +104,8 @@ function setDetailsMap(){
 	$('#detailsView').empty();
 	$('#detailsView').append(mapTileStr);
 }
-
+*/
+/*
 function setDetailsBuilding(){
 	$('#detailsBuilding').addClass("gameDetailsOptionSelected");
 	$('#detailsMap').removeClass("gameDetailsOptionSelected");
@@ -107,6 +114,9 @@ function setDetailsBuilding(){
 	}
 	showBuildingDetails(mapView.getSelectedTileObject());
 }
+*/
+
+/*
 
 function conquer(){
 	selectedTile = mapView.getSelectedTile();
@@ -125,3 +135,4 @@ function conquer(){
 		});
 	}
 }
+*/

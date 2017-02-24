@@ -48,7 +48,27 @@
         }
       }
     }
+
+    foreach($_POST as $key => $value){
+      if($key == 'Army'){
+        if(!checkArmyFormat($value)){
+          $response = false;
+        }
+      }
+    }
+
     return $response;
   }
+
+  function checkArmyFormat($armyData){
+    $correctFormat = true;
+    foreach ($armyData as $key => $value) {
+      if(!is_numeric($value)){
+        $correctFormat = false;
+      }
+    }
+    return $correctFormat;
+  }
+
 
 ?>

@@ -28,6 +28,8 @@ function DetailView(){
     if(this.selectedTile == null){
       return;
     }
+    $('#detailsBuilding').addClass("gameDetailsOptionSelected");
+  	$('#detailsMap').removeClass("gameDetailsOptionSelected");
     if(this.selectedTile['building']==null){
   			$('#detailsView').empty();
   			$('#detailsView').append("No building here.")
@@ -40,8 +42,7 @@ function DetailView(){
   	var buildingStr = "Type: "+this.selectedTile.building.type;
   	$('#detailsView').empty();
   	$('#detailsView').append("<div>"+buildingStr+"</div>");
-    $('#detailsBuilding').addClass("gameDetailsOptionSelected");
-  	$('#detailsMap').removeClass("gameDetailsOptionSelected");
+
     DV.setBuildingsFunctions();
     //console.log(this.selectedTile.building);
   }

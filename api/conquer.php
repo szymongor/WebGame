@@ -16,10 +16,14 @@
 			switch($method)
 			{
 				case 'POST':
-					//eg. http://localhost/reg/api/conquer.php?x=4&y=4
-	        //$response = $_SESSION['Player']->conquer($_GET['x'], $_GET['y']);
-					$response = checkVariables();
-
+				//eg. http://localhost/reg/api/conquer.php?x=4&y=4
+					if(checkVariables()){
+						//$response = $_SESSION['Player']->conquer($_GET['x'], $_GET['y']);
+						$response = json_encode($_POST);
+					}
+					else{
+						$response = "Wrong data format";
+					}
 					echo($response);
 	        break;
       }

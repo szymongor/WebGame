@@ -132,11 +132,11 @@ function ApiClient(server){
   	});
   }
 
-  this.conquer = function(x,y,method){
+  this.conquer = function(x,y,armyData,method){
     $.ajax({
 			type: 'POST',
-			url: this.server+'/reg/api/conquer.php?x='+x+'&y='+y+'&BuildingType=House-',
-      data: {"lol":"lol"},
+			url: this.server+'/reg/api/conquer.php?x='+x+'&y='+y,
+      data: armyData,
 			success: function(data){
 				console.log(data);
 			}

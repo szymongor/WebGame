@@ -44,11 +44,11 @@
 									echo($resources_json);
 									break;
 								case 'Items':
-									//eg http://localhost/reg/api/resources.php/Items
-										$row = $_SESSION['Player']->getPlayersItems();
-										$resources_json = json_encode($row);
-										echo($resources_json);
-										break;
+								//eg http://localhost/reg/api/resources.php/Items
+									$row = $_SESSION['Player']->getPlayersItems();
+									$resources_json = json_encode($row);
+									echo($resources_json);
+									break;
 							}
 
 							break;
