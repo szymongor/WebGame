@@ -34,6 +34,9 @@
       return $result;
     }
 
+    public function getDefendingArmy(){
+      return $this->defendingArmy;
+    }
   }
 
 ?>

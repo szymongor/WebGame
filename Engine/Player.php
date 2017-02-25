@@ -258,10 +258,10 @@
         $combat->performBattle();
         $ret = $combat->getBattleResult();
         if($ret){
-          return "Win";
+          return $combat->getDefendingArmy();
         }
         else{
-          return "Defeat";
+          return $combat->getDefendingArmy();
         }
       }
       else{
@@ -363,7 +363,7 @@
       if($this->checkPlayersArmyState($army)){
         $battle = new Combat($army,$x,$y);
         $battle->performBattle();
-        return $battle->getBattleResult();
+        return $battle->getDefendingArmy();
       }
       else{
         return false;

@@ -1,6 +1,7 @@
 {
 	"Swordman": {
 		"Atack": 5,
+		"Defense":2,
 		"Health": 50,
 		"Effectiveness": {
 			"Wizard": 2,
@@ -9,6 +10,7 @@
 	},
 	"Bowman": {
 		"Atack": 10,
+		"Defense":1,
 		"Health": 40,
 		"Effectiveness": {
 			"Shaman": 2,
@@ -18,6 +20,7 @@
 	},
 	"Shieldbearer": {
 		"Atack": 5,
+		"Defense":3,
 		"Health": 100,
 		"Effectiveness": {
 			"Wizard": 2,
