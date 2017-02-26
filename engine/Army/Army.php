@@ -17,12 +17,33 @@
       }
     }
 
-    public function getUnits(){
-      $str = "";
-      foreach ($this->units as $value) {
-        $str = $str.$value->getUnitStats();
+    public function checkArmy(){
+
+      foreach ($this->units as $key => $value) {
+        if($value->getAmount() <= 0 ){
+          unset($this->units[$key]);
+        }
       }
-      return $str;
+      if(count($this->units) == 0){
+        return "Defeat";
+      }
+      else{
+        return "Alive";
+      }
+    }
+
+    public function getUnits(){
+      $units = array();
+      foreach ($this->units as $value) {
+        $units[$value->getType()] = $value->getAmount();
+      }
+      return $units;
+    }
+
+    public function getRandomUnit(){
+      $rand = $this->units[array_rand($this->units)];
+
+      return $rand;
     }
 
   }

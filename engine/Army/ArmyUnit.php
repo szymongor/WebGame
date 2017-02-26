@@ -47,6 +47,10 @@
       return $this->type;
     }
 
+    public function getAmount(){
+      return $this->amount;
+    }
+
     public function getUnitStats(){
       $stats = "Type: ".$this->type."</br>";
       $stats = $stats." Amount: ".$this->amount."</br>";
