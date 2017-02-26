@@ -28,20 +28,53 @@
     }
 
     private function calculateAmount(){
-      $amount = floor($this->health / $this->statsInfo['Health']);
+      $amount = ceil($this->health / $this->statsInfo['Health']);
+      $this->amount = $amount;
+
+      $stats = $this->statsInfo;
+      $a = $this->amount;
+      $this->defense = $stats['Defense'] * $a;
+      $this->attack = $stats['Atack'] * $a;
     }
 
     public function getStatsInfo(){
       return $this->statsInfo;
     }
 
+    public function getUnitStats(){
+      $stats = "Amount: ".$this->amount."</br>";
+      $stats = $stats."Health: ".$this->health."</br>";
+      $stats = $stats."Defense: ".$this->defense."</br>";
+      $stats = $stats."Attack: ".$this->attack."</br>";
+      return $stats;
+    }
+
+    public function dealDamage($dmg){
+      if($this->defense < $dmg){
+        $this->health = $this->health + $this->defense - $dmg;
+        $this->calculateAmount();
+      }
+    }
+
+    public function getDamage($target){
+      $dmg = $this->attack;
+      if(isset($this->statsInfo['Effectiveness'][$target])){
+        $dmg = $dmg*$this->statsInfo['Effectiveness'][$target];
+      }
+      return $dmg;
+    }
 
 
   }
 
   $unit = new ArmyUnit("Swordman", 10);;
 
-  echo(json_encode($unit->getStatsInfo()));
-
+  echo(json_encode($unit->getStatsInfo())."</br>");
+  echo($unit->getUnitStats());
+  $unit->dealDamage(100);
+  echo($unit->getUnitStats());
+  echo($unit->getDamage("Shieldbearer")."</br>");
+  echo($unit->getDamage("Wizard")."</br>");
+  echo($unit->getDamage("Swordman")."</br>");
 
 ?>
