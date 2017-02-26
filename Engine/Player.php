@@ -256,7 +256,7 @@
       if($tileLocation == "Connected"){
         $combat = new Battle($armyData, $x,$y);
         $combat->performBattle();
-        return $combat->getBattleResult();
+        return $combat->getBattleLog();
       }
       else{
         return "Wrong Tile";

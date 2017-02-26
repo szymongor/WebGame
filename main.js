@@ -4,7 +4,7 @@ var detailView = new DetailView();
 var resourcesView = new ResourcesView();
 var idPlayer = apiClient.getPlayerId();
 
-var armyData = {'Army':{"Swordman":4,"Bowman":3,"Wizard":2}};
+var armyData = {'Army':{"Swordman":400,"Bowman":300,"Wizard":200}};
 
 document.addEventListener("tileSelectDbClick", function(e) {
 	detailView.openDetailView(e,"Building");
