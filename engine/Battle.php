@@ -1,13 +1,15 @@
 <?php
-
-  class Combat{
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Army/Army.php";
+  class Battle{
 
     private $attackingArmy;
     private $defendingArmy;
 
     public function __construct($attackingArmy,$x,$y){
-      $this->attackingArmy=$attackingArmy;
-      $this->defendingArmy = getArmyByLocationDB($x,$y);
+      $this->attackingArmy= new Army($attackingArmy);
+      $this->defendingArmy = new Army(getArmyByLocationDB($x,$y));
+      //$this->attackingArmy=$attackingArmy;
+      //$this->defendingArmy = getArmyByLocationDB($x,$y);
     }
 
     public function performBattle(){
@@ -35,7 +37,7 @@
     }
 
     public function getDefendingArmy(){
-      return $this->defendingArmy;
+      return $this->defendingArmy->getUnits();
     }
   }
 

@@ -26,5 +26,24 @@
 			"Wizard": 2,
 			"Swordman": 2
 		}
+	},
+	"Shaman": {
+		"Atack": 5,
+		"Defense":3,
+		"Health": 100,
+		"Effectiveness": {
+			"Wizard": 2,
+			"Swordman": 2
+		}
+	},
+	"Wizard": {
+		"Atack": 5,
+		"Defense":3,
+		"Health": 100,
+		"Effectiveness": {
+			"Wizard": 2,
+			"Swordman": 2
+		}
 	}
+
 }

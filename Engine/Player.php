@@ -1,7 +1,7 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
-  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Combat.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Battle.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
   class Player
@@ -254,8 +254,8 @@
       }
 
       if($tileLocation == "Connected"){
-        $combat = new Combat($armyData, $x,$y);
-        $combat->performBattle();
+        $combat = new Battle($armyData, $x,$y);
+        //$combat->performBattle();
         $ret = $combat->getBattleResult();
         if($ret){
           return $combat->getDefendingArmy();
@@ -361,7 +361,7 @@
 
     public function attackTile($army,$x,$y){
       if($this->checkPlayersArmyState($army)){
-        $battle = new Combat($army,$x,$y);
+        $battle = new Battle($army,$x,$y);
         $battle->performBattle();
         return $battle->getDefendingArmy();
       }

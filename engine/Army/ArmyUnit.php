@@ -8,8 +8,10 @@
     private $defense;
     private $attack;
     private $statsInfo;
+    private $type;
 
     public function __construct($type, $amount){
+      $this->type = $type;
       $this->amount = $amount;
       $this->loadStatsInfo($type);
       $this->calculateStats();
@@ -37,15 +39,20 @@
       $this->attack = $stats['Atack'] * $a;
     }
 
-    public function getStatsInfo(){
+    private function getStatsInfo(){
       return $this->statsInfo;
     }
 
+    public function getType(){
+      return $this->type;
+    }
+
     public function getUnitStats(){
-      $stats = "Amount: ".$this->amount."</br>";
-      $stats = $stats."Health: ".$this->health."</br>";
-      $stats = $stats."Defense: ".$this->defense."</br>";
-      $stats = $stats."Attack: ".$this->attack."</br>";
+      $stats = "Type: ".$this->type."</br>";
+      $stats = $stats." Amount: ".$this->amount."</br>";
+      $stats = $stats." Health: ".$this->health."</br>";
+      $stats = $stats." Defense: ".$this->defense."</br>";
+      $stats = $stats." Attack: ".$this->attack."</br>";
       return $stats;
     }
 
@@ -67,14 +74,6 @@
 
   }
 
-  $unit = new ArmyUnit("Swordman", 10);;
-
-  echo(json_encode($unit->getStatsInfo())."</br>");
-  echo($unit->getUnitStats());
-  $unit->dealDamage(100);
-  echo($unit->getUnitStats());
-  echo($unit->getDamage("Shieldbearer")."</br>");
-  echo($unit->getDamage("Wizard")."</br>");
-  echo($unit->getDamage("Swordman")."</br>");
+  //$unit = new ArmyUnit("Shieldbearer", 10);
 
 ?>
