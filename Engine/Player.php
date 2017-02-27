@@ -238,10 +238,22 @@
       return $mapView;
     }
 
+    public function attackTile($x, $y, $armyData){
+      if(!$this->checkPlayersArmyState($armyData)){
+        return "You dont have such army";
+      }
+      else{
+        $combat = new Battle($armyData, $x,$y);
+        $combat->performBattle();
+        //$combat->getBattleLog()." ".
+        return $combat->getBattleResult();
+      }
+    }
+
     public function conquer($x, $y, $armyData){
       $tileLocation = "";
       if($this->isTileOwned($x,$y)){
-        $tileLocation = "Owned";
+        $tileLocation = "Owned tile.";
       }
       else{
         $map = getMapRegionFromDB($this->playerId, $x - 1 , $x + 1 , $y - 1, $y + 1);
@@ -249,22 +261,17 @@
           $tileLocation = "Connected";
         }
         else{
-          $tileLocation = "Not Connected";
+          $tileLocation = "Not connected tile.";
         }
       }
 
-      if($tileLocation == "Connected"){
-        $combat = new Battle($armyData, $x,$y);
-        $combat->performBattle();
-        return $combat->getBattleLog();
+      if($tileLocation != "Connected"){
+        $ret = $tileLocation." Pick another tile.";
       }
       else{
-        return "Wrong Tile";
+        $ret = $this->attackTile($x, $y, $armyData);
       }
-
-
        return $ret;
-
     }
 
     public function getBuilding($x, $y){
@@ -351,17 +358,6 @@
 
     public function getPlayersArmy(){
       return getPlayersArmyByIdDB($this->playerId);
-    }
-
-    public function attackTile($army,$x,$y){
-      if($this->checkPlayersArmyState($army)){
-        $battle = new Battle($army,$x,$y);
-        $battle->performBattle();
-        return $battle->getDefendingArmy();
-      }
-      else{
-        return false;
-      }
     }
 
     public function getBuildingFunctions($x,$y){

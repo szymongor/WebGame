@@ -37,6 +37,7 @@
         $defendingUnit = $this->defendingArmy->getRandomUnit();
         $atackingDMG = $attackingUnit->getDamage($defendingUnit->getType());
         $defendingUnit->dealDamage($atackingDMG);
+        $this->battleLog = $this->battleLog."Attackers: ".$attackingUnit->getType()." ->".$defendingUnit->getType()." dmg: ".$atackingDMG;
       }
 
     }
