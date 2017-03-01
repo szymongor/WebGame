@@ -135,7 +135,7 @@ function ApiClient(server){
   this.conquer = function(x,y,armyData,method){
     $.ajax({
 			type: 'POST',
-			url: this.server+'/reg/api/conquer.php?x='+x+'&y='+y,
+			url: this.server+'/reg/api/conquer.php/conquer/?x='+x+'&y='+y,
       data: armyData,
 			success: function(data){
 				console.log(data);
