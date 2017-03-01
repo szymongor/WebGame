@@ -132,7 +132,7 @@ function ApiClient(server){
   	});
   }
 
-  this.conquer = function(x,y,armyData,method){
+  this.conquerTile = function(x,y,armyData,method){
     $.ajax({
 			type: 'POST',
 			url: this.server+'/reg/api/conquer.php/conquer/?x='+x+'&y='+y,
@@ -143,5 +143,17 @@ function ApiClient(server){
 		});
 
   }
+
+  this.attackTile = function(x,y,armyData,metohd){
+    $.ajax({
+			type: 'POST',
+			url: this.server+'/reg/api/conquer.php/attack/?x='+x+'&y='+y,
+      data: armyData,
+			success: function(data){
+				console.log(data);
+			}
+		});
+  }
+
 
 }

@@ -1,34 +1,20 @@
-CSS:
-	-gameOptions,Details,Map relative to parent div
+TODO:
+	JS: Sort list of buildings to build. (desc. by sum of resources).
+	PHP: Attack/Conquer - army loss.
+	PHP: Conquer - change tile owner.
+	PHP: Attack/Conquer - battle log.
+	PHP: Conquer - return new tile if win.
+	PHP/DB: Technologies.
 
-API:
-	BUILDINGS TASKS!
-	validate get/post variables
-	building.php
-	{
 
-	}
-
-	map.php:
-	{
-		add isset($_GET['x/y'])
-		show shadow tile
-	}
-
-	resources.php
-	{
-		add init resources and resources, income for new players
-	}
-
-JS:
-	Sort list of buildings to build. (desc. by sum of resources)
+Done list:
 	DONE: file with links to api.
 	DONE: getRegion instead of Tile (getTile(x,y) => getRegion(xFrom,yFrom,xTo,yTo))
 	DONE: Store conquered tile (to show it details without refreshing board)
 	DONE: class to store tiles (storeTile method)
 	DONE: getTile - fix to async.
-
-
-PHP:
-	in progress: DB-interface to manage opeations on resources etc.
-	?:Refactor path require_once $_SERVER['DOCUMENT_ROOT']."/Reg/..." in resources.php, player.php, map.php
+	DONE: show shadow tile
+	DONE: validate get/post variables
+	DONE: add init resources and resources, income for new players
+	DONE: BUILDINGS TASKS!
+	DONE: DB-interface to manage opeations on resources etc.

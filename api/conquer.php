@@ -22,7 +22,6 @@
 					//eg. http://localhost/reg/api/conquer.php/conquer/?x=4&y=4
 						if(checkVariables()){
 							$response = json_encode($_SESSION['Player']->conquer($_GET['x'], $_GET['y'],$_POST['Army']));
-							//$response = json_encode($_POST);
 						}
 						else{
 							$response = "Wrong data format";
@@ -32,8 +31,7 @@
 					case 'attack':
 					//eg. http://localhost/reg/api/conquer.php/attack/?x=4&y=4
 						if(checkVariables()){
-							$response = json_encode($_SESSION['Player']->conquer($_GET['x'], $_GET['y'],$_POST['Army']));
-							//$response = json_encode($_POST);
+							$response = json_encode($_SESSION['Player']->attackTile($_GET['x'], $_GET['y'],$_POST['Army']));
 						}
 						else{
 							$response = "Wrong data format";
