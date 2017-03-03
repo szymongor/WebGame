@@ -636,12 +636,26 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
+	function getPlayersTechnologies($playerId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `technologies` WHERE owner_id = %s",$playerId);
+		$result = @$db_connect->query($queryStr);
+		$technologiesArray = array();
+		if($result){
+			while($task = $result->fetch_assoc()){
+				array_push($technologiesArray,$task);
+			}
+		}
+		mysqli_close($db_connect);
+		return $technologiesArray;
+	}
 	//$res = [
 	//	"level" => 3,
 	//	"type" => "\"Barack\""
 	//];
 	//upDateBuilding(68,$res);
-	//echo(json_encode(getPlayersTasksDB(12)));
+	echo(json_encode(getPlayersTechnologies(12)));
 	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
 	//echo(json_encode(getBuildingsTasksDB(2,2)));

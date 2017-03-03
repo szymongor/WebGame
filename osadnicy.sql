@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 08 Lut 2017, 18:03
+-- Czas generowania: 03 Mar 2017, 16:20
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -41,8 +41,9 @@ CREATE TABLE `army` (
 
 INSERT INTO `army` (`id`, `Swordman`, `Bowman`, `Shieldbearer`, `Shaman`, `Wizard`) VALUES
 (1, 14, 5, 6, 4, 1),
-(8, 14, 15, 4, 0, 0),
-(9, 10, 10, 0, 0, 0);
+(8, 50, 120, 40, 20, 50),
+(9, 10, 10, 0, 0, 0),
+(10, 10, 9, 10, 8, 10);
 
 -- --------------------------------------------------------
 
@@ -81,7 +82,11 @@ INSERT INTO `buildings` (`building_id`, `type`, `level`) VALUES
 (55, 'Barrack', 1),
 (56, 'Forge', 1),
 (67, 'Workshop', 1),
-(68, 'Barrack', 1);
+(68, 'Barrack', 3),
+(69, 'Workshop', 1),
+(84, 'Farm', 1),
+(86, 'Forge', 1),
+(87, 'House', 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +196,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (3, 3, NULL, 'Swamp', NULL, NULL),
 (3, 4, 12, 'Swamp', 49, NULL),
 (3, 5, 12, 'Plains', 46, NULL),
-(3, 6, NULL, 'Swamp', NULL, NULL),
+(3, 6, NULL, 'Swamp', NULL, 10),
 (3, 7, NULL, 'Plains', NULL, NULL),
 (3, 8, NULL, 'Swamp', NULL, NULL),
 (3, 9, NULL, 'Plains', NULL, NULL),
@@ -201,7 +206,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (4, 3, NULL, 'Plains', NULL, NULL),
 (4, 4, 12, 'Plains', 50, NULL),
 (4, 5, 12, 'Forest', 48, NULL),
-(4, 6, 12, 'Desert', NULL, NULL),
+(4, 6, 12, 'Desert', 87, NULL),
 (4, 7, NULL, 'Swamp', NULL, NULL),
 (4, 8, NULL, 'Forest', NULL, NULL),
 (4, 9, NULL, 'Swamp', NULL, NULL),
@@ -211,7 +216,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (5, 3, 12, 'Swamp', NULL, NULL),
 (5, 4, 12, 'Swamp', 54, NULL),
 (5, 5, 12, 'Plains', 51, NULL),
-(5, 6, 12, 'Swamp', NULL, NULL),
+(5, 6, 12, 'Swamp', 86, NULL),
 (5, 7, NULL, 'Desert', NULL, NULL),
 (5, 8, NULL, 'Plains', NULL, NULL),
 (5, 9, NULL, 'Swamp', NULL, NULL),
@@ -219,8 +224,8 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (6, 1, NULL, 'Plains', NULL, 9),
 (6, 2, 12, 'Desert', 52, NULL),
 (6, 3, 12, 'Desert', 53, NULL),
-(6, 4, 12, 'Desert', NULL, NULL),
-(6, 5, 12, 'Plains', NULL, NULL),
+(6, 4, 12, 'Desert', 69, NULL),
+(6, 5, 12, 'Plains', 84, NULL),
 (6, 6, NULL, 'Desert', NULL, NULL),
 (6, 7, NULL, 'Forest', NULL, NULL),
 (6, 8, NULL, 'Desert', NULL, NULL),
@@ -267,16 +272,26 @@ CREATE TABLE `tasks` (
   `timeEnd` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+-- --------------------------------------------------------
+
 --
--- Zrzut danych tabeli `tasks`
+-- Struktura tabeli dla tabeli `technologies`
 --
 
-INSERT INTO `tasks` (`task_id`, `owner_id`, `task_building`, `task_effect`, `timeEnd`) VALUES
-(1, 12, 1, 0x5b5d, 444),
-(2, 12, 34, 0x7b2253776f72646d616e223a33302c22426f776d616e223a31327d, 333),
-(3, 12, 2, 0x22, 1485538185),
-(4, 12, 2, 0x4172726179, 1485538253),
-(5, 12, 2, 0x7b2253776f72646d616e223a342c22536869656c64626561726572223a347d, 1485538425);
+CREATE TABLE `technologies` (
+  `technology_id` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  `technology` varchar(22) COLLATE utf8_polish_ci NOT NULL,
+  `level` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `technologies`
+--
+
+INSERT INTO `technologies` (`technology_id`, `owner_id`, `technology`, `level`) VALUES
+(1, 12, 'Seasoning', 1),
+(2, 12, 'Hardening', 1);
 
 -- --------------------------------------------------------
 
@@ -339,7 +354,7 @@ CREATE TABLE `user_items` (
 --
 
 INSERT INTO `user_items` (`user_id`, `Tools`, `Swords`, `Bows`, `Armors`, `Runes`, `Wands`) VALUES
-(12, 0, 0, 0, 0, 0, 0);
+(12, 374, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -360,7 +375,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 1200, 600, 500, 2300),
+(12, 900, 600, 500, 2600),
 (13, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
@@ -382,7 +397,7 @@ CREATE TABLE `user_resources_capacity` (
 --
 
 INSERT INTO `user_resources_capacity` (`User_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 1200, 600, 500, 2300);
+(12, 900, 600, 500, 2600);
 
 -- --------------------------------------------------------
 
@@ -403,7 +418,7 @@ CREATE TABLE `user_resources_income` (
 --
 
 INSERT INTO `user_resources_income` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 11, 5, 4, 39);
+(12, 8, 5, 4, 45);
 
 -- --------------------------------------------------------
 
@@ -421,7 +436,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1486570738),
+(12, 1488551218),
 (13, 1483516160),
 (14, 1484847486),
 (15, 1484847537);
@@ -466,6 +481,13 @@ ALTER TABLE `map`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`task_id`);
+
+--
+-- Indexes for table `technologies`
+--
+ALTER TABLE `technologies`
+  ADD PRIMARY KEY (`technology_id`),
+  ADD UNIQUE KEY `technology_id` (`technology_id`);
 
 --
 -- Indexes for table `users`
@@ -519,12 +541,12 @@ ALTER TABLE `user_resources_update`
 -- AUTO_INCREMENT dla tabeli `army`
 --
 ALTER TABLE `army`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT dla tabeli `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 --
 -- AUTO_INCREMENT dla tabeli `gs_buildingstypes`
 --
@@ -539,7 +561,12 @@ ALTER TABLE `gs_costs`
 -- AUTO_INCREMENT dla tabeli `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `technologies`
+--
+ALTER TABLE `technologies`
+  MODIFY `technology_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --

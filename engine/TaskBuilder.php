@@ -28,6 +28,10 @@
       $this->task['build']['buildingData'] = $buildingArray;
     }
 
+    public function addTechnology($buildingId, $technologyName, $level){
+      # TO DO
+    }
+
     public function getTask(){
       return $this->task;
     }

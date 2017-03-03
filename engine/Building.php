@@ -134,6 +134,8 @@
           $items = array($function => $amount);
           $task->addItems($this->buildingId,$items);
           break;
+        case "addTechnology":
+          break;
       }
       $taskCosts = $this->calculateTaskCost($function,$amount);
       $taskStr = $task->getTask();
