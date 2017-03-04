@@ -15,6 +15,9 @@
 					"Food": "-50"
 				},
 				"Time": 20,
+				"RequiredTechnologies":{
+					"Hardening" : "1"
+				},
 				"TaskType": "addArmy"
 			}, {
 				"Name": "Bowman",

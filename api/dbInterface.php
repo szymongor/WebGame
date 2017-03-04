@@ -636,7 +636,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
-	function getPlayersTechnologies($playerId){
+	function getPlayersTechnologiesDB($playerId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("SELECT * FROM `technologies` WHERE owner_id = %s",$playerId);
@@ -655,7 +655,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//	"type" => "\"Barack\""
 	//];
 	//upDateBuilding(68,$res);
-	echo(json_encode(getPlayersTechnologies(12)));
+	//echo(json_encode(getPlayersTechnologiesDB(12)));
 	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
 	//echo(json_encode(getBuildingsTasksDB(2,2)));

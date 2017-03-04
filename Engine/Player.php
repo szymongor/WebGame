@@ -38,6 +38,16 @@
       return chceckSufficientAmount($playersArmy, $requiredArmy);
     }
 
+    public function checkPlayersTechnologies($requiredTechnologies){
+      $playersTechnologies = $this->getPlayersTechnologies();
+      foreach ($requiredTechnologies as $key => $value) {
+        if(!checkTechnology($playersTechnologies,$key,$value)){
+          return false;
+        }
+      }
+      return true;
+    }
+
     public function getPlayerResourcesIncome(){
       return getUserResourcesIncomeDB($this->playerId);
     }
@@ -306,13 +316,23 @@
         return "No building here!";
       }
       $taskCost = $building->calculateTaskCost($taskName,$amount);
-
       if($taskCost == "No such function!"){
         return "No such function!";
       }
 
-      if($this->checkPlayerResourcesState($taskCost['Resources'])){
-        echo json_encode($building->makeTask($taskName,$amount,$this->playerId));
+      $requiredTechnologies = $building->requiredTaskTechnology($taskName);
+
+      $checkResources = $this->checkPlayerResourcesState($taskCost['Resources']);
+      $checkTechnology = $this->checkPlayersTechnologies($requiredTechnologies);
+
+      if($checkResources){
+        if($checkTechnology){
+          echo json_encode($building->makeTask($taskName,$amount,$this->playerId));
+        }
+        else{
+            echo "Missing required technology";
+        }
+
       }
       else{
         echo "NotSuffice";
@@ -381,6 +401,10 @@
         $response = "You are not the owner";
       }
       return $response;
+    }
+
+    public function getPlayersTechnologies(){
+      return getPlayersTechnologiesDB($this->playerId);
     }
 
   }

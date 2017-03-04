@@ -15,6 +15,9 @@
 					"Wood": "-20",
 					"Iron": "-10"
 				},
+				"RequiredTechnologies":{
+					"Hardening" : "1"
+				},
 				"TaskType": "addItem"
 			}, {
 				"Name": "Armor",
@@ -22,6 +25,9 @@
 				"Cost": {
 					"Stone": "-20",
 					"Iron": "-10"
+				},
+				"RequiredTechnologies":{
+					"Hardening" : "1"
 				},
 				"TaskType": "addItem"
 			}

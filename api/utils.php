@@ -70,5 +70,19 @@
     return $correctFormat;
   }
 
+  function checkTechnology($playersTechnologies, $requiredTechnology, $level){
+
+    foreach ($playersTechnologies as $key => $value) {
+      if($value["technology"] == $requiredTechnology){
+        if($value["level"] >= $level){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+    return false;
+  }
 
 ?>

@@ -81,6 +81,25 @@
       return $buildingFunctions;
     }
 
+    public function getBuildingFunction($taskName){
+      $buildingFunctions = $this->getBuildingFunctions()[0];
+      $function;
+      foreach ($buildingFunctions as $key => $functions) {
+        foreach ($functions as $key => $buildingFunction) {
+          if($buildingFunction['Name'] == $taskName){
+            $function = $buildingFunction;
+            break;
+          }
+        }
+      }
+      if(!isset($function)){
+        return "No such function!";
+      }
+      else{
+        return $function;
+      }
+    }
+
     public function getTaskType($functionName){
       $buildingFunctions = $this->getBuildingFunctions()[0];
       foreach ($buildingFunctions as $key => $functions) {
@@ -96,30 +115,34 @@
     }
 
     public function calculateTaskCost($taskName,$amount){
-      $buildingFunctions = $this->getBuildingFunctions()[0];
-      $function;
-      foreach ($buildingFunctions as $key => $functions) {
-        foreach ($functions as $key => $buildingFunction) {
-          if($buildingFunction['Name'] == $taskName){
-            $function = $buildingFunction;
-            break;
-          }
-        }
-      }
-      if(!isset($function)){
+      $buildingFunction = $this->getBuildingFunction($taskName);
+      if($buildingFunction == "No such function!"){
         return "No such function!";
       }
 
-      $taskCost= $function["Cost"];
+      $taskCost= $buildingFunction["Cost"];
       foreach ($taskCost as $key => $value) {
         $taskCost[$key] = $amount*$value;
       }
 
-      $time = $function['Time'] * $amount;
+      $time = $buildingFunction['Time'] * $amount;
 
       $costs['Resources'] = $taskCost;
       $costs['Time'] = $time;
       return $costs;
+    }
+
+    public function requiredTaskTechnology($taskName){
+      $buildingFunction = $this->getBuildingFunction($taskName);
+      if($buildingFunction == "No such function!"){
+        return "No such function!";
+      }
+      if(isset($buildingFunction["RequiredTechnologies"])){
+        return $buildingFunction["RequiredTechnologies"];
+      }
+      else{
+        return array();
+      }
     }
 
     public function makeTask($function, $amount, $playerId){
@@ -135,6 +158,7 @@
           $task->addItems($this->buildingId,$items);
           break;
         case "addTechnology":
+          $task->addTechnology($this->buildingId, $function, $amount);
           break;
       }
       $taskCosts = $this->calculateTaskCost($function,$amount);

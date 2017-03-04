@@ -23,6 +23,9 @@
 					"Wood": "-20",
 					"Stone": "-10"
 				},
+				"RequiredTechnologies":{
+					"Seasoning" : "1"
+				},
 				"TaskType": "addItem"
 			}
 
