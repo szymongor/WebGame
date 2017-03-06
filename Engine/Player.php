@@ -328,6 +328,10 @@
       $checkResources = $this->checkPlayerResourcesState($taskCost['Resources']);
       $checkTechnology = $this->checkPlayersTechnologies($requiredTechnologies);
 
+      //Refactor /\ all checks here \/
+      $checkRequirements = $this->checkTasksRequirements($x,$y,$taskName,$amount);
+
+
       if($checkResources){
         if($checkTechnology){
           echo json_encode($building->makeTask($taskName,$amount,$this->playerId));
@@ -341,6 +345,26 @@
         echo "NotSuffice";
       }
       //return $taskCost;
+    }
+
+    private function checkTasksRequirements($x,$y,$taskName,$amount){
+      $building = $this->getBuildingFromTile($x,$y);
+      if($building == NULL){
+        return "No building here!";
+      }
+
+      $taskType = $building->getTaskType($taskName);
+      switch($taskType){
+        case "Technology":
+          //TO DO
+          break;
+      }
+
+
+      return "Ok";
+
+
+
     }
 
     public function buildBuilding($x,$y,$buildingType){
