@@ -5,9 +5,11 @@
   class Task{
 
     private $task;
+    private $verify;
 
     public function __construct($taskFromDB){
       $this->task = $taskFromDB;
+      $this->verify = "ok";
     }
 
     private function getTaskEffect(){
@@ -70,14 +72,17 @@
 
     }
 
-    public function isTaskReady(){
-      $timeNow = time();
-      if($task['timeEnd'] < $timeNow){
+    public function checkTask(){
+      if($this->$verify == "ok"){
         return true;
       }
       else{
         return false;
       }
+    }
+
+    public function setVerification($ver){
+      $this->$verify = $ver;
     }
 
     public function executeTask(){

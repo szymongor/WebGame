@@ -1,10 +1,12 @@
 TODO:
 	JS: Sort list of buildings to build. (desc. by sum of resources).
 	PHP: Attack/Conquer - army loss.
-	PHP: Conquer - change tile owner.
 	PHP: Attack/Conquer - battle log.
 	PHP: Conquer - return new tile if win.
 	PHP/DB: Technologies.
+	PHP: Attack/Conquer - time delay effect, lock army.
+	Game: New building - Tower, reveals map
+	PHP: Refactor Conquer - checking tile connection with "getMapRegionFromDB" - Tower can reveal not connected tiles.
 
 
 Done list:
@@ -18,3 +20,4 @@ Done list:
 	DONE: add init resources and resources, income for new players
 	DONE: BUILDINGS TASKS!
 	DONE: DB-interface to manage opeations on resources etc.
+	DONE:	PHP: Conquer - change tile owner.

@@ -53,9 +53,6 @@
 									else{
 										$response = "Wrong data format";
 									}
-									//$response = json_encode($_SESSION['Player']->addBuildingTask($_GET['x'], $_GET['y'],$_GET['Task'],$_GET['Amount']));
-									//echo($_GET['x'].":". $_GET['y']."/".$_GET['Task'].":". $_GET['Amount']);
-									//echo($response);
 									break;
 								case "currentBuildingTasks":
 									//eg. http://localhost/reg/api/building.php/currentBuildingTasks/?x=2&y=2

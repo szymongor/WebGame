@@ -280,6 +280,9 @@
       }
       else{
         $ret = $this->attackTile($x, $y, $armyData);
+        if($ret == "Win"){
+          changeTileOwnerDB($this->playerId,$x,$y);
+        }
       }
        return $ret;
     }
