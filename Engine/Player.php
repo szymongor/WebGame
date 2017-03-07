@@ -314,6 +314,18 @@
     }
 
     public function addBuildingTask($x,$y,$taskName,$amount){
+      $checkRequirements = $this->checkTasksRequirements($x,$y,$taskName,$amount);
+        if($checkRequirements == "OK"){
+          //refactor gettig building, return it in checkRequirements
+          $building = $this->getBuildingFromTile($x,$y);
+          return $building->makeTask($taskName,$amount,$this->playerId);
+        }
+        else{
+            return $checkRequirements;
+        }
+    }
+
+    private function checkTasksRequirements($x,$y,$taskName,$amount){
       $building = $this->getBuildingFromTile($x,$y);
       if($building == NULL){
         return "No building here!";
@@ -324,47 +336,39 @@
       }
 
       $requiredTechnologies = $building->requiredTaskTechnology($taskName);
-
       $checkResources = $this->checkPlayerResourcesState($taskCost['Resources']);
       $checkTechnology = $this->checkPlayersTechnologies($requiredTechnologies);
-
-      //Refactor /\ all checks here \/
-      $checkRequirements = $this->checkTasksRequirements($x,$y,$taskName,$amount);
-
-
-      if($checkResources){
-        if($checkTechnology){
-          echo json_encode($building->makeTask($taskName,$amount,$this->playerId));
-        }
-        else{
-            echo "Missing required technology";
-        }
-
+      if(!$checkResources){
+        return "Not enough resources";
       }
-      else{
-        echo "NotSuffice";
-      }
-      //return $taskCost;
-    }
-
-    private function checkTasksRequirements($x,$y,$taskName,$amount){
-      $building = $this->getBuildingFromTile($x,$y);
-      if($building == NULL){
-        return "No building here!";
+      if(!$checkTechnology){
+        return "Missing required technology";
       }
 
       $taskType = $building->getTaskType($taskName);
       switch($taskType){
         case "Technology":
-          //TO DO
+          if($this->checkUpgradingTechnology($taskName)){
+            return "Technology is currently upgraded";
+          }
           break;
       }
+      return "OK";
+    }
 
-
-      return "Ok";
-
-
-
+    public function checkUpgradingTechnology($technologyName){
+      $playersTechnologies = $this->getPlayersTechnologies();
+      foreach ($playersTechnologies as $key => $value) {
+        if($value['technology'] == $technologyName){
+          if( $value['currently_upgraded']){
+            return false;
+          }
+          else{
+            return true;
+          }
+        }
+      }
+      return true;
     }
 
     public function buildBuilding($x,$y,$buildingType){

@@ -36,9 +36,10 @@
 		"Technology": [{
 				"Name": "Hardening",
 				"Cost": {
-					"Gold": "-20",
+					"Stone": "-20",
 					"Stone": "-50"
 				},
+				"Time": "50",
 				"TaskType": "addTechnology"
 			}
 
