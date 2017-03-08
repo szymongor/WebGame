@@ -650,6 +650,23 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 		return $technologiesArray;
 	}
+
+	function addTechnologyDB($playerId, $technologyName){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("INSERT INTO `technologies`(`owner_id`, `technology`) VALUES (%s,%s)",$playerId,$technologyName);
+		$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
+	function upgradeTechnologyDB($technologyId, $technologyLevel){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("UPDATE `technologies` SET `level`= %s WHERE technology_id = %s",$playerId,$technologyLevel);
+		$db_connect->query($queryStr);
+		mysqli_close($db_connect);		
+	}
+
 	//$res = [
 	//	"level" => 3,
 	//	"type" => "\"Barack\""

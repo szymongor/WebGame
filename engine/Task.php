@@ -72,6 +72,15 @@
 
     }
 
+    private function upgradeTechnology($technologyData){
+      if($technologyData['technology']['level'] == 1){
+        addTechnologyDB($technologyData['technology']['idOwner'], $technologyData['technology']['name']);
+      }
+      else{
+        //To do
+      }
+    }
+
     public function checkTask(){
       if($this->$verify == "ok"){
         return true;

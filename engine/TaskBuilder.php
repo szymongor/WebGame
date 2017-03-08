@@ -3,9 +3,11 @@
   class TaskBuilder{
 
     private $task;
+    private $execute;
 
     public function __construct(){
       $this->task = array();
+      private $this->execute = array();
     }
 
     public function addResources($buildingId, $resourcesArray){
@@ -28,8 +30,10 @@
       $this->task['build']['buildingData'] = $buildingArray;
     }
 
-    public function addTechnology($buildingId, $technologyName, $level){
-      # TO DO
+    public function addTechnology($idOwner, $technologyName, $level){
+      $this->task['technology']['idOwner'] = $idOwner;
+      $this->task['technology']['name'] = $technologyName;
+      $this->task['technology']['level'] = $level;
     }
 
     public function getTask(){
