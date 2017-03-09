@@ -33,7 +33,7 @@
 		"Technology": [{
 				"Name": "Engineering",
 				"Cost": {
-					"Gold": "-20",
+					"Stone": "-20",
 					"Iron": "-50"
 				},
 				"TaskType": "addTechnology"

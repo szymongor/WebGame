@@ -588,8 +588,9 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
-	function addTaskDB($ownerId,$buildingId,$taskEffect,$time){
+	function addTaskDB($ownerId,$buildingId,$task,$time){
 		global $host, $db_user, $db_password, $db_name;
+		$taskEffect = $task->getTask();
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$effect = str_replace("\"","\\\"",json_encode($taskEffect));
 		$queryStr = sprintf("INSERT INTO `tasks`(`owner_id`, `task_building`, `task_effect`, `timeEnd`) VALUES (%s,%s,\"%s\",%s)",
@@ -664,7 +665,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("UPDATE `technologies` SET `level`= %s WHERE technology_id = %s",$playerId,$technologyLevel);
 		$db_connect->query($queryStr);
-		mysqli_close($db_connect);		
+		mysqli_close($db_connect);
 	}
 
 	//$res = [

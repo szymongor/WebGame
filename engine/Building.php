@@ -162,10 +162,9 @@
           break;
       }
       $taskCosts = $this->calculateTaskCost($function,$amount);
-      $taskStr = $task->getTask();
       transferResourcesDB($playerId,$taskCosts['Resources']);
 
-      addTaskDB($playerId,$this->buildingId,$taskStr,$taskCosts['Time']);
+      addTaskDB($playerId,$this->buildingId,$task,$taskCosts['Time']);
       return "Success";
     }
 

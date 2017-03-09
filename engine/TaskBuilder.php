@@ -7,7 +7,7 @@
 
     public function __construct(){
       $this->task = array();
-      private $this->execute = array();
+      $this->execute = array();
     }
 
     public function addResources($buildingId, $resourcesArray){
