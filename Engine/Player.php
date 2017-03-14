@@ -334,6 +334,10 @@
       if($taskCost == "No such function!"){
         return "No such function!";
       }
+      $currentTask = $this->getBuildingsTasks($x,$y);
+      if(count($currentTask) >0){
+        return "Buildings task queue is already full";
+      }
 
       $requiredTechnologies = $building->requiredTaskTechnology($taskName, $amount);
       $checkResources = $this->checkPlayerResourcesState($taskCost['Resources']);

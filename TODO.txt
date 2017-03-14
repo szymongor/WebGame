@@ -3,7 +3,6 @@ TODO:
 	PHP: Attack/Conquer - army loss.
 	PHP: Attack/Conquer - battle log.
 	PHP: Conquer - return new tile if win.
-	PHP/DB: Technologies.
 	PHP: Attack/Conquer - time delay effect, lock army.
 	Game: New building - Tower, reveals map
 	PHP: Refactor Conquer - checking tile connection with "getMapRegionFromDB" - Tower can reveal not connected tiles.
@@ -21,3 +20,4 @@ Done list:
 	DONE: BUILDINGS TASKS!
 	DONE: DB-interface to manage opeations on resources etc.
 	DONE:	PHP: Conquer - change tile owner.
+	DONE: PHP/DB: Technologies.
