@@ -73,12 +73,8 @@
     }
 
     private function upgradeTechnology($technologyData){
-      if($technologyData['technology']['level'] == 1){
-        addTechnologyDB($technologyData['technology']['idOwner'], $technologyData['technology']['name']);
-      }
-      else{
-        //To do
-      }
+        upgradeTechnologyDB($technologyData['idOwner'],
+          $technologyData['name'], $technologyData['level']);
     }
 
     public function checkTask(){
@@ -107,6 +103,9 @@
       }
       if(isset($taskEffect['build'])){
         $this->updateBuilding($taskEffect['build']);
+      }
+      if(isset($taskEffect['technology'])){
+        $this->upgradeTechnology($taskEffect['technology']);
       }
       deleteTaskDB($this->getTaskId());
     }

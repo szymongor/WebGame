@@ -32,6 +32,7 @@
 		],
 		"Technology": [{
 				"Name": "Engineering",
+				"Time": "10",
 				"Cost": {
 					"Stone": "-20",
 					"Iron": "-50"

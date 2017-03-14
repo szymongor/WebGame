@@ -7,7 +7,7 @@
 
     public function __construct(){
       $this->task = array();
-      $this->execute = array();
+      $this->executeBeforeTasks = array();
     }
 
     public function addResources($buildingId, $resourcesArray){
@@ -34,10 +34,25 @@
       $this->task['technology']['idOwner'] = $idOwner;
       $this->task['technology']['name'] = $technologyName;
       $this->task['technology']['level'] = $level;
+      if($level == 1){
+        $execBefore = array("InitTechnology"=>array("TechnologyName"=>$technologyName,"Owner"=>$idOwner));
+        array_push($this->executeBeforeTasks, $execBefore);
+      }
     }
 
     public function getTask(){
       return $this->task;
+    }
+
+
+    public function execute(){
+      foreach ($this->executeBeforeTasks as $key => $value) {
+        switch($key){
+          case "InitTechnology":
+            addTechnologyDB($value['InitTechnology']['Owner'],$value['InitTechnology']['TechnologyName']);
+            break;
+        }
+      }
     }
 
   };

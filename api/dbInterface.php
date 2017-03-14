@@ -588,14 +588,16 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
-	function addTaskDB($ownerId,$buildingId,$task,$time){
+	function addTaskDB($ownerId,$buildingId,$taskBuilder,$time){
 		global $host, $db_user, $db_password, $db_name;
-		$taskEffect = $task->getTask();
+		$taskEffect = $taskBuilder->getTask();
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$effect = str_replace("\"","\\\"",json_encode($taskEffect));
 		$queryStr = sprintf("INSERT INTO `tasks`(`owner_id`, `task_building`, `task_effect`, `timeEnd`) VALUES (%s,%s,\"%s\",%s)",
 		 $ownerId,$buildingId,$effect,time()+$time);
 		$db_connect->query($queryStr);
+		//refactor if query succeed
+		$taskBuilder->execute();
 		mysqli_close($db_connect);
 	}
 
@@ -655,15 +657,16 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	function addTechnologyDB($playerId, $technologyName){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$queryStr = sprintf("INSERT INTO `technologies`(`owner_id`, `technology`) VALUES (%s,%s)",$playerId,$technologyName);
+		$queryStr = sprintf("INSERT INTO `technologies`(`owner_id`, `technology`,`currently_upgraded`) VALUES (%s,\"%s\",1)",$playerId,$technologyName);
 		$db_connect->query($queryStr);
 		mysqli_close($db_connect);
 	}
 
-	function upgradeTechnologyDB($technologyId, $technologyLevel){
+	function upgradeTechnologyDB($ownerId, $technologyName, $technologyLevel){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$queryStr = sprintf("UPDATE `technologies` SET `level`= %s WHERE technology_id = %s",$playerId,$technologyLevel);
+		$queryStr = sprintf("UPDATE `technologies` SET `level`= %s,`currently_upgraded`=0 WHERE owner_id = %s AND technology = \"%s\"",
+		$technologyLevel,$ownerId,$technologyName);
 		$db_connect->query($queryStr);
 		mysqli_close($db_connect);
 	}
