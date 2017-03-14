@@ -671,6 +671,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
+	function technologyUpgradedDB($ownerId, $technologyName){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("UPDATE `technologies` SET `currently_upgraded`=1 WHERE owner_id = %s AND technology = \"%s\"",
+		$ownerId,$technologyName);
+		$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
 	//$res = [
 	//	"level" => 3,
 	//	"type" => "\"Barack\""

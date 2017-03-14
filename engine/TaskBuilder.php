@@ -35,7 +35,12 @@
       $this->task['technology']['name'] = $technologyName;
       $this->task['technology']['level'] = $level;
       if($level == 1){
-        $execBefore = array("InitTechnology"=>array("TechnologyName"=>$technologyName,"Owner"=>$idOwner));
+        echo($level);
+        $execBefore = array("Type"=>"InitTechnology","TechnologyName"=>$technologyName,"Owner"=>$idOwner);
+        array_push($this->executeBeforeTasks, $execBefore);
+      }
+      else{
+        $execBefore = array("Type"=>"TechnologyUpgraded","TechnologyName"=>$technologyName,"Owner"=>$idOwner);
         array_push($this->executeBeforeTasks, $execBefore);
       }
     }
@@ -46,10 +51,13 @@
 
 
     public function execute(){
-      foreach ($this->executeBeforeTasks as $key => $value) {
-        switch($key){
+      foreach ($this->executeBeforeTasks as $value) {
+        switch($value['Type']){
           case "InitTechnology":
-            addTechnologyDB($value['InitTechnology']['Owner'],$value['InitTechnology']['TechnologyName']);
+            addTechnologyDB($value['Owner'],$value['TechnologyName']);
+            break;
+          case "TechnologyUpgraded":
+            technologyUpgradedDB($value['Owner'],$value['TechnologyName']);
             break;
         }
       }
