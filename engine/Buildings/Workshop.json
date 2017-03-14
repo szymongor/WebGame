@@ -37,6 +37,11 @@
 					"Stone": "-20",
 					"Iron": "-50"
 				},
+				"RequiredTechnologies":{
+					"1":{},
+					"2":{"Engineering":"1"},
+					"3":{"Engineering":"2"}
+				},
 				"TaskType": "addTechnology"
 			}
 

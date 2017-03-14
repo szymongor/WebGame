@@ -132,11 +132,20 @@
       return $costs;
     }
 
-    public function requiredTaskTechnology($taskName){
+    public function requiredTaskTechnology($taskName, $level){
       $buildingFunction = $this->getBuildingFunction($taskName);
       if($buildingFunction == "No such function!"){
         return "No such function!";
       }
+      if(isset($buildingFunction['TaskType']) && $buildingFunction['TaskType'] == "addTechnology"){
+        if(isset($buildingFunction["RequiredTechnologies"][$level])){
+          return $buildingFunction["RequiredTechnologies"][$level];
+        }
+        else{
+          return array("NotPossible"=>"1");
+        }
+      }
+
       if(isset($buildingFunction["RequiredTechnologies"])){
         return $buildingFunction["RequiredTechnologies"];
       }

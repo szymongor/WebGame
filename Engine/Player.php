@@ -335,7 +335,7 @@
         return "No such function!";
       }
 
-      $requiredTechnologies = $building->requiredTaskTechnology($taskName);
+      $requiredTechnologies = $building->requiredTaskTechnology($taskName, $amount);
       $checkResources = $this->checkPlayerResourcesState($taskCost['Resources']);
       $checkTechnology = $this->checkPlayersTechnologies($requiredTechnologies);
       if(!$checkResources){
