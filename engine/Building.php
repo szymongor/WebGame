@@ -172,6 +172,7 @@
       }
       $taskCosts = $this->calculateTaskCost($function,$amount);
       transferResourcesDB($playerId,$taskCosts['Resources']);
+      transferItemsDB($playerId,$taskCosts['Resources']);
 
       addTaskDB($playerId,$this->buildingId,$task,$taskCosts['Time']);
       return "Success";

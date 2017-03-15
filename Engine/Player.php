@@ -22,9 +22,23 @@
 
     public function checkPlayerResourcesState($requiredResources){
       $playerResources = $this->getPlayerResources();
-      foreach ($requiredResources as $key => $value) {
-        if(0>$playerResources[$key]+$value){
-          return false;
+      foreach ($playerResources as $key => $value) {
+        if(isset($requiredResources[$key])){
+          if(0>$value+$requiredResources[$key]){
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    public function checkPlayerItemsState($requiredItems){
+      $playerItems = $this->getPlayersItems();
+      foreach ($playerItems as $key => $value) {
+        if(isset($requiredItems[$key])){
+          if(0>$value+$requiredItems[$key]){
+            return false;
+          }
         }
       }
       return true;
@@ -341,9 +355,13 @@
 
       $requiredTechnologies = $building->requiredTaskTechnology($taskName, $amount);
       $checkResources = $this->checkPlayerResourcesState($taskCost['Resources']);
+      $checkItems = $this->checkPlayerItemsState($taskCost['Resources']);
       $checkTechnology = $this->checkPlayersTechnologies($requiredTechnologies);
       if(!$checkResources){
         return "Not enough resources";
+      }
+      if(!$checkItems){
+        return "Not enough items";
       }
       if(!$checkTechnology){
         return "Missing required technology";

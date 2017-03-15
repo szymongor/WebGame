@@ -134,22 +134,10 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	function transferItemsDB($userId, $itemsArray){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$currentItems = getUserItemsDB($userId);
-		$sufficeAmount = chceckSufficientAmount($currentItems,$itemsArray);
-		$response;
-		if($sufficeAmount)
-		{
-			foreach ($itemsArray as $transferedItems => $amount)
-			{
-				addItemDB($userId, $transferedItems, $amount);
-			}
-			$response = true;
-		}
-		else{
-			$response = false;
+		foreach ($itemsArray as $transferedItems => $amount){
+			addItemDB($userId, $transferedItems, $amount);
 		}
 		mysqli_close($db_connect);
-		return $response;
 	}
 
 	function upDateResources($userId){
@@ -227,15 +215,8 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		upDateResources($userId);
-		$currentResources = getUserResourcesDB($userId);
-		$sufficeAmount = chceckSufficientAmount($currentResources,$resourcesArray);
-		if($sufficeAmount)
-		{
-
-			foreach ($resourcesArray as $transferedResource => $amount)
-			{
-				addResource($userId, $transferedResource, $amount);
-			}
+		foreach ($resourcesArray as $transferedResource => $amount){
+			addResource($userId, $transferedResource, $amount);
 		}
 		mysqli_close($db_connect);
 
