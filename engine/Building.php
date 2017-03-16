@@ -1,6 +1,7 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/TaskBuilder.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
   class Building
   {
@@ -8,6 +9,7 @@
     private $buildingId;
     private $buildingType;
     private $buildingLevel;
+    private $buildingOwner;
     /*
     public function __construct($buildingType,$buildingLevel){
       $this->buildingType=$buildingType;
@@ -16,6 +18,7 @@
     */
 
     public function __construct($buildingId){
+      $this->buildingOwner = getOwnerByBuildingIdDB($buildingId);
       $buildingData = getBuildingByIDFromDB($buildingId);
       if($buildingData != NULL){
         $this->buildingDataDB = $buildingData;
@@ -77,8 +80,25 @@
       $buildingFunctions = array();
       if(isset($buildingInfo['Functions'])){
         $buildingFunctions = $buildingInfo['Functions'];
+        if(isset($buildingInfo['Functions'][0]['Technology'])){
+          $buildingFunctions[0]['Technology'] = $this->getBuildingTechnologiesToDevelop($buildingInfo['Functions'][0]['Technology']);
+        }
       }
       return $buildingFunctions;
+    }
+
+    private function getBuildingTechnologiesToDevelop($buildingTechnologiesData){
+      $buildingTechnologies = array();
+      $ownerTechnologies = getPlayersTechnologiesDB($this->buildingOwner);
+      foreach ($buildingTechnologiesData as $key => $value) {
+        $playersTechnology = findPlayerTechnology($ownerTechnologies,$value['Name']);
+        if($playersTechnology){
+        }
+        else{
+          $buildingTechnologies[] = $value;
+        }
+      }
+      return $buildingTechnologies;
     }
 
     public function getBuildingFunction($taskName){

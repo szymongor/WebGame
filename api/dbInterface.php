@@ -665,7 +665,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//	"type" => "\"Barack\""
 	//];
 	//upDateBuilding(68,$res);
-	//echo(json_encode(getPlayersTechnologiesDB(12)));
+	//echo(json_encode(getOwnerByBuildingIdDB(56)));
 	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
 	//echo(json_encode(getBuildingsTasksDB(2,2)));

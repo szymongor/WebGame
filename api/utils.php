@@ -71,7 +71,6 @@
   }
 
   function checkTechnology($playersTechnologies, $requiredTechnology, $level){
-
     foreach ($playersTechnologies as $key => $value) {
       if($value["technology"] == $requiredTechnology){
         if($value["level"] >= $level){
@@ -80,6 +79,15 @@
         else{
           return false;
         }
+      }
+    }
+    return false;
+  }
+
+  function findPlayerTechnology($playersTechnologies, $technologyName){
+    foreach ($playersTechnologies as $key => $value) {
+      if($value["technology"] == $technologyName){
+        return $value;
       }
     }
     return false;
