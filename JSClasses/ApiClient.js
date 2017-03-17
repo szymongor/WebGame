@@ -1,17 +1,17 @@
 function ApiClient(server){
   this.server = server;
 
-  this.getPlayerId = function(){
-    var id;
+  this.getPlayerInfo = function(){
   	$.ajax({
   		type: 'GET',
-      async: false,
-  		url: this.server+'/reg/api/playerId.php',
+  		url: this.server+'/reg/api/playerInfo.php',
   		success: function(data){
-  				id = ($.parseJSON(data))['id'];
+        console.log(data);
+          playerInfo = $.parseJSON(data);
+          mapView = new MapView(10,10,playerInfo['location']['x'],playerInfo['location']['y'],playerInfo['id'],apiClient);
+          startGame();
   		}
   	});
-    return id;
   };
 
   this.getPlayerResources = function(method){

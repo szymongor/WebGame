@@ -1,8 +1,9 @@
 var apiClient = new ApiClient('http://localhost');
-var mapView = new MapView(10,10,4,4,12,apiClient);
 var detailView = new DetailView();
 var resourcesView = new ResourcesView();
-var idPlayer = apiClient.getPlayerId();
+var playerInfo;
+var mapView;
+apiClient.getPlayerInfo();
 
 var armyData = {'Army':{"Swordman":15,"Bowman":15,"Wizard":15}};
 
@@ -16,10 +17,16 @@ document.addEventListener("tileSelectOneClick", function(e) {
 	//console.log(e.detail); // Prints selected x and y
 });
 
-$( document ).ready(function(){
+function startGame(){
 	showResources();
 	showMap();
 	detailView.initDetailsView();
+}
+
+$( document ).ready(function(){
+	//showResources();
+	//showMap();
+	//detailView.initDetailsView();
 });
 
 function showMap(){
