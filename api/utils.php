@@ -43,6 +43,7 @@
     $response = true;
     foreach ($_GET as $key => $value) {
       if(!is_numeric($value)){
+        //Refactor? check if value is in {"Swordman","Bowman", ...}
         if($value != preg_replace("/[^a-zA-Z0-9]+/", "", $value)){
           $response = false;
         }

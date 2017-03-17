@@ -13,6 +13,16 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $row;
 	}
 
+	function getUserInfoDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `users` WHERE id = %s",$userId);
+		$result = @$db_connect->query($queryStr);
+		$row = $result->fetch_assoc();
+		mysqli_close($db_connect);
+		return $row;
+	}
+
 	function getUserResourcesDB($userId){
 		upDateResources($userId);
 		global $host, $db_user, $db_password, $db_name;
