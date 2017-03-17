@@ -4,7 +4,7 @@ function ApiClient(server){
   this.getPlayerInfo = function(){
   	$.ajax({
   		type: 'GET',
-  		url: this.server+'/reg/api/playerInfo.php',
+  		url: this.server+'/reg/api/playerInfo.php/info',
   		success: function(data){
         console.log(data);
           playerInfo = $.parseJSON(data);

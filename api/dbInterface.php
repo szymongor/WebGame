@@ -332,6 +332,19 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $row;
   }
 
+	function getMapRegionFromDB($userId,$xFrom,$xTo,$yFrom,$yTo){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT *  FROM `map` WHERE x_coord >=%s AND x_coord <= %s AND y_coord >=%s AND y_coord <=%s AND id_owner = %s ",$xFrom,$xTo,$yFrom,$yTo,$userId);
+		$result = @$db_connect->query($queryStr);
+		$mapArray = array();
+		while($mapRow = $result->fetch_assoc()){
+			array_push($mapArray,$mapRow);
+		}
+		mysqli_close($db_connect);
+		return $mapArray;
+	}
+
 	function getArmyTypesFromDB(){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -490,20 +503,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				addArmyUnitsDB($armyId,$type,$amount);
 			}
 		}
-	}
-
-	function getMapRegionFromDB($userId,$xFrom,$xTo,$yFrom,$yTo){
-		global $host, $db_user, $db_password, $db_name;
-		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$queryStr = sprintf("SELECT *  FROM `map` WHERE x_coord >=%s AND x_coord <= %s AND y_coord >=%s AND y_coord <=%s AND id_owner = %s ",$xFrom,$xTo,$yFrom,$yTo,$userId);
-		$result = @$db_connect->query($queryStr);
-		$mapArray = array();
-		while($mapRow = $result->fetch_assoc()){
-			array_push($mapArray,$mapRow);
-		}
-		mysqli_close($db_connect);
-		return $mapArray;
-
 	}
 
 	function setTileBuilding($x,$y,$buildingType){
