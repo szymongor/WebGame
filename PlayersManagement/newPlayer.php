@@ -11,7 +11,6 @@
 
   function getSurroundingNotOccupiedTiles($x,$y,$radius){
     $tiles = array();
-
     $xFrom = $x - $radius;
     $xTo = $x + $radius;
     $yFrom = $y - $radus;
@@ -29,6 +28,25 @@
     return $tiles;
   }
 
+  function checkArea($span, $iterations){
+    $pointsToCheck = array();
+
+    for($i = 0 ; $i > -$iterations ; $i--){
+      for($j = $i ; $j < -$i ; $j+=2 ){
+        $pointsToCheck[] = array($i,$j);
+        $pointsToCheck[] = array(-$i,-$j);
+        $pointsToCheck[] = array(-$j,$i);
+        $pointsToCheck[] = array($j,-$i);
+      }
+
+    }
+
+
+    return $pointsToCheck;
+
+  }
+
+  echo( json_encode(checkArea(2,5)));
 
 
 ?>

@@ -238,8 +238,8 @@ function MapView(width, height, xCoord, yCoord, playerId, apiClient){
       context.drawImage(imgBiome, x_coord*scale, y_coord*scale, scale, scale);
     }
     imgBiome.src = "img/Biomes/"+biome+".png";
-
     if(tileJSON['building']!=null){
+
       var buildingType = tileJSON['building']['type'];
       var imgBuilding = new Image();
       imgBuilding.onload = function() {

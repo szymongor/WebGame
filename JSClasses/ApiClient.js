@@ -6,7 +6,6 @@ function ApiClient(server){
   		type: 'GET',
   		url: this.server+'/reg/api/playerInfo.php/info',
   		success: function(data){
-        console.log(data);
           playerInfo = $.parseJSON(data);
           mapView = new MapView(10,10,playerInfo['location']['x'],playerInfo['location']['y'],playerInfo['id'],apiClient);
           startGame();

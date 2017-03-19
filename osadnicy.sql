@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 03 Mar 2017, 16:20
+-- Czas generowania: 19 Mar 2017, 13:36
 -- Wersja serwera: 10.1.16-MariaDB
 -- Wersja PHP: 7.0.9
 
@@ -41,7 +41,7 @@ CREATE TABLE `army` (
 
 INSERT INTO `army` (`id`, `Swordman`, `Bowman`, `Shieldbearer`, `Shaman`, `Wizard`) VALUES
 (1, 14, 5, 6, 4, 1),
-(8, 50, 120, 40, 20, 50),
+(8, 90, 120, 40, 20, 50),
 (9, 10, 10, 0, 0, 0),
 (10, 10, 9, 10, 8, 10);
 
@@ -86,7 +86,9 @@ INSERT INTO `buildings` (`building_id`, `type`, `level`) VALUES
 (69, 'Workshop', 1),
 (84, 'Farm', 1),
 (86, 'Forge', 1),
-(87, 'House', 1);
+(87, 'House', 1),
+(88, 'Sawmill', 1),
+(89, 'Castle', 1);
 
 -- --------------------------------------------------------
 
@@ -185,8 +187,8 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (2, 2, 12, 'Swamp', 55, NULL),
 (2, 3, 12, 'Mountains', 3, NULL),
 (2, 4, 12, 'Swamp', 44, NULL),
-(2, 5, 12, 'Plains', NULL, NULL),
-(2, 6, NULL, 'Plains', NULL, NULL),
+(2, 5, 12, 'Plains', 88, NULL),
+(2, 6, 12, 'Plains', NULL, NULL),
 (2, 7, NULL, 'Plains', NULL, NULL),
 (2, 8, NULL, 'Plains', NULL, NULL),
 (2, 9, NULL, 'Forest', NULL, NULL),
@@ -196,7 +198,7 @@ INSERT INTO `map` (`x_coord`, `y_coord`, `id_owner`, `biome`, `building_id`, `ar
 (3, 3, NULL, 'Swamp', NULL, NULL),
 (3, 4, 12, 'Swamp', 49, NULL),
 (3, 5, 12, 'Plains', 46, NULL),
-(3, 6, NULL, 'Swamp', NULL, 10),
+(3, 6, 12, 'Swamp', 89, 10),
 (3, 7, NULL, 'Plains', NULL, NULL),
 (3, 8, NULL, 'Swamp', NULL, NULL),
 (3, 9, NULL, 'Plains', NULL, NULL),
@@ -282,16 +284,18 @@ CREATE TABLE `technologies` (
   `technology_id` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,
   `technology` varchar(22) COLLATE utf8_polish_ci NOT NULL,
-  `level` int(5) NOT NULL
+  `level` int(5) NOT NULL DEFAULT '1',
+  `currently_upgraded` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `technologies`
 --
 
-INSERT INTO `technologies` (`technology_id`, `owner_id`, `technology`, `level`) VALUES
-(1, 12, 'Seasoning', 1),
-(2, 12, 'Hardening', 1);
+INSERT INTO `technologies` (`technology_id`, `owner_id`, `technology`, `level`, `currently_upgraded`) VALUES
+(1, 12, 'Seasoning', 1, 0),
+(2, 12, 'Hardening', 1, 0),
+(7, 67, 'Engineering', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -303,17 +307,19 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `user` text COLLATE utf8_polish_ci NOT NULL,
   `pass` text COLLATE utf8_polish_ci NOT NULL,
-  `email` text COLLATE utf8_polish_ci NOT NULL
+  `email` text COLLATE utf8_polish_ci NOT NULL,
+  `xCoordHQ` smallint(6) NOT NULL,
+  `yCoordHQ` smallint(6) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`id`, `user`, `pass`, `email`) VALUES
-(12, 'Szymon', '$2y$10$vTv8VjWSOaU/Z96xp.un2.YCauEQUTDbqrCpiYx.3rnCfIUUT2.pC', 'gm@gmail.com'),
-(13, 'Blyp', '$2y$10$VQ8eZTjq0OGDHfK1jqz7JuzRRHnA/yfQLh2LHhBNmOoEBStNnUyOu', 'blyp@gmail.com'),
-(14, 'Toran', '$2y$10$AjfqvJN4rf/X1gaBHnevvufQYa6s5wDjTPyXPROSA6N3HAEjnP8KK', 'gornioczek.szymon@gmail.com');
+INSERT INTO `users` (`id`, `user`, `pass`, `email`, `xCoordHQ`, `yCoordHQ`) VALUES
+(12, 'Szymon', '$2y$10$vTv8VjWSOaU/Z96xp.un2.YCauEQUTDbqrCpiYx.3rnCfIUUT2.pC', 'gm@gmail.com', 2, 4),
+(13, 'Blyp', '$2y$10$VQ8eZTjq0OGDHfK1jqz7JuzRRHnA/yfQLh2LHhBNmOoEBStNnUyOu', 'blyp@gmail.com', 0, 0),
+(14, 'Toran', '$2y$10$AjfqvJN4rf/X1gaBHnevvufQYa6s5wDjTPyXPROSA6N3HAEjnP8KK', 'gornioczek.szymon@gmail.com', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -354,7 +360,7 @@ CREATE TABLE `user_items` (
 --
 
 INSERT INTO `user_items` (`user_id`, `Tools`, `Swords`, `Bows`, `Armors`, `Runes`, `Wands`) VALUES
-(12, 374, 0, 0, 0, 0, 0);
+(12, 374, 15, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -375,7 +381,7 @@ CREATE TABLE `user_resources` (
 --
 
 INSERT INTO `user_resources` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 900, 600, 500, 2600),
+(12, 1200, 600, 500, 2600),
 (13, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
@@ -397,7 +403,7 @@ CREATE TABLE `user_resources_capacity` (
 --
 
 INSERT INTO `user_resources_capacity` (`User_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 900, 600, 500, 2600);
+(12, 1200, 600, 500, 2600);
 
 -- --------------------------------------------------------
 
@@ -418,7 +424,7 @@ CREATE TABLE `user_resources_income` (
 --
 
 INSERT INTO `user_resources_income` (`user_id`, `Wood`, `Stone`, `Iron`, `Food`) VALUES
-(12, 8, 5, 4, 45);
+(12, 13, 7, 5, 48);
 
 -- --------------------------------------------------------
 
@@ -436,7 +442,7 @@ CREATE TABLE `user_resources_update` (
 --
 
 INSERT INTO `user_resources_update` (`user_id`, `last_update`) VALUES
-(12, 1488551218),
+(12, 1489923958),
 (13, 1483516160),
 (14, 1484847486),
 (15, 1484847537);
@@ -546,7 +552,7 @@ ALTER TABLE `army`
 -- AUTO_INCREMENT dla tabeli `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT dla tabeli `gs_buildingstypes`
 --
@@ -566,7 +572,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT dla tabeli `technologies`
 --
 ALTER TABLE `technologies`
-  MODIFY `technology_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `technology_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
