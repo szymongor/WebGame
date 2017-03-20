@@ -4,8 +4,23 @@
 
 
   function searchFreeMapTiles(){
-
-
+    $radius = 3;
+    $iteration = 1;
+    $tilesRegion;
+    while ($iteration<5) {
+      $tilesToCheck = checkArea(10,$iteration);
+      foreach ($tilesToCheck as $key => $value) {
+        $tilesRegion = getSurroundingNotOccupiedTiles($value[0],$value[1],$radius);
+        if($tilesRegion){
+          $tilesRegion = $value;
+          break;
+        }
+      }
+      if($tilesRegion){
+        break;
+      }
+    }
+    echo(json_encode($tilesRegion));
 
   }
 
@@ -13,7 +28,7 @@
     $tiles = array();
     $xFrom = $x - $radius;
     $xTo = $x + $radius;
-    $yFrom = $y - $radus;
+    $yFrom = $y - $radius;
     $yTo = $y + $radius;
 
     for ($i = $xFrom; $i <= $xTo; $i++) {
@@ -28,25 +43,20 @@
     return $tiles;
   }
 
-  function checkArea($span, $iterations){
+  function checkArea($span, $iteration){
     $pointsToCheck = array();
-
-    for($i = 0 ; $i > -$iterations ; $i--){
-      for($j = $i ; $j < -$i ; $j+=2 ){
-        $pointsToCheck[] = array($i,$j);
-        $pointsToCheck[] = array(-$i,-$j);
-        $pointsToCheck[] = array(-$j,$i);
-        $pointsToCheck[] = array($j,-$i);
-      }
-
+    $i=-$iteration;
+    for($j = $i ; $j < -$i ; $j+=2 ){
+      $pointsToCheck[] = array($span*$i,$span*$j);
+      $pointsToCheck[] = array($span*(-$i),$span*(-$j));
+      $pointsToCheck[] = array($span*(-$j),$span*($i));
+      $pointsToCheck[] = array($span*($j),$span*(-$i));
     }
-
-
     return $pointsToCheck;
-
   }
 
-  echo( json_encode(checkArea(2,5)));
+  searchFreeMapTiles();
+  //echo( json_encode(checkArea(10,2)) );
 
 
 ?>
