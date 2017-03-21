@@ -27,7 +27,7 @@
       $tilesToCheck = checkArea(10,$iteration);
       foreach ($tilesToCheck as $key => $value) {
         $tilesRegion['tiles'] = getSurroundingNotOccupiedTiles($value[0],$value[1],$radius);
-        if($tilesRegion){
+        if($tilesRegion['tiles']){
           $tilesRegion["coords"] = $value;
           break;
         }
@@ -72,7 +72,7 @@
   }
 
   //searchFreeMapTiles();
-  //echo( json_encode() );
+  //echo( json_encode(searchFreeMapTiles()) );
   //initNewPlayer(14);
 
 ?>

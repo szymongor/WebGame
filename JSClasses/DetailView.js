@@ -34,7 +34,7 @@ function DetailView(){
   			$('#detailsView').empty();
   			$('#detailsView').append("No building here.")
   			var element = "tile" +this.selectedTile[0]+"x" +this.selectedTile[1];
-  			if(this.selectedTile.id_owner == idPlayer){
+  			if(this.selectedTile.id_owner == playerInfo['id']){
   				DV.showBuildingsToBuild();
   			}
   		return;
@@ -48,7 +48,7 @@ function DetailView(){
   }
 
   this.setBuildingsFunctions = function(){
-    if(DV.selectedTile.id_owner != idPlayer){
+    if(DV.selectedTile.id_owner != playerInfo['id']){
       return;
     }
     $('#detailsView').append('<div class="gameDetailsOption" id="detailsProduction" onclick="detailView.appendBuildingTypeFunction(\'Production\')" style ="width : 30%">Production</div>');
