@@ -1,12 +1,23 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
 
-
+  function initNewPlayer($playerId){
+    $tile = searchFreeMapTiles();
+    if(!$tile) return "There is no place for new player";
+    $initBuildings = array(array(0,0,"Castle"),array(-1,-1,"House"),array(1,1,"House"));
+    foreach ($initBuildings as $value) {
+      $x=$value[0]+$tile[0];
+      $y=$value[1]+$tile[1];
+      setTileBuilding($x,$y,$value[2]);
+    }
+    setPlayerLoation($playerId,$tile[0],$tile[1]);
+    return "Success";
+  }
 
   function searchFreeMapTiles(){
     $radius = 3;
     $iteration = 1;
-    $tilesRegion;
+    $tilesRegion = false;
     while ($iteration<5) {
       $tilesToCheck = checkArea(10,$iteration);
       foreach ($tilesToCheck as $key => $value) {
@@ -20,8 +31,8 @@
         break;
       }
     }
-    echo(json_encode($tilesRegion));
 
+    return $tilesRegion;
   }
 
   function getSurroundingNotOccupiedTiles($x,$y,$radius){
@@ -55,8 +66,8 @@
     return $pointsToCheck;
   }
 
-  searchFreeMapTiles();
-  //echo( json_encode(checkArea(10,2)) );
+  //searchFreeMapTiles();
+  //echo( json_encode(initNewPlayer(14)) );
 
 
 ?>

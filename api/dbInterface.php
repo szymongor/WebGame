@@ -13,6 +13,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $row;
 	}
 
+	function setPlayerLoation($playerId,$x,$y){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("UPDATE `users` SET `xCoordHQ`=%s,`yCoordHQ`=%s WHERE id=%s",$x,$y,$playerId);
+		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
 	function getUserInfoDB($userId){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);

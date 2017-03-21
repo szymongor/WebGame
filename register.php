@@ -101,16 +101,15 @@
 					$correctForm = false;
 					$_SESSION['e_nick']="Nick already registered!";
 				}
-
 				if($correctForm == true)
 				{
-					if($db_connect->query("INSERT INTO users VALUES (NULL, '$nick','$pass_hash','$email')"))
+					if($db_connect->query("INSERT INTO users VALUES (NULL, '$nick','$pass_hash','$email',0,0)"))
 					{
 						$_SESSION['successful_registration']=true;
 
 						header('Location: welcome.php');
 						$msg = "Gratulacje";
-						mail("gornioczek.szymon@gmaill.com","HelloWorld",$msg);
+						//mail("gornioczek.szymon@gmaill.com","HelloWorld",$msg);
 					}
 					else
 					{

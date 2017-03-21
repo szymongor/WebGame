@@ -1,5 +1,6 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/TaskManager.php";
+	require_once $_SERVER['DOCUMENT_ROOT']."/Reg/PlayersManagement/newPlayer.php";
 
 	session_start();
 
@@ -36,6 +37,11 @@
 
 				if(password_verify($password, $row['pass']) == true)
 				{
+
+					if($row['xCoordHQ'] == 0 && $row['yCoordHQ'] == 0){
+						initNewPlayer($row['id']);
+					}
+
 					$_SESSION['logged_on'] = true;
 					$_SESSION['id'] = $row['id'];
 					$_SESSION['user'] = $row['user'];
