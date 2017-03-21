@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/databaseNames.php";
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 
 	function getUser($userId){
@@ -95,6 +96,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$row = $result->fetch_assoc();
 		mysqli_close($db_connect);
 		return $row;
+	}
+
+	function initUserResourcesIncomeDB($userId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr= sprintf("INSERT INTO `user_resources_income`(`user_id`) VALUES (%s)", $userId);
+		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
 	}
 
 	function getUserItemsDB($userId){
@@ -309,7 +318,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	}
 
 	function getTileMapFromDB($x,$y){
-		global $host, $db_user, $db_password, $db_name;
+		global $host, $db_user, $db_password, $db_name, $Biomes;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$query = sprintf("SELECT * FROM `map` WHERE x_coord = %s AND y_coord = %s",
     $x,$y);
@@ -318,7 +327,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
     $row = $result->fetch_assoc();
     if($row == NULL)
     {
-			require_once "../databaseNames.php";
 			$biome = array_rand($Biomes);
 			$query = sprintf("INSERT INTO `map`(`x_coord`, `y_coord`, `biome`) VALUES (%s,%s,'%s')",
       $x,$y,$biome);
@@ -685,7 +693,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//echo(json_encode(getOwnerByBuildingIdDB(56)));
 	//echo json_encode(getAllUrgentTasksDB());
  	//deleteTask(1);
-	//echo(json_encode(getBuildingsTasksDB(2,2)));
+	//echo(json_encode(getTileMapFromDB(-13,-13)));
 	//addItemDB(12,"Tools",4);
 
 ?>

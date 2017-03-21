@@ -2,15 +2,20 @@
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
 
   function initNewPlayer($playerId){
-    $tile = searchFreeMapTiles();
-    if(!$tile) return "There is no place for new player";
+    $tiles = searchFreeMapTiles();
+    if(!$tiles) return "There is no place for new player";
     $initBuildings = array(array(0,0,"Castle"),array(-1,-1,"House"),array(1,1,"House"));
     foreach ($initBuildings as $value) {
-      $x=$value[0]+$tile[0];
-      $y=$value[1]+$tile[1];
+      $x=$value[0]+$tiles["coords"][0];
+      $y=$value[1]+$tiles["coords"][1];
       setTileBuilding($x,$y,$value[2]);
     }
-    setPlayerLoation($playerId,$tile[0],$tile[1]);
+    setPlayerLoation($playerId,$tiles["coords"][0],$tiles["coords"][1]);
+    initUserResourcesIncomeDB($playerId);
+    foreach ($tiles['tiles'] as $value) {
+      changeTileOwnerDB($playerId,$value['x_coord'],$value['y_coord']);
+    }
+
     return "Success";
   }
 
@@ -21,9 +26,9 @@
     while ($iteration<5) {
       $tilesToCheck = checkArea(10,$iteration);
       foreach ($tilesToCheck as $key => $value) {
-        $tilesRegion = getSurroundingNotOccupiedTiles($value[0],$value[1],$radius);
+        $tilesRegion['tiles'] = getSurroundingNotOccupiedTiles($value[0],$value[1],$radius);
         if($tilesRegion){
-          $tilesRegion = $value;
+          $tilesRegion["coords"] = $value;
           break;
         }
       }
@@ -67,7 +72,7 @@
   }
 
   //searchFreeMapTiles();
-  //echo( json_encode(initNewPlayer(14)) );
-
+  //echo( json_encode() );
+  //initNewPlayer(14);
 
 ?>
