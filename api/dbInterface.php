@@ -71,7 +71,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 
 		mysqli_close($db_connect);
 
-		if($result){
+		if(!$result){
 			return initUserResourcesCapacityDB($userId);
 		}else{
 			$row = $result->fetch_assoc();
@@ -234,7 +234,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		foreach ($resourcesCapacity as $resourceName => $value) {
 			$queryStr = sprintf("UPDATE `user_resources_capacity` SET `%s`= %s WHERE user_id = %s",
 			$resourceName,$value,$userId);
-			@$db_connect->query($queryStr);
+			$db_connect->query($queryStr);
 		}
 		mysqli_close($db_connect);
 	}
@@ -696,6 +696,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	//echo(json_encode(getTileMapFromDB(-13,-13)));
 	//addItemDB(12,"Tools",4);
 
-	//echo( json_encode(getUserResourcesCapacityDB(15)) );
+	//echo( json_encode(setPlayersResourcesCapacityDB(15,json_decode('{"Wood":300,"Stone":300,"Iron":500,"Food":500}',true))) );
 
 ?>

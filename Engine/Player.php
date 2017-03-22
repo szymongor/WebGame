@@ -3,6 +3,7 @@
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Building.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Battle.php";
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 
   class Player
   {
@@ -63,7 +64,10 @@
     }
 
     public function getPlayerResourcesIncome(){
+      //Refactor, update when its needed
       $this->updatePlayerResourcesIncome();
+
+
       return getUserResourcesIncomeDB($this->playerId);
     }
 
@@ -96,6 +100,9 @@
     }
 
     public function getPlayerResourcesCapacity(){
+      //Refactor, update when its needed
+      $this->updatePlayerResourcesCapacity();
+
       return getUserResourcesCapacityDB($this->playerId);
     }
 
@@ -418,7 +425,7 @@
       $taskBuilder = new taskBuilder();
       $taskBuilder->buildBuilding($buildingId, $buildingArray);
       $taskStr = $taskBuilder->getTask();
-      addTaskDB($this->playerId,$buildingId,$taskStr,$buildingInfo['BuildingTime']);
+      addTaskDB($this->playerId,$buildingId,$taskBuilder,$buildingInfo['BuildingTime']);
 
       return $this->getMapTile($x,$y);
     }
@@ -467,13 +474,13 @@
   //$_SESSION['Player']->updatePlayerResourcesCapacity();
 
 
-  //  session_start();
+  //session_start();
   //  $res = [
 	//  	"Swordman" => 10,
 	//  	"Shieldbearer" => 0,
   //    "Bowman" => 9,
   //  ];
    //
-  //  echo json_encode($_SESSION['Player']->attackTile($res,6,1));
+  //echo(json_encode($_SESSION['Player']->calculatePlayerResourcesCapacity()));
 
 ?>
