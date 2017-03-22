@@ -63,6 +63,7 @@
     }
 
     public function getPlayerResourcesIncome(){
+      $this->updatePlayerResourcesIncome();
       return getUserResourcesIncomeDB($this->playerId);
     }
 
@@ -86,8 +87,6 @@
           }
         }
       }
-
-
       return $playersIncome;
     }
 

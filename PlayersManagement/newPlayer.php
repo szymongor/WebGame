@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/dbInterface.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 
   function initNewPlayer($playerId){
     $tiles = searchFreeMapTiles();
@@ -12,6 +13,11 @@
     }
     setPlayerLoation($playerId,$tiles["coords"][0],$tiles["coords"][1]);
     initUserResourcesIncomeDB($playerId);
+    initUserResources($playerId);
+
+    $initResources = Rules::getRules("Resources")["InitResources"];
+    transferResourcesDB($playerId,$initResources);
+
     foreach ($tiles['tiles'] as $value) {
       changeTileOwnerDB($playerId,$value['x_coord'],$value['y_coord']);
     }
@@ -72,7 +78,7 @@
   }
 
   //searchFreeMapTiles();
-  //echo( json_encode(searchFreeMapTiles()) );
+  //echo( json_encode(Rules::getRules("Resources")["InitResources"]) );
   //initNewPlayer(14);
 
 ?>

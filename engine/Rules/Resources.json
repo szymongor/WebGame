@@ -4,5 +4,11 @@
 		"Stone": 300,
 		"Iron": 200,
 		"Food": 500
+	},
+	"InitResources": {
+		"Wood": 200,
+		"Stone": 200,
+		"Iron": 50,
+		"Food": 300
 	}
 }

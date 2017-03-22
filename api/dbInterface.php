@@ -68,12 +68,13 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$userId);
 		$result = @$db_connect->query($queryStr);
-		$row = $result->fetch_assoc();
+
 		mysqli_close($db_connect);
 
-		if($row == NULL){
+		if($result){
 			return initUserResourcesCapacityDB($userId);
 		}else{
+			$row = $result->fetch_assoc();
 			return $row;
 		}
 	}
@@ -246,7 +247,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 			addResource($userId, $transferedResource, $amount);
 		}
 		mysqli_close($db_connect);
-
 	}
 
 	function addResource($userId,$resourceName,$resouceAmount){
@@ -695,5 +695,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
  	//deleteTask(1);
 	//echo(json_encode(getTileMapFromDB(-13,-13)));
 	//addItemDB(12,"Tools",4);
+
+	//echo( json_encode(getUserResourcesCapacityDB(15)) );
 
 ?>
