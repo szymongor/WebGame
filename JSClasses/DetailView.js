@@ -157,7 +157,7 @@ function DetailView(){
     }
     var functions = builsingsFunctions[functionType];
     $.each(functions,function(i,func){
-      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='detailView.addBuildingTask("+x+","+y+",\""+func["Name"]+"\",5)' id='functions"+
+      $('#buildingsFunctionsList').append("<div class='gameDetailsBuildingToBuild' onclick='detailView.addBuildingTask("+x+","+y+",\""+func["Name"]+"\",1)' id='functions"+
       func["Name"]+"' ></div>");
       $('#functions'+func["Name"]).append(func["Name"]+"</br>");
       $('#functions'+func["Name"]).append("<div class='gameDetailsBuildingToBuildResources' id='function"+func["Name"]+"Cost' ></div>");
@@ -168,12 +168,13 @@ function DetailView(){
   }
 
   this.addBuildingTask = function(x, y, taskType, amount){
+    console.log(taskType);
     apiClient.makeBuildingTask(x,y,taskType,amount);
   }
 
   this.addUnit = function(Type){
     var amount = $('#'+Type+'Number').val();
-    console.log(Type+":"+amount);
+    //console.log(Type+":"+amount);
   }
 
   this.build = function(buildingType){
