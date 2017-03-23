@@ -52,9 +52,10 @@
 
     private function addItems($itemsData){
       $playerId;
+
       if(isset($itemsData['destination'])){
         if(isset($itemsData['destination']['buildingOwner'])){
-          $playerId = getOwnerByBuildingIdDB($itemsData['destination']['buildingOwner']);;
+          $playerId = getOwnerByBuildingIdDB($itemsData['destination']['buildingOwner']);
         }
         elseif (isset($itemsData['destination']['owner'])) {
           $playerId = $itemsData['destination']['owner'];
@@ -111,5 +112,10 @@
     }
 
   }
+
+//  $fromDB['task_id']=0;
+//  $fromDB['task_effect'] = '{"items":{"destination":{"buildingOwner":"102"},"transfer":{"Sword":"1"}}}';
+//  $task = new Task($fromDB);
+//  $task->executeTask();
 
 ?>

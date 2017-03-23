@@ -187,7 +187,7 @@
           $task->addItems($this->buildingId,$items);
           break;
         case "addTechnology":
-          $task->addTechnology($this->buildingId, $function, $amount);
+          $task->addTechnology($playerId, $function, $amount);
           break;
       }
       $taskCosts = $this->calculateTaskCost($function,$amount);
