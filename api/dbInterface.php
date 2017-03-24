@@ -491,6 +491,15 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
+	function setArmyUnitsDB($armyId, $unitType, $amount){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("UPDATE `army` SET `%s`= %s WHERE id=%s",
+		$unitType,$amount,$armyId);
+		@$db_connect->query($queryStr);
+		mysqli_close($db_connect);
+	}
+
 	function addArmyToTileDB($x,$y,$armyAmount){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
@@ -510,6 +519,24 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		mysqli_close($db_connect);
 	}
 
+	function setArmyTileDB($x,$y,$army){
+		//Refactor, clear army before setting.
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$army = getArmyIdByLocationFromDB($x,$y);
+		$armyId;
+		if($army == NULL){
+			$armyId = initTileArmy($x,$y);
+		}
+		else{
+			$armyId = $army;
+		}
+		foreach ($armyAmount as $unitType => $amount) {
+			setArmyUnitsDB($armyId,$unitType,$amount);
+		}
+		mysqli_close($db_connect);
+	}
+
 	function transferPlayersArmyDB($playerId,$armyAmount){
 		$playersArmy = getPlayersArmyByIdDB($playerId);
 		$sufficeAmount = chceckSufficientAmount($playersArmy, $armyAmount);
@@ -519,6 +546,14 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				addArmyUnitsDB($armyId,$type,$amount);
 			}
 		}
+	}
+
+	function withdrawPlayersArmyDB($playerId,$armyAmount){
+		$armyTowithDraw = $armyAmount;
+		foreach ($armyTowithDraw as $key => $value) {
+			$armyTowithDraw[$key] = -$value;
+		}
+		transferPlayersArmyDB($playerId,$armyTowithDraw);
 	}
 
 	function setTileBuilding($x,$y,$buildingType){

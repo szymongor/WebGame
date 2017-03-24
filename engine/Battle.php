@@ -5,15 +5,26 @@
     private $attackingArmy;
     private $defendingArmy;
     private $battleLog;
+    private $battleTile;
+    private $aggressorId;
 
-    public function __construct($attackingArmy,$x,$y){
+    public function __construct($aggressorId,$attackingArmy,$x,$y){
       $this->battleLog = "";
-      $this->attackingArmy= new Army($attackingArmy);
+      $this->battleTile = array($x,$y);
+      $this->aggressorId = $aggressorId;
+      withdrawPlayersArmyDB($aggressorId,$attackingArmy);
+      $this->attackingArmy = new Army($attackingArmy);
       $this->defendingArmy = new Army(getArmyByLocationDB($x,$y));
-
       $this->battleLog = $this->battleLog."Attacking army: ".json_encode( $this->attackingArmy->getUnits());
       $this->battleLog = $this->battleLog."Defending army: ".json_encode( $this->defendingArmy->getUnits());
+    }
 
+    private manageArmy(){
+      $x = $this->battleTile[0];
+      $y = $this->battleTile[1];
+      $defendingArmy = $this->defendingArmy->getUnits();
+      setArmyTileDB($x,$y,$defendingArmy);
+      transferPlayersArmyDB($this->aggressorId,$this->attackingArmy->getUnits() );
     }
 
     public function performBattle(){
@@ -21,6 +32,7 @@
        && $this->defendingArmy->checkArmy() != "Defeat"){
          $this->round();
        }
+       manageArmy();
     }
 
     private function round(){
