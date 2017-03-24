@@ -11,7 +11,7 @@
 		"Recruit": [{
 				"Name": "Swordman",
 				"Cost": {
-					"Swords":"-1",
+					"Sword":"-1",
 					"Iron": "-20",
 					"Food": "-50"
 				},

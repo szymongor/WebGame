@@ -19,7 +19,7 @@
       $this->battleLog = $this->battleLog."Defending army: ".json_encode( $this->defendingArmy->getUnits());
     }
 
-    private manageArmy(){
+    private function manageArmy(){
       $x = $this->battleTile[0];
       $y = $this->battleTile[1];
       $defendingArmy = $this->defendingArmy->getUnits();
@@ -32,7 +32,7 @@
        && $this->defendingArmy->checkArmy() != "Defeat"){
          $this->round();
        }
-       manageArmy();
+       $this->manageArmy();
     }
 
     private function round(){
