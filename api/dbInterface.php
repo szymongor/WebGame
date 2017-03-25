@@ -284,7 +284,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	function getBuildingByIDFromDB($idBuilding){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
-		$queryStr = sprintf("SELECT `building_id`, `type` FROM `buildings`
+		$queryStr = sprintf("SELECT * FROM `buildings`
 		WHERE building_id = %s",
 		$idBuilding);
 

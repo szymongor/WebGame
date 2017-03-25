@@ -32,7 +32,7 @@
 				case 'building':
 					//eg. http://localhost/reg/api/map.php/building/?x=0&y=7
 					if(checkVariables()){
-						$response = $_SESSION['Player']->getBuilding($_GET['x'],$_GET['y']);
+						$response = $_SESSION['Player']->getBuildingFromTile($_GET['x'],$_GET['y'])->buildingData();
 					}
 					else{
 						$response = "Wrong data format";

@@ -240,6 +240,13 @@
     public function calculateCapacity(){
 
     }
+
+    public function buildingData(){
+      $data['building_id'] = $this->buildingId;
+      $data['type'] = $this->buildingType;
+      $data['level'] = $this->buildingLevel;
+      return $data;
+    }
   }
 
   //print_r(Building::calculateIncome(2,4,12));
