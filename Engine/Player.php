@@ -65,7 +65,7 @@
 
     public function getPlayerResourcesIncome(){
       //Refactor, update when its needed
-      $this->updatePlayerResourcesIncome();
+      //$this->updatePlayerResourcesIncome();
 
 
       return getUserResourcesIncomeDB($this->playerId);
@@ -101,7 +101,7 @@
 
     public function getPlayerResourcesCapacity(){
       //Refactor, update when its needed
-      $this->updatePlayerResourcesCapacity();
+      //$this->updatePlayerResourcesCapacity();
 
       return getUserResourcesCapacityDB($this->playerId);
     }

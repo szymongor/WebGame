@@ -52,7 +52,6 @@
 
     private function addItems($itemsData){
       $playerId;
-
       if(isset($itemsData['destination'])){
         if(isset($itemsData['destination']['buildingOwner'])){
           $playerId = getOwnerByBuildingIdDB($itemsData['destination']['buildingOwner']);
@@ -70,7 +69,6 @@
       upDateBuildingDB($buildingData['buildingId'],$buildingData['buildingData']);
       $buildingOwner = new Player(getOwnerByBuildingIdDB($buildingData['buildingId']));
       $buildingOwner->updateStats();
-
     }
 
     private function upgradeTechnology($technologyData){
