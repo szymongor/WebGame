@@ -664,11 +664,27 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		return $tasksArray;
 	}
 
-	function getBuildingsTasksDB($x,$y){
+	function getBuildingTasksByCoordsDB($x,$y){
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$queryStr = sprintf("SELECT * FROM `tasks` WHERE task_building
 			is not null AND task_building = (SELECT `building_id` FROM `map` WHERE x_coord = %s AND y_coord = %s)",$x,$y);
+		$result = @$db_connect->query($queryStr);
+		$tasksArray = array();
+		if($result){
+			while($task = $result->fetch_assoc()){
+				array_push($tasksArray,$task);
+			}
+		}
+		mysqli_close($db_connect);
+		return $tasksArray;
+	}
+
+	function getBuildingTasksByIdDB($buildingId){
+		global $host, $db_user, $db_password, $db_name;
+		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$queryStr = sprintf("SELECT * FROM `tasks` WHERE task_building
+			is not null AND task_building = %s",$buildingId);
 		$result = @$db_connect->query($queryStr);
 		$tasksArray = array();
 		if($result){

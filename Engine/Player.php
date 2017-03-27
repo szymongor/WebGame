@@ -326,6 +326,16 @@
       }
     }
 
+    public function getBuildingDataFromTile($x,$y){
+      $building = $this->getBuildingFromTile($x,$y);
+      if($building == NULL){
+        return null;
+      }
+      else{
+        return $building->buildingData();
+      }
+    }
+
     public function addBuildingTask($x,$y,$taskName,$amount){
       $checkRequirements = $this->checkTasksRequirements($x,$y,$taskName,$amount);
         if($checkRequirements == "OK"){
@@ -447,7 +457,7 @@
     public function getBuildingsTasks($x,$y){
       $response;
       if($this->isTileOwned($x,$y)){
-        $response = getBuildingsTasksDB($x,$y);
+        $response = getBuildingTasksByCoordsDB($x,$y);
       }
       else{
         $response = "You are not the owner";

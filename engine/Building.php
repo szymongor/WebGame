@@ -245,6 +245,12 @@
       $data['building_id'] = $this->buildingId;
       $data['type'] = $this->buildingType;
       $data['level'] = $this->buildingLevel;
+
+      $tasks = getBuildingTasksByIdDB($this->buildingId);
+      if($tasks != null){
+        $data['tasks'] = $tasks;
+      }
+
       return $data;
     }
   }
