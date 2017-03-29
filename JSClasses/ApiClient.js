@@ -134,7 +134,7 @@ function ApiClient(server){
   this.conquerTile = function(x,y,armyData,method){
     $.ajax({
 			type: 'POST',
-			url: this.server+'/reg/api/conquer.php/conquer/?x='+x+'&y='+y,
+			url: this.server+'/reg/api/army.php/conquer/?x='+x+'&y='+y,
       data: armyData,
 			success: function(data){
 				console.log(data);
@@ -146,7 +146,7 @@ function ApiClient(server){
   this.attackTile = function(x,y,armyData,metohd){
     $.ajax({
 			type: 'POST',
-			url: this.server+'/reg/api/conquer.php/attack/?x='+x+'&y='+y,
+			url: this.server+'/reg/api/army.php/attack/?x='+x+'&y='+y,
       data: armyData,
 			success: function(data){
 				console.log(data);

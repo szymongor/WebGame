@@ -37,6 +37,16 @@
 							$response = "Wrong data format";
 						}
 						echo($response);
+					break;
+					case 'addArmy':
+					//eg. http://localhost/reg/api/conquer.php/addArmy/?x=4&y=4
+						if(checkVariables()){
+							$response = json_encode($_SESSION['Player']->addArmyToTile($_GET['x'], $_GET['y'],$_POST['Army']));
+						}
+						else{
+							$response = "Wrong data format";
+						}
+						echo($response);
 						break;
 
 				}

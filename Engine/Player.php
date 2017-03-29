@@ -300,6 +300,10 @@
        return $ret;
     }
 
+    public function addArmyToTile($x, $y, $armyData){
+      return "Added army";
+    }
+
     public function getBuilding($x, $y){
       $tile = $this->getMapTile($x,$y);
       if($tile!=NULL || $tile["building"]!=NULL){
