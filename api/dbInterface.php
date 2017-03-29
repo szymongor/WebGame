@@ -520,10 +520,17 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 	}
 
 	function setArmyTileDB($x,$y,$army){
-		//Refactor, clear army before setting.
 		global $host, $db_user, $db_password, $db_name;
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+		$armyToDB = getEmptyArmy();
 		$army = getArmyIdByLocationFromDB($x,$y);
+
+		foreach ($armyToDB as $key => $value) {
+			if(isset($army[$key])){
+				$armyToDB[$key] = $army[$key];
+			}
+		}
+
 		$armyId;
 		if($army == NULL){
 			$armyId = initTileArmy($x,$y);
@@ -531,7 +538,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		else{
 			$armyId = $army;
 		}
-		foreach ($armyAmount as $unitType => $amount) {
+		foreach ($armyToDB as $unitType => $amount) {
 			setArmyUnitsDB($armyId,$unitType,$amount);
 		}
 		mysqli_close($db_connect);
