@@ -301,6 +301,15 @@
     }
 
     public function addArmyToTile($x, $y, $armyData){
+      $tile = $this->getMapTile($x,$y);
+      if($tile['id_owner'] != $this->playerId ){
+        return "Tile not owned!";
+      }
+      if(!$this->checkPlayersArmyState($armyData)){
+        return "You dont have such army";
+      }
+      withdrawPlayersArmyDB($this->playerId,$armyData);
+      addArmyToTileDB($x, $y, $armyData);
       return "Added army";
     }
 
