@@ -5,7 +5,7 @@ var playerInfo;
 var mapView;
 apiClient.getPlayerInfo();
 
-var armyData = {'Army':{"Swordman":15,"Bowman":15,"Wizard":15}};
+var armyData = {'Army':{"Swordman":5,"Bowman":15}};
 
 document.addEventListener("tileSelectDbClick", function(e) {
 	detailView.openDetailView(e,"Building");

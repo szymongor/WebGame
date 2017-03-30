@@ -154,5 +154,16 @@ function ApiClient(server){
 		});
   }
 
+  this.addArmyToTile = function(x,y,armyData,metohd){
+    $.ajax({
+			type: 'POST',
+			url: this.server+'/reg/api/army.php/addArmy/?x='+x+'&y='+y,
+      data: armyData,
+			success: function(data){
+				console.log(data);
+			}
+		});
+  }
+
 
 }
