@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php"; //refactor path?
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/DB/connect.php";
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/databaseNames.php";
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
@@ -524,13 +524,11 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		$db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
 		$armyToDB = getEmptyArmy();
 		$army = getArmyIdByLocationFromDB($x,$y);
-
 		foreach ($armyToDB as $key => $value) {
 			if(isset($army[$key])){
 				$armyToDB[$key] = $army[$key];
 			}
 		}
-
 		$armyId;
 		if($army == NULL){
 			$armyId = initTileArmy($x,$y);
