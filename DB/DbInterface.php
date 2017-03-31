@@ -23,9 +23,10 @@ class DbInterface{
     if($this->startConnection()){
       $queryStr = sprintf("SELECT `user` FROM `users` WHERE id = %s",$playerId);
   		$result = $this->db_connect->query($queryStr);
-  		$row = $result->fetch_assoc();
-  		mysqli_close($this->db_connect);
-  		return $row;
+      mysqli_close($this->db_connect);
+      $row = $result->fetch_assoc();
+      return $row;
+
     }
     else{
       return "Connection failed: " . $this->db_connect->connect_error;
@@ -44,10 +45,77 @@ class DbInterface{
     }
 
 	}
-}
 
+  public function getPlayerResourcesDB($playerId){
+		if($this->startConnection()){
+      $queryStr= sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources` WHERE user_id = %s",$playerId);
+  		$result = @$this->db_connect->query($queryStr);
+  		$row = $result->fetch_assoc();
+  		if($row == NULL){
+  			if($this->initUserResources($playerId)){
+          $result = @$this->db_connect->query($queryStr);
+    			$row = $result->fetch_assoc();
+          return $row;
+        }
+        else{
+          return "No such player";
+        }
+  		}
+      mysqli_close($this->db_connect);
+			return $row;
+    }
+    else{
+      return "Connection failed: " . $this->db_connect->connect_error;
+    }
+	}
+
+  public function initUserResources($playerId){
+    if($this->getPlayer($playerId)){
+      if($this->startConnection()){
+        $queryStr= sprintf("INSERT INTO `user_resources`(`user_id`) VALUES (%s)",$playerId);
+    		@$this->db_connect->query($queryStr);
+
+    		$queryStr= sprintf("INSERT INTO `user_resources_income`(`user_id`) VALUES (%s)",$playerId);
+    		@$this->db_connect->query($queryStr);
+
+    		$queryStr= sprintf("INSERT INTO `user_resources_update`(`user_id`, `last_update`) VALUES (%s,%s)",$playerId,time());
+    		@$this->db_connect->query($queryStr);
+
+    		mysqli_close($this->db_connect);
+        return true;
+      }
+      else{
+        //return "Connection failed: " . $this->db_connect->connect_error;
+        return false;
+      }
+
+    }
+    else{
+      return false;
+    }
+
+
+	}
+
+  public function getPlayerResourcesCapacity($playerId){
+		$this->startConnection();
+		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$playerId);
+		$result = @$this->db_connect->query($queryStr);
+
+		mysqli_close($this->db_connect);
+
+		if(!$result){
+			return initUserResourcesCapacityDB($playerId);
+		}else{
+			$row = $result->fetch_assoc();
+			return $row;
+		}
+	}
+
+
+}
 $db = new DbInterface();
 
-echo(json_encode($db->getPlayer(12)));
+echo(json_encode($db->getPlayerResourcesDB(12)));
 
 ?>
