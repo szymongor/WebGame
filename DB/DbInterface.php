@@ -46,7 +46,7 @@ class DbInterface{
 
 	}
 
-  public function getPlayerResourcesDB($playerId){
+  public function getPlayerResources($playerId){
 		if($this->startConnection()){
       $queryStr= sprintf("SELECT `Wood`, `Stone`, `Iron`, `Food` FROM `user_resources` WHERE user_id = %s",$playerId);
   		$result = @$this->db_connect->query($queryStr);
@@ -68,6 +68,10 @@ class DbInterface{
       return "Connection failed: " . $this->db_connect->connect_error;
     }
 	}
+
+  public function setPlayerResources($playerId,$resources){
+    //TO DO
+  }
 
   public function initUserResources($playerId){
     if($this->getPlayer($playerId)){
@@ -112,10 +116,59 @@ class DbInterface{
 		}
 	}
 
+  public function getPlayersLastResourcesUpDate($playerId){
+    if($this->startConnection()){
+      $result = @$this->db_connect->query(sprintf("SELECT last_update FROM `user_resources_update` WHERE user_id = %s",$playerId));
+  		if($result){
+        $row = $result->fetch_assoc();
+    		$timeLastUpdate = $row['last_update'];
+        mysqli_close($this->db_connect);
+        return $timeLastUpdate;
+      }
+      else{
+        mysqli_close($this->db_connect);
+        return "No such item in db";
+      }
+    }
+    else{
+      return "Connection failed: " . $this->db_connect->connect_error;
+    }
+  }
+
+  public function setPlayersLastResourcesUpDate($playerId,$time){
+    $this->startConnection();
+    @$this->db_connect->query(sprintf("UPDATE `user_resources_update` SET `last_update`= %s WHERE user_id=%s",$time,$playerId));
+    mysqli_close($this->db_connect);
+  }
+
+  public function getPlayerResourcesIncome($playerId){
+    if($this->startConnection()){
+      $queryStr= sprintf("SELECT * FROM `user_resources_income` WHERE user_id = %s",$playerId);
+  		$result = @$this->db_connect->query($queryStr);
+  		$row = $result->fetch_assoc();
+  		if($row == NULL){
+  			if($this->initUserResources($playerId)){
+          $result = @$this->db_connect->query($queryStr);
+    			$row = $result->fetch_assoc();
+          unset($row['user_id']);
+          return $row;
+        }
+        else{
+          return "No such player";
+        }
+  		}
+      mysqli_close($this->db_connect);
+      unset($row['user_id']);
+			return $row;
+    }
+    else{
+      return "Connection failed: " . $this->db_connect->connect_error;
+    }
+  }
 
 }
 $db = new DbInterface();
 
-echo(json_encode($db->getPlayerResourcesDB(12)));
+echo(json_encode($db->setPlayersLastResourcesUpDate(12,2042)));
 
 ?>
