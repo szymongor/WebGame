@@ -70,7 +70,21 @@ class DbInterface{
 	}
 
   public function setPlayerResources($playerId,$resources){
-    //TO DO
+    $queryStr = "UPDATE `user_resources` SET ";
+    foreach ($resources as $key => $value) {
+      $queryStr.= "`$key`= $value ,";
+    }
+    $queryStr = rtrim($queryStr,",");
+    $queryStr.=  "WHERE user_id=".$playerId;
+
+    if($this->startConnection()){
+      $this->db_connect->query($queryStr);
+      mysqli_close($this->db_connect);
+    }
+    else{
+      return "Connection failed: " . $this->db_connect->connect_error;
+    }
+
   }
 
   public function initUserResources($playerId){
@@ -167,8 +181,11 @@ class DbInterface{
   }
 
 }
-$db = new DbInterface();
 
-echo(json_encode($db->setPlayersLastResourcesUpDate(12,2042)));
+//$db = new DbInterface();
+//$res = array('Wood' => 12, 'Iron' => 21);
+//echo(json_encode($db->setPlayerResources(12,$res)));
+
+
 
 ?>
