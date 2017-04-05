@@ -87,6 +87,7 @@ class DbInterface{
 
   }
 
+  //private
   public function initUserResources($playerId){
     if($this->getPlayer($playerId)){
       if($this->startConnection()){
@@ -94,6 +95,9 @@ class DbInterface{
     		@$this->db_connect->query($queryStr);
 
     		$queryStr= sprintf("INSERT INTO `user_resources_income`(`user_id`) VALUES (%s)",$playerId);
+    		@$this->db_connect->query($queryStr);
+
+        $queryStr= sprintf("INSERT INTO `user_resources_capacity`(`user_id`) VALUES (%s)",$playerId);
     		@$this->db_connect->query($queryStr);
 
     		$queryStr= sprintf("INSERT INTO `user_resources_update`(`user_id`, `last_update`) VALUES (%s,%s)",$playerId,time());
@@ -113,21 +117,6 @@ class DbInterface{
     }
 
 
-	}
-
-  public function getPlayerResourcesCapacity($playerId){
-		$this->startConnection();
-		$queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$playerId);
-		$result = @$this->db_connect->query($queryStr);
-
-		mysqli_close($this->db_connect);
-
-		if(!$result){
-			return initUserResourcesCapacityDB($playerId);
-		}else{
-			$row = $result->fetch_assoc();
-			return $row;
-		}
 	}
 
   public function getPlayersLastResourcesUpDate($playerId){
@@ -180,11 +169,36 @@ class DbInterface{
     }
   }
 
+  public function getPlayerResourcesCapacity($playerId){
+    if($this->startConnection()){
+      $queryStr= sprintf("SELECT * FROM `user_resources_capacity` WHERE user_id = %s",$playerId);
+  		$result = @$this->db_connect->query($queryStr);
+  		$row = $result->fetch_assoc();
+  		if($row == NULL){
+  			if($this->initUserResources($playerId)){
+          $this->startConnection();
+          $result = @$this->db_connect->query($queryStr);
+    			$row = $result->fetch_assoc();
+          unset($row['User_id']);
+          mysqli_close($this->db_connect);
+          return $row;
+        }
+        else{
+          return "No such player";
+        }
+  		}
+      mysqli_close($this->db_connect);
+      unset($row['User_id']);
+			return $row;
+    }
+    else{
+      return "Connection failed: " . $this->db_connect->connect_error;
+    }
+  }
 }
-
 //$db = new DbInterface();
 //$res = array('Wood' => 12, 'Iron' => 21);
-//echo(json_encode($db->setPlayerResources(12,$res)));
+//echo(json_encode($db->getPlayerResourcesCapacity(12)));
 
 
 

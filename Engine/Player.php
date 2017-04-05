@@ -266,7 +266,7 @@
         return "You dont have such army";
       }
       else{
-        $combat = new Battle($armyData, $x,$y);
+        $combat = new Battle($this->playerId,$armyData, $x,$y);
         $combat->performBattle();
         //$combat->getBattleLog()." ".
         return $combat->getBattleResult();

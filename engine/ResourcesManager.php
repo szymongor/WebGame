@@ -9,8 +9,7 @@ class ResourcesManager{
     $this->DB = new DbInterface();
   }
 
-  //private
-  public function upDatePlayerResources($playerId){
+  private function upDatePlayerResources($playerId){
     $lastUpdateTime = $this->DB->getPlayersLastResourcesUpDate($playerId);
     $timeNow = time();
     $resourcesCapacity = $this->DB->getPlayerResourcesCapacity($playerId);
@@ -37,13 +36,18 @@ class ResourcesManager{
   }
 
   public function getPlayerResources($playerId){
-
+    $this->upDatePlayerResources($playerId);
+    $playerResources = $this->DB->getPlayerResources($playerId);
+    return $playerResources;
   }
 
+  public function getPlayerResourcesCapacity($playerId){
+    $this->DB->getPlayerResourcesCapacity($playerId);
+  }
 
 }
 
 $resMng = new ResourcesManager();
-$resMng->upDatePlayerResources(12);
+echo json_encode($resMng->getPlayerResources(12));
 
 ?>
