@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
 
-class DbInterface{
+class ResourcesDAO{
 
   private $db_connect;
 
@@ -18,33 +18,6 @@ class DbInterface{
       return true;
     }
   }
-
-  public function getPlayer($playerId){
-    if($this->startConnection()){
-      $queryStr = sprintf("SELECT `user` FROM `users` WHERE id = %s",$playerId);
-  		$result = $this->db_connect->query($queryStr);
-      mysqli_close($this->db_connect);
-      $row = $result->fetch_assoc();
-      return $row;
-
-    }
-    else{
-      return "Connection failed: " . $this->db_connect->connect_error;
-    }
-
-  }
-
-  public function setPlayerLoation($playerId,$x,$y){
-    if($this->startConnection()){
-      $queryStr = sprintf("UPDATE `users` SET `xCoordHQ`=%s,`yCoordHQ`=%s WHERE id=%s",$x,$y,$playerId);
-  		@$this->db_connect->query($queryStr);
-  		mysqli_close($this->db_connect);
-    }
-    else{
-      return "Connection failed: " . $this->db_connect->connect_error;
-    }
-
-	}
 
   public function getPlayerResources($playerId){
 		if($this->startConnection()){
@@ -89,6 +62,7 @@ class DbInterface{
 
   //private
   public function initUserResources($playerId){
+    //Refactor \/ getPlayer from playersService
     if($this->getPlayer($playerId)){
       if($this->startConnection()){
         $queryStr= sprintf("INSERT INTO `user_resources`(`user_id`) VALUES (%s)",$playerId);

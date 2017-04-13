@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/DB/DbInterface.php";
 
-class ResourcesManager{
+class ResourcesService{
 
   private $DB;
 
@@ -47,7 +47,7 @@ class ResourcesManager{
 
 }
 
-$resMng = new ResourcesManager();
-echo json_encode($resMng->getPlayerResources(12));
+//$resService = new ResourcesService();
+//echo json_encode($resService->getPlayerResources(12));
 
 ?>
