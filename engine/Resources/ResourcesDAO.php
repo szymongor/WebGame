@@ -60,6 +60,22 @@ class ResourcesDAO{
 
   }
 
+  public function transferResources($playerId,$resources){
+    $queryStr = "UPDATE `user_resources` SET ";
+    foreach ($resources as $key => $value) {
+      $queryStr.= "`$key`= $key + $value ,";
+    }
+    $queryStr = rtrim($queryStr,",");
+    $queryStr.=  "WHERE user_id=".$playerId;
+
+    if($this->startConnection()){
+      $this->db_connect->query($queryStr);
+      mysqli_close($this->db_connect);
+    }
+    else{
+      return "Connection failed: " . $this->db_connect->connect_error;
+    }
+  }
   //private
   public function initUserResources($playerId){
     //Refactor \/ getPlayer from playersService

@@ -1,12 +1,12 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/Reg/DAO/DAOInterface.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/Engine/Resources/ResourcesDAO.php";
 
 class ResourcesService{
 
   private $DAO;
 
   public function __construct(){
-    $this->DAO = new DAOInterface();
+    $this->DAO = new ResourcesDAO();
   }
 
   private function upDatePlayerResources($playerId){
@@ -64,12 +64,20 @@ class ResourcesService{
   }
 
   public function transferResources($playerId,$resources){
-    //TODO
+    $check = $this->chceckSufficientResourcesAmount($playerId,$resources);
+    if($check){
+      $this->DAO->transferResources($playerId,$resources);
+      return "Transfered";
+    }
+    else{
+      return "Not suffice";
+    }
   }
 
 }
 
-//$resService = new ResourcesService();
-//echo json_encode($resService->getPlayerResources(12));
+$resService = new ResourcesService();
+$resources = array('Wood' => 41120, 'Food'=> 41000 );
+echo json_encode($resService->transferResources(12,$resources));
 
 ?>
