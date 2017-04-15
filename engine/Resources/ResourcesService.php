@@ -1,20 +1,20 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/Reg/DB/DbInterface.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/DAO/DAOInterface.php";
 
 class ResourcesService{
 
-  private $DB;
+  private $DAO;
 
   public function __construct(){
-    $this->DB = new DbInterface();
+    $this->DAO = new DAOInterface();
   }
 
   private function upDatePlayerResources($playerId){
-    $lastUpdateTime = $this->DB->getPlayersLastResourcesUpDate($playerId);
+    $lastUpdateTime = $this->DAO->getPlayersLastResourcesUpDate($playerId);
     $timeNow = time();
-    $resourcesCapacity = $this->DB->getPlayerResourcesCapacity($playerId);
-    $currentResources = $this->DB->getPlayerResources($playerId);
-    $resourcesIncome = $this->DB->getPlayerResourcesIncome($playerId);
+    $resourcesCapacity = $this->DAO->getPlayerResourcesCapacity($playerId);
+    $currentResources = $this->DAO->getPlayerResources($playerId);
+    $resourcesIncome = $this->DAO->getPlayerResourcesIncome($playerId);
 
     $timeSpan = $timeNow-$lastUpdateTime;
     if($timeSpan>=60)
@@ -30,19 +30,41 @@ class ResourcesService{
         }
       }
 
-      $this->DB->setPlayersLastResourcesUpDate($playerId,$timePass);
-      $this->DB->setPlayerResources($playerId,$resourcesAfterUpdate);
+      $this->DAO->setPlayersLastResourcesUpDate($playerId,$timePass);
+      $this->DAO->setPlayerResources($playerId,$resourcesAfterUpdate);
     }
   }
 
   public function getPlayerResources($playerId){
     $this->upDatePlayerResources($playerId);
-    $playerResources = $this->DB->getPlayerResources($playerId);
+    $playerResources = $this->DAO->getPlayerResources($playerId);
     return $playerResources;
   }
 
   public function getPlayerResourcesCapacity($playerId){
-    $this->DB->getPlayerResourcesCapacity($playerId);
+    $this->DAO->getPlayerResourcesCapacity($playerId);
+  }
+
+  public function getPlayerResourcesIncome($playerId){
+    $this->DAO->getPlayerResourcesIncome($playerId);
+
+
+  }
+
+  public function chceckSufficientResourcesAmount($playerId,$requiredResources){
+    $playerResources = $this->getPlayerResources($playerId);
+    foreach ($playerResources as $key => $value) {
+      if(isset($requiredResources[$key])){
+        if(0>$value+$requiredResources[$key]){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public function transferResources($playerId,$resources){
+    //TODO
   }
 
 }
