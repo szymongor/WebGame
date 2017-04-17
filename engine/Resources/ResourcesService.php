@@ -47,8 +47,6 @@ class ResourcesService{
 
   public function getPlayerResourcesIncome($playerId){
     $this->DAO->getPlayerResourcesIncome($playerId);
-
-
   }
 
   public function chceckSufficientResourcesAmount($playerId,$requiredResources){
@@ -76,8 +74,8 @@ class ResourcesService{
 
 }
 
-$resService = new ResourcesService();
-$resources = array('Wood' => 41120, 'Food'=> 41000 );
-echo json_encode($resService->transferResources(12,$resources));
+//$resService = new ResourcesService();
+//$resources = array('Wood' => 41120, 'Food'=> 41000 );
+//echo json_encode($resService->transferResources(12,$resources));
 
 ?>
