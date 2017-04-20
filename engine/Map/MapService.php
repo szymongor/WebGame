@@ -15,10 +15,33 @@
     }
 
     public function getMapRegion($xFrom,$xTo,$yFrom,$yTo,$playerId){
-      $tilesFromDB = $this->Dao->getMapRegion($xFrom,$xTo,$yFrom,$yTo);
-      $tilesFromDB = $this->mapToGrid($tilesFromDB,$xFrom,$xTo,$yFrom,$yTo);
+      $tilesFromDB = $this->Dao->getMapRegion($xFrom-1,$xTo+1,$yFrom-1,$yTo+1);
+      $gridFromDB = $this->mapToGrid($tilesFromDB,$xFrom+1,$xTo-1,$yFrom+1,$yTo-1);
       $tilesSeenByPlayer = $this->emptyGrid($xFrom,$xTo,$yFrom,$yTo);
-      return $tilesFromDB;
+
+      foreach ($tilesFromDB as $value) {
+        if($value['id_owner'] == $playerId){
+          $tilesSeenByPlayer[$value['x_coord']][$value['y_coord']] = $value;
+          if($value['x_coord']-1 >= $xFrom)
+          $tilesSeenByPlayer[$value['x_coord']-1][$value['y_coord']] = $gridFromDB[$value['x_coord']-1][$value['y_coord']];
+          if($value['x_coord']+1 < $xTo)
+          $tilesSeenByPlayer[$value['x_coord']+1][$value['y_coord']] = $gridFromDB[$value['x_coord']+1][$value['y_coord']];
+          if($value['y_coord']-1 >= $yFrom )
+          $tilesSeenByPlayer[$value['x_coord']][$value['y_coord']-1] = $gridFromDB[$value['x_coord']][$value['y_coord']-1];
+          if($value['y_coord']+1 < $yTo )
+          $tilesSeenByPlayer[$value['x_coord']][$value['y_coord']+1] = $gridFromDB[$value['x_coord']][$value['y_coord']+1];
+          if($value['x_coord']-1 >= $xFrom && $value['y_coord']-1 >= $yFrom )
+          $tilesSeenByPlayer[$value['x_coord']-1][$value['y_coord']-1] = $gridFromDB[$value['x_coord']-1][$value['y_coord']-1];
+          if($value['x_coord']+1 < $xTo && $value['y_coord']-1 >= $yFrom )
+          $tilesSeenByPlayer[$value['x_coord']+1][$value['y_coord']-1] = $gridFromDB[$value['x_coord']+1][$value['y_coord']-1];
+          if($value['x_coord']+1 < $xTo && $value['y_coord']+1 < $yTo )
+          $tilesSeenByPlayer[$value['x_coord']+1][$value['y_coord']+1] = $gridFromDB[$value['x_coord']+1][$value['y_coord']+1];
+          if($value['x_coord']-1 >= $xFrom && $value['y_coord']+1 < $yTo )
+          $tilesSeenByPlayer[$value['x_coord']-1][$value['y_coord']+1] = $gridFromDB[$value['x_coord']-1][$value['y_coord']+1];
+        }
+      }
+
+      return $tilesSeenByPlayer;
     }
 
     private function emptyGrid($xFrom,$xTo,$yFrom,$yTo){

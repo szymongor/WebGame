@@ -79,11 +79,28 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
   		mysqli_close($this->db_connect);
   		return $mapArray;
   	}
+
+    public function getPlayersBuildings($playerId){
+      $this->startConnection();
+
+   		$queryStr = sprintf("SELECT B.`building_id`, B.`type`, B.`level`, M.`x_coord`, M.`y_coord` FROM `buildings` as B JOIN `map` AS M
+        WHERE B.building_id = M.building_id AND M.id_owner = %s",
+   		$playerId);
+   		$result = @$this->db_connect->query($queryStr);
+  		$playersBuildings = array();
+  		if($result){
+  			while($row = $result->fetch_assoc()){
+  				$playersBuildings[]= $row;
+  			}
+  		}
+   		mysqli_close($this->db_connect);
+   		return $playersBuildings;
+    }
   }
 
   //$mapDAO = new MapDAO();
 
-  //$response = $mapDAO->getMapTile(3,3);
+  //$response = $mapDAO->getPlayersBuildings(12);
 
   //echo(json_encode($response));
 
