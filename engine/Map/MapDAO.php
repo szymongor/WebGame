@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/databaseNames.php";
 require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
 
   class MapDAO{
@@ -38,6 +39,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
   	}
 
     public function getMapTile($x,$y){
+      global $Biomes;
   		$this->startConnection();
 
   		$query = sprintf("SELECT * FROM `map` WHERE x_coord = %s AND y_coord = %s",
@@ -54,7 +56,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
       }
       else
       {
-  			//$jsonResponse = json_encode($row);
   			mysqli_close($this->db_connect);
         return $row;
       }
@@ -67,13 +68,24 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
   		return $row;
     }
 
+    public function getMapRegion($xFrom,$xTo,$yFrom,$yTo){
+  		$this->startConnection();
+  		$queryStr = sprintf("SELECT * FROM `map` WHERE x_coord >=%s AND x_coord <= %s AND y_coord >=%s AND y_coord <=%s ",$xFrom,$xTo,$yFrom,$yTo);
+  		$result = @$this->db_connect->query($queryStr);
+  		$mapArray = array();
+  		while($mapRow = $result->fetch_assoc()){
+  			array_push($mapArray,$mapRow);
+  		}
+  		mysqli_close($this->db_connect);
+  		return $mapArray;
+  	}
   }
 
-  $mapDAO = new MapDAO();
+  //$mapDAO = new MapDAO();
 
-  $response = $mapDAO->getMapTile(3,3);
+  //$response = $mapDAO->getMapTile(3,3);
 
-  echo(json_encode($response));
+  //echo(json_encode($response));
 
 
 
