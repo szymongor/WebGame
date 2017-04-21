@@ -6,7 +6,8 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
 
     private $db_connect;
 
-    public function __construct(){}
+    public function __construct(){
+    }
 
     private function startConnection(){
       global $host, $db_user, $db_password, $db_name;
@@ -96,7 +97,114 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
    		mysqli_close($this->db_connect);
    		return $playersBuildings;
     }
-  }
+
+    public function setTileBuilding($x,$y,$buildingType){
+  		$this->startConnection();
+      $success;
+  		$this->db_connect = @new mysqli($host, $db_user, $db_password, $db_name);
+  		$tile = $this->getMapTile($x,$y);
+  		if($tile["building_id"]==NULL)
+  		{
+  			$queryStr = sprintf("INSERT INTO `buildings`(`type`) VALUES ('%s'); ",$buildingType);
+  			$queryStr .= sprintf("SELECT LAST_INSERT_ID();");
+
+  			$buildingId;
+  			if (mysqli_multi_query($this->db_connect,$queryStr))
+  			{
+  			  do
+  			    {
+  			    if ($result=mysqli_store_result($this->db_connect)) {
+  			      while ($row=mysqli_fetch_row($result))
+  			      {
+  			        $buildingId=$row[0];
+  			      }
+  			      // Free result set
+  			      mysqli_free_result($result);
+  			      }
+  			    }
+  			  while (mysqli_next_result($this->db_connect));
+  			}
+
+  			$queryStr = sprintf("UPDATE `map` SET `building_id`=%s WHERE x_coord = %s AND y_coord = %s",$buildingId,$x,$y);
+  			@$this->db_connect->query($queryStr);
+  			$success = true;
+  		}
+  		else
+  		{
+  			$success = false;
+  		}
+  		mysqli_close($this->db_connect);
+  		return $success;
+  	}
+
+    public function addArmyToTileDB($x,$y,$armyAmount){
+  		$this->startConnection();
+  		$army = $this->getArmyIdByLocation($x,$y);
+  		$armyId;
+  		if($army == NULL){
+  			$armyId = $this->initTileArmy($x,$y);
+  		}
+  		else{
+  			$armyId = $army;
+  		}
+
+      /*TODO (+refactor: like transferResources in ResourcesDAO)
+  		foreach ($armyAmount as $unitType => $amount) {
+  			addArmyUnitsDB($armyId,$unitType,$amount);
+  		}
+      */
+
+  		mysqli_close($this->db_connect);
+  	}
+
+
+    public function getArmyIdByLocation($x,$y){
+    	$this->startConnection();
+    	$queryStr = sprintf("SELECT `army_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
+    	$x,$y);
+    	$result = @$this->db_connect->query($queryStr);
+    	$row = $result->fetch_assoc();
+    	mysqli_close($this->db_connect);
+    	return $row["army_id"];
+    }
+
+    private function initTileArmy($x,$y){
+      $armyId = $this->initArmy();
+      $this->startConnection();
+  		if($armyId != NULL){
+  			$queryStr = sprintf("UPDATE `map` SET `army_id`=%s WHERE x_coord = %s AND y_coord = %s",$armyId,$x,$y);
+  			@$this->db_connect->query($queryStr);
+  		}
+      mysqli_close($this->db_connect);
+  		return $armyId;
+  	}
+
+    public function initArmy(){
+  		$this->startConnection();
+  		$queryStr = sprintf("INSERT INTO `army`() VALUES ();");
+  		$queryStr .= sprintf("SELECT LAST_INSERT_ID();");
+
+  		$armyId;
+  		if (mysqli_multi_query($this->db_connect,$queryStr))
+  		{
+  			do
+  				{
+  				if ($result=mysqli_store_result($this->db_connect)) {
+  					while ($row=mysqli_fetch_row($result))
+  					{
+  						$armyId=$row[0];
+  					}
+  					// Free result set
+  					mysqli_free_result($result);
+  					}
+  				}
+  			while (mysqli_next_result($this->db_connect));
+  		}
+      mysqli_close($this->db_connect);
+  		return $armyId;
+  	}
+
+}
 
   //$mapDAO = new MapDAO();
 

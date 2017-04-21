@@ -5,7 +5,9 @@ class ResourcesDAO{
 
   private $db_connect;
 
-  public function __construct(){}
+  public function __construct(){
+
+  }
 
   private function startConnection(){
     global $host, $db_user, $db_password, $db_name;

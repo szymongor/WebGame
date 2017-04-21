@@ -616,7 +616,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 				$userBuildings[]= $row;
 			}
 		}
-
  		mysqli_close($db_connect);
  		return $userBuildings;
 	}
