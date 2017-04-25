@@ -153,7 +153,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
   			addArmyUnitsDB($armyId,$unitType,$amount);
   		}
       */
-
   		mysqli_close($this->db_connect);
   	}
 
