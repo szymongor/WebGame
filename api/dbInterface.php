@@ -373,8 +373,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 		foreach ($row as $key => $value) {
 			$row[$key] = 0;
 		}
-
-
 		mysqli_close($db_connect);
 		return $row;
 	}
@@ -394,12 +392,8 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/engine/Rules.php";
 			$row = $result->fetch_assoc();
 			unset($row['id']);
 		}
-
-
-
 		mysqli_close($db_connect);
 		return $row;
-
 	}
 
 	function getArmyIdByLocationFromDB($x,$y){
