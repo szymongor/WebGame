@@ -1,21 +1,24 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/Engine/Map/MapDAO.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/Engine/Army/ArmyDAO.php";
 
   class MapService{
 
-    private $Dao;
+    private $mapDAO;
+    private $armyDAO;
 
     public function __construct(){
-      $this->Dao = new MapDAO();
+      $this->mapDAO = new MapDAO();
+      $this->armyDAO = new ArmyDAO();
     }
 
     public function getMapTile($x, $y){
-      $tile = $this->Dao->getMapTile($x, $y);
+      $tile = $this->mapDAO->getMapTile($x, $y);
       return $tile;
     }
 
     public function getMapRegion($xFrom,$xTo,$yFrom,$yTo,$playerId){
-      $tilesFromDB = $this->Dao->getMapRegion($xFrom-1,$xTo+1,$yFrom-1,$yTo+1);
+      $tilesFromDB = $this->mapDAO->getMapRegion($xFrom-1,$xTo+1,$yFrom-1,$yTo+1);
       $gridFromDB = $this->mapToGrid($tilesFromDB,$xFrom+1,$xTo-1,$yFrom+1,$yTo-1);
       $tilesSeenByPlayer = $this->emptyGrid($xFrom,$xTo,$yFrom,$yTo);
 
@@ -64,10 +67,21 @@
       return $gridMap;
     }
 
+    public function addArmyToTile($x, $y, $army){
+      $armyId = $this->mapDAO->getArmyIdByLocation($x,$y);
+      if($armyId == NULL){
+        $armyId = $this->armyDAO->initArmy();
+        $this->mapDAO->initTileArmy($x,$y,$armyId);
+      }
+      $this->armyDAO->transferArmy($armyId,$army);
+    }
   }
 
     $MapService = new MapService();
-    $response = $MapService->getMapRegion(0,7,0,7,12);
+    $army = array('Shaman' => 10, 'Wizard' => 20);
+    $MapService->addArmyToTile(2,2,$army);
 
-    echo( json_encode($response));
+    //$response = $MapService->getMapRegion(0,7,0,7,12);
+
+    //echo( json_encode($response));
 ?>

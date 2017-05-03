@@ -137,26 +137,6 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
   		return $success;
   	}
 
-    public function addArmyToTileDB($x,$y,$armyAmount){
-  		$this->startConnection();
-  		$army = $this->getArmyIdByLocation($x,$y);
-  		$armyId;
-  		if($army == NULL){
-  			$armyId = $this->initTileArmy($x,$y);
-  		}
-  		else{
-  			$armyId = $army;
-  		}
-
-      /*TODO (+refactor: like transferResources in ResourcesDAO)
-  		foreach ($armyAmount as $unitType => $amount) {
-  			addArmyUnitsDB($armyId,$unitType,$amount);
-  		}
-      */
-  		mysqli_close($this->db_connect);
-  	}
-
-
     public function getArmyIdByLocation($x,$y){
     	$this->startConnection();
     	$queryStr = sprintf("SELECT `army_id` FROM `map` WHERE x_coord = %s AND y_coord = %s",
@@ -167,8 +147,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
     	return $row["army_id"];
     }
 
-    private function initTileArmy($x,$y){
-      $armyId = $this->initArmy();
+    public function initTileArmy($x,$y,$armyId){
       $this->startConnection();
   		if($armyId != NULL){
   			$queryStr = sprintf("UPDATE `map` SET `army_id`=%s WHERE x_coord = %s AND y_coord = %s",$armyId,$x,$y);

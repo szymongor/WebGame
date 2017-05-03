@@ -104,11 +104,10 @@
       mysqli_close($this->db_connect);
   		return $armyId;
   	}
-
   }
 
-  $armyDao = new ArmyDAO();
-  $army = array('Shaman' => 100, 'Wizard' => 200);
-  echo json_encode($armyDao->getArmyById(8));
+  //$armyDao = new ArmyDAO();
+  //$army = array('Shaman' => 100, 'Wizard' => 200);
+  //echo json_encode($armyDao->getArmyById(8));
 
 ?>
