@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
+  require_once $_SERVER['DOCUMENT_ROOT']."/Reg/api/utils.php";
 
 
   class ArmyDAO{
@@ -48,6 +49,38 @@
 
       if($this->startConnection()){
         $this->db_connect->query($queryStr);
+        mysqli_close($this->db_connect);
+      }
+      else{
+        return "Connection failed: " . $this->db_connect->connect_error;
+      }
+    }
+
+    public function withdrawArmy($armyId,$army){
+  		$armyTowithDraw = $army;
+  		foreach ($armyTowithDraw as $key => $value) {
+  			$armyTowithDraw[$key] = -$value;
+  		}
+  		$this->transferArmy($armyId,$armyTowithDraw);
+  	}
+
+    public function setArmy($armyId,$army){
+      $emptyArmy = getEmptyArmy(); //refactor, utils class
+      $queryStr = "UPDATE `army` SET ";
+      foreach ($emptyArmy as $key => $value) {
+        if(isset($army[$key])){
+          $queryStr.= "`$key`= ".$army[$key]." ,";
+        }
+        else{
+          $queryStr.= "`$key`= 0 ,";
+        }
+      }
+      $queryStr = rtrim($queryStr,",");
+      $queryStr.=  "WHERE id=".$armyId;
+
+      if($this->startConnection()){
+        $this->db_connect->query($queryStr);
+        echo($queryStr);
         mysqli_close($this->db_connect);
       }
       else{
@@ -108,6 +141,7 @@
 
   //$armyDao = new ArmyDAO();
   //$army = array('Shaman' => 100, 'Wizard' => 200);
+  //$armyDao->setArmy(11,$army);
   //echo json_encode($armyDao->getArmyById(8));
 
 ?>
