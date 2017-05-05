@@ -182,6 +182,10 @@ require_once $_SERVER['DOCUMENT_ROOT']."/Reg/connect.php";
   		return $armyId;
   	}
 
+    public function getBuildingFromTile($x, $y){
+      
+    }
+
 }
 
   //$mapDAO = new MapDAO();

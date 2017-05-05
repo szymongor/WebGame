@@ -75,13 +75,22 @@
       }
       $this->armyDAO->transferArmy($armyId,$army);
     }
+
+    public function getArmyFromTile($x, $y){
+      $tile = $this->getMapTile($x,$y);
+      if(isset($tile['army_id'])){
+        $army = $this->armyDAO->getArmyById($tile['army_id']);
+        return $army;
+      }
+      else{
+        return getEmptyArmy();
+      }
+    }
+
   }
 
     $MapService = new MapService();
-    $army = array('Shaman' => 10, 'Wizard' => 20);
-    $MapService->addArmyToTile(2,2,$army);
-
-    //$response = $MapService->getMapRegion(0,7,0,7,12);
-
-    //echo( json_encode($response));
+    //$army = array('Shaman' => 10, 'Wizard' => 20);
+    $response = $MapService->getArmyFromTile(2,5);
+    echo( json_encode($response));
 ?>
