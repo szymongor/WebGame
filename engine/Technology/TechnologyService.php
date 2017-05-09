@@ -28,10 +28,10 @@ class TechnologyService{
 
 }
 
-$technologyService = new TechnologyService();
+  //$technologyService = new TechnologyService();
 
-$response = $technologyService->getPlayersTechnologies(12);
+  //$response = $technologyService->getPlayersTechnologies(12);
 
-echo json_encode($response);
+  //echo json_encode($response);
 
 ?>
