@@ -17,13 +17,23 @@
       return $this->itemsDAO->transferItems($playerId, $items);
     }
 
+    public function checkPlayerItemsState($playerId, $requiredItems){
+      $playersItems = $this->getUserItems($playerId);
+      foreach ($requiredItems as $key => $value) {
+        if($playersItems[$key]+$value<0){
+          return false;
+        }
+      }
+      return true;
+    }
+
   }
 
 
-//  $itemsService = new ItemsService();
-//  $items = array('Tool'=>100, 'Armor' => 10);
-//  $response = $itemsService->transferItems(12,$items);
-//  echo json_encode($response);
+  //$itemsService = new ItemsService();
+  //$items = array('Tool'=>-575, 'Armor' => 10);
+  //$response = $itemsService->checkPlayerItemsState(12,$items);
+  //echo json_encode($response);
 
 
 ?>
