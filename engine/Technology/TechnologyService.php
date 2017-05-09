@@ -13,6 +13,17 @@ class TechnologyService{
     return $this->technologyDAO->getPlayersTechnologies($playerId);
   }
 
+  public function addTechnology($playerId, $technologyName){
+		$this->technologyDAO->addTechnology($playerId, $technologyName);
+	}
+
+  public function upgradeTechnology($playerId, $technologyName, $technologyLevel){
+		$this->technologyDAO->upgradeTechnology($playerId, $technologyName, $technologyLevel);
+	}
+
+  public function setTechnologyUpgraded($playerId, $technologyName){
+		$this->technologyDAO->setTechnologyUpgraded($playerId, $technologyName);
+	}
 
 
 }

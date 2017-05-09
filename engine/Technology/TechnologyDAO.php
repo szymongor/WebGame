@@ -33,6 +33,29 @@ class TechnologyDAO{
 		return $technologiesArray;
   }
 
+  public function addTechnology($playerId, $technologyName){
+		$this->startConnection();
+		$queryStr = sprintf("INSERT INTO `technologies`(`owner_id`, `technology`,`currently_upgraded`) VALUES (%s,\"%s\",1)",$playerId,$technologyName);
+		$this->db_connect->query($queryStr);
+		mysqli_close($this->db_connect);
+	}
+
+  public function upgradeTechnology($playerId, $technologyName, $technologyLevel){
+		$this->startConnection();
+		$queryStr = sprintf("UPDATE `technologies` SET `level`= %s,`currently_upgraded`=0 WHERE owner_id = %s AND technology = \"%s\"",
+		$technologyLevel,$playerId,$technologyName);
+		$this->db_connect->query($queryStr);
+		mysqli_close($this->db_connect);
+	}
+
+  public function setTechnologyUpgraded($playerId, $technologyName){
+		$this->startConnection();
+		$queryStr = sprintf("UPDATE `technologies` SET `currently_upgraded`=1 WHERE owner_id = %s AND technology = \"%s\"",
+		$playerId,$technologyName);
+		$this->db_connect->query($queryStr);
+		mysqli_close($this->db_connect);
+	}
+
 }
 
   //$dao = new TechnologyDAO();
